@@ -36,6 +36,8 @@ function Scene(scene){
 
 	this.setupControls = function(){
 		$('#controlLayer').on('click', function(e){
+			activePlayer.destX = e.offsetX; 
+			activePlayer.destY = e.offsetY;
 			console.log(e);
 		});
 	}

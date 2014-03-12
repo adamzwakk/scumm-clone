@@ -4,6 +4,7 @@ var now,
     step = 1/60;
 
 var activeScene;
+var activePlayer;
 var activeSprites = new Array();
 
 function frame() {
@@ -16,7 +17,7 @@ function frame() {
 
 function render(){
 	for (var i = 0; i < activeSprites.length; i++) {
-		activeSprites[i].move();
+		activeSprites[i].move(dt);
 	};
 }
 
