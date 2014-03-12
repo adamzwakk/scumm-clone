@@ -28,6 +28,7 @@ function Layer(id,image,zindex){
 		var calDest = moveDifference({x:0,y:0},{x:destX,y:0},4);
 		var x = image.x+calDest.x;
 		image.x = x;
+		this.clear();
 		that.ctx.drawImage(image.src,0,0,image.width,image.height,x,0,image.newDM.width,image.newDM.height);
 	}
 

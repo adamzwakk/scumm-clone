@@ -33,28 +33,24 @@ function Scene(scene,large){
 
 	this.move = function(){
 		var dest = {};
+		var ifCheck;
 		if(this.moving){
 			for (var i = 0; i < this.bgLayers.length; i++) {
 				var l = this.bgLayers[i];
 				if(this.scroll == 'r'){
 					dest.x = -(l.image.newDM.width - mainWidth);
-					if(l.image.x >= dest.x){
-						l.clear();
-						l.scroll(dest);
-					} else {
-						this.moving = false;
-					}
+					ifCheck = l.image.x >= dest.x;
 				}
 				if(this.scroll == 'l'){
 					dest.x = 0;
-					if(l.image.x <= dest.x){
-						l.clear();
-						l.scroll(dest);
-					} else {
-						this.moving = false;
-					}
+					ifCheck = l.image.x <= dest.x;
 				}
-			};
+				if(ifCheck){
+					l.scroll(dest);
+				} else {
+					this.moving = false;
+				}
+			}
 		}
 	}
 
