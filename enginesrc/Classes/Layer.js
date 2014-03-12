@@ -22,7 +22,7 @@ function Layer(id,image,zindex){
 		that.ctx.drawImage(image.src,0,0,image.width,image.height,x,y,image.newDM.width,image.newDM.height);
 	}
 
-	this.scrollRight = function(dest){
+	this.scroll = function(dest){
 		var image = this.image;
 		var destX = dest.x;
 		var calDest = moveDifference({x:0,y:0},{x:destX,y:0},4);

@@ -41,12 +41,16 @@ function Actor(scene){
 	}
 
 	this.checkSceneEdge = function(x,y){
-		if((mainWidth - this.scene.padding) >= (this.sprite.x + this.sprite.w)){
-			return false;
-		} else {
+		if((mainWidth - this.scene.padding) <= (this.sprite.x + this.sprite.w)){
 			this.scene.moving = true;
 			this.scene.scroll = 'r';
 			return true;
+		} else if(this.sprite.x <= (this.scene.padding)) {
+			this.scene.moving = true;
+			this.scene.scroll = 'l';
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

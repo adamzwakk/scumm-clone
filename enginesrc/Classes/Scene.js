@@ -40,7 +40,16 @@ function Scene(scene,large){
 					dest.x = -(l.image.newDM.width - mainWidth);
 					if(l.image.x >= dest.x){
 						l.clear();
-						l.scrollRight(dest);
+						l.scroll(dest);
+					} else {
+						this.moving = false;
+					}
+				}
+				if(this.scroll == 'l'){
+					dest.x = 0;
+					if(l.image.x <= dest.x){
+						l.clear();
+						l.scroll(dest);
 					} else {
 						this.moving = false;
 					}
