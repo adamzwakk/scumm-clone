@@ -8,7 +8,7 @@ function Actor(scene){
 
 	this.move = function(dt){
 		if(this.moving){
-			var bottom = this.sprite.getBottomPos(this.x,this.y);
+			this.sprite.bottom = this.sprite.getBottomPos(this.x,this.y);
 			var src = {x:this.x,y:this.y};
 			var dest = {x:this.destX - (this.sprite.w/2),y:this.destY - this.sprite.h};
 			var calDest = moveDifference(src,dest,this.speed);
@@ -29,6 +29,7 @@ function Actor(scene){
 			if(calDest.x !== 0 || calDest.y !== 0){
 				this.sprite.clear();
 				this.sprite.draw(newX, newY);
+				this.zHandler();
 				this.x = newX;
 				this.y = newY;
 			} else {
@@ -37,6 +38,13 @@ function Actor(scene){
 				this.moving = false;
 			}
 		}
+	}
+
+	this.zHandler = function(){
+		var smallPoint = this.scene.horizonLine;
+		var bt = this.sprite.bottom;
+		this.sprite.z = Math.abs(1-(bt.y/smallPoint));
+		this.sprite.handleZ();
 	}
 
 	this.checkSceneEdge = function(x,y){

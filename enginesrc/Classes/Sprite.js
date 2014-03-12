@@ -3,10 +3,21 @@ function Sprite(scene){
 	this.y;
 	this.w;
 	this.h;
+	this.z;
 	this.scene = scene;
-	
+	this.scaleDiff = 1;
+
 	this.init = function(){
 		
+	}
+
+	this.handleZ = function(){
+		console.log(this.z);
+		if(this.z <= 0.6){
+			this.scaleDiff = this.z;
+		} else {
+			this.scaleDiff = 1;
+		}
 	}
 
 	this.getBottomPos = function(x,y){

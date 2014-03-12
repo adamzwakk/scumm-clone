@@ -4,6 +4,8 @@ function SpriteBox(scene,w,h){
 	this.w = w;
 	this.h = h;
 	this.scene = scene;
+	this.realH = h;
+	this.realW = w;
 	this.init = function(){
 		this.ctx = scene.spriteLayers[0].ctx;
 		this.ctx.fillStyle = "rgb(244,244,244)";
@@ -12,6 +14,9 @@ function SpriteBox(scene,w,h){
 	this.draw = function(x,y){
 		this.x = x;
 		this.y = y;
+		this.h = parseInt(this.realH*this.scaleDiff);
+		this.w = parseInt(this.realW*this.scaleDiff);
+		console.log(this.w+' '+this.h);
 		this.ctx.fillRect(this.x,this.y,this.w,this.h);
 		this.getBottomPos();
 	}

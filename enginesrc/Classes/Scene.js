@@ -1,20 +1,21 @@
-function Scene(scene,large){
+function Scene(scene){
 	this.bgLayers = new Array();
 	this.spriteLayers = new Array();
 	this.moving = false;
-	this.scrollable = (large) ? true : false;
-	this.padding = 40;
+	this.scrollable;
+	this.padding;
 	this.scroll;
 	this.init = function(){
 		this.getLayers();
-
+		this.padding = scene.largePadding;
+		this.scrollable = (isset(scene.large) || !scene.large) ? true : false;
+		this.persPoint = scene.persPoint;
+		this.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
 		var l = new Layer('controlLayer',0,99999);
 		$('#container').append(l.canvas);
 		activeScene = this;
 		this.setupControls();
 	}
-
-	this.persPoint = scene.persPoint;
 
 	this.getLayers = function(){
 		var json = scene.imageLayers;
@@ -84,7 +85,6 @@ function Scene(scene,large){
 
 	this.setupControls = function(){
 		$('#controlLayer').on('click', function(e){
-			console.log(e);
 			activePlayer.destX = e.offsetX; 
 			activePlayer.destY = e.offsetY;
 			activePlayer.moving = true;
