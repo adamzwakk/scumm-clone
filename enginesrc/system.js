@@ -19,6 +19,7 @@ function render(){
 	for (var i = 0; i < activeSprites.length; i++) {
 		activeSprites[i].move(dt);
 	};
+	activeScene.move();
 }
 
 requestAnimationFrame(frame);

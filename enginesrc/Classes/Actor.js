@@ -4,6 +4,7 @@ function Actor(scene){
 	this.speed = 2;
 	this.moving = false;
 	this.curDir = {};
+	this.scene = scene;
 
 	this.move = function(dt){
 		if(this.moving){
@@ -15,16 +16,17 @@ function Actor(scene){
 				this.curDir.x = calDest.x;
 				this.curDir.y = calDest.y;
 			}
-			if(this.curDir.x !== calDest.x){
-				calDest.x = 0;
-			}
-
-			if(this.curDir.y !== calDest.y){
-				calDest.y = 0;
-			}
+			calDest.x = (this.curDir.x !== calDest.x) ? 0 : calDest.x;
+			calDest.y = (this.curDir.y !== calDest.y) ? 0 : calDest.y; 
 
 			var newX = this.x+calDest.x;
 			var newY = this.y+calDest.y;
+
+
+			if(this.scene.scrollable){
+				this.checkSceneEdge(newX,newY);
+			}
+
 			if(calDest.x !== 0 || calDest.y !== 0){
 				this.sprite.clear();
 				this.sprite.draw(newX, newY);
@@ -35,6 +37,16 @@ function Actor(scene){
 				delete this.curDir.y;
 				this.moving = false;
 			}
+		}
+	}
+
+	this.checkSceneEdge = function(x,y){
+		if((mainWidth - this.scene.padding) >= (this.sprite.x + this.sprite.w)){
+			return false;
+		} else {
+			this.scene.moving = true;
+			this.scene.scroll = 'r';
+			return true;
 		}
 	}
 }

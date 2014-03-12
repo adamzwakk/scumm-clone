@@ -1,6 +1,10 @@
-function Scene(scene){
+function Scene(scene,large){
 	this.bgLayers = new Array();
 	this.spriteLayers = new Array();
+	this.moving = false;
+	this.scrollable = (large) ? true : false;
+	this.padding = 40;
+	this.scroll;
 	this.init = function(){
 		this.getLayers();
 
@@ -9,6 +13,8 @@ function Scene(scene){
 		activeScene = this;
 		this.setupControls();
 	}
+
+	this.persPoint = scene.persPoint;
 
 	this.getLayers = function(){
 		var json = scene.imageLayers;
@@ -22,6 +28,24 @@ function Scene(scene){
 					count++;
 				}
 			}
+		}
+	}
+
+	this.move = function(){
+		var dest = {};
+		if(this.moving){
+			for (var i = 0; i < this.bgLayers.length; i++) {
+				var l = this.bgLayers[i];
+				if(this.scroll == 'r'){
+					dest.x = -(l.image.newDM.width - mainWidth);
+					if(l.image.x >= dest.x){
+						l.clear();
+						l.scrollRight(dest);
+					} else {
+						this.moving = false;
+					}
+				}
+			};
 		}
 	}
 
