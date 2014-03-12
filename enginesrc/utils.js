@@ -7,12 +7,13 @@ function timestamp() {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 }
 
-function difference(num1,num2){
-	return (num1 > num2)? num1-num2 : num2-num1
+function moveDirection(num1,num2,speed){
+	return (num1 > num2) ? -speed : speed;
 }
 
-function calculateDelta(src,dest){
+function moveDifference(src,dest,speed){
 	if(typeof dest.x !== 'undefined'){
-		return {x:difference(src.x,dest.x),y:difference(src.y,dest.y)}
+		console.log({x:moveDirection(src.x,dest.x,speed),y:moveDirection(src.y,dest.y,speed)});
+		return {x:moveDirection(src.x,dest.x,speed),y:moveDirection(src.y,dest.y,speed)}
 	}
 }

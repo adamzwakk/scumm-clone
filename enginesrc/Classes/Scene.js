@@ -3,6 +3,11 @@ function Scene(scene){
 	this.spriteLayers = new Array();
 	this.init = function(){
 		this.getLayers();
+
+		var l = new Layer('controlLayer',0,99999);
+		$('#container').append(l.canvas);
+		activeScene = this;
+		this.setupControls();
 	}
 
 	this.getLayers = function(){
@@ -27,18 +32,19 @@ function Scene(scene){
 		var l = new Layer('spritelayer0',0,9999);
 		this.spriteLayers.push(l);
 		$('#container').append(l.canvas);
+	}
 
-		var l = new Layer('controlLayer',0,9999);
-		$('#container').append(l.canvas);
-		activeScene = this;
-		this.setupControls();
+	this.hide = function(){
+		for (var i = 0; i < this.bgLayers.length; i++) {
+			$('#'+this.bgLayers[i].id).remove();
+		};
 	}
 
 	this.setupControls = function(){
 		$('#controlLayer').on('click', function(e){
 			activePlayer.destX = e.offsetX; 
 			activePlayer.destY = e.offsetY;
-			console.log(e);
+			//activePlayer.move();
 		});
 	}
 

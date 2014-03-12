@@ -1,19 +1,20 @@
 function Actor(scene){
-	this.dest = {};
 	this.destX;
 	this.destY;
+	this.speed = 1;
 
 	this.move = function(dt){
 		if(typeof this.destX != 'undefined' && this.destX != this.x){
 			var src = {x:this.x,y:this.y};
 			var dest = {x:this.destX,y:this.destY};
-			console.log(dest);
-			var calDest = calculateDelta(src,dest);
-			console.log(calDest);
+			var calDest = moveDifference(src,dest,this.speed);
+			var newX = this.x+calDest.x;
+			var newY = this.y+calDest.y;
 			this.sprite.clear();
-			this.sprite.draw(calDest.x, calDest.y);
-			this.x = calDest.x;
-			this.y = calDest.y;
+			console.log(newX);
+			this.sprite.draw(newX, newY);
+			this.x = newX;
+			this.y = newY;
 		}
 	}
 }

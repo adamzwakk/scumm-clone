@@ -1,4 +1,5 @@
 function Layer(id,image,zindex){
+	this.id = id;
 	this.canvas = $('<canvas></canvas>').attr({'id':id,'width':mainWidth,'height':mainHeight-invHeight}).css('z-index',zindex);
 	this.ctx = this.canvas[0].getContext('2d');
 	if(image !== 0){
