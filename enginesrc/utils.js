@@ -13,7 +13,10 @@ function moveDirection(num1,num2,speed){
 
 function moveDifference(src,dest,speed){
 	if(typeof dest.x !== 'undefined'){
-		console.log({x:moveDirection(src.x,dest.x,speed),y:moveDirection(src.y,dest.y,speed)});
 		return {x:moveDirection(src.x,dest.x,speed),y:moveDirection(src.y,dest.y,speed)}
 	}
+}
+
+function isset(v){
+	return (typeof v !== 'undefined');
 }

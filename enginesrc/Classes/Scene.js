@@ -44,7 +44,7 @@ function Scene(scene){
 		$('#controlLayer').on('click', function(e){
 			activePlayer.destX = e.offsetX; 
 			activePlayer.destY = e.offsetY;
-			//activePlayer.move();
+			activePlayer.moving = true;
 		});
 	}
 
