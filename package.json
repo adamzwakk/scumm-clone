@@ -1,0 +1,18 @@
+{
+  "name": "scumm-clone",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "~0.4.3"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.3",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-watch": "^0.5.3",
+    "grunt-contrib-copy": "^0.5.0"
+  },
+  "author": "Adam Zwakenberg",
+  "license": "ISC"
+}

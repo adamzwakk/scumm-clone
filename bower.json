@@ -1,0 +1,19 @@
+{
+  "name": "scumm-clone",
+  "version": "0.0.0",
+  "authors": [
+    "Adam Zwakenberg <shamist@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.0"
+  }
+}
