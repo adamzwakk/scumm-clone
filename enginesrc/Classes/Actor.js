@@ -22,7 +22,6 @@ function Actor(scene){
 			var newX = this.x+calDest.x;
 			var newY = this.y+calDest.y;
 
-
 			if(this.scene.scrollable){
 				this.checkSceneEdge(newX,newY);
 			}

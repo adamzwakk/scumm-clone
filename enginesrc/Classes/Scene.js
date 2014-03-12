@@ -32,17 +32,21 @@ function Scene(scene,large){
 	}
 
 	this.move = function(){
-		var dest = {};
+		var dest = {x:0,y:0};
 		var ifCheck;
+		var scrollRightX;
+		var scrollLeftX;
 		if(this.moving){
 			for (var i = 0; i < this.bgLayers.length; i++) {
 				var l = this.bgLayers[i];
 				if(this.scroll == 'r'){
 					dest.x = -(l.image.newDM.width - mainWidth);
+					scrollRightX = dest.x;
 					ifCheck = l.image.x >= dest.x;
 				}
 				if(this.scroll == 'l'){
 					dest.x = 0;
+					scrollLeftX = dest.x;
 					ifCheck = l.image.x <= dest.x;
 				}
 				if(ifCheck){
@@ -51,6 +55,15 @@ function Scene(scene,large){
 					this.moving = false;
 				}
 			}
+			for (var i = 0; i < activeSprites.length; i++) {
+				var s = activeSprites[i];
+				if(!this.moving){
+					s.moving = false;
+				} else {
+					s.destX = scrollRightX;
+					s.moving = true;
+				}
+			};
 		}
 	}
 
@@ -71,6 +84,7 @@ function Scene(scene,large){
 
 	this.setupControls = function(){
 		$('#controlLayer').on('click', function(e){
+			console.log(e);
 			activePlayer.destX = e.offsetX; 
 			activePlayer.destY = e.offsetY;
 			activePlayer.moving = true;
