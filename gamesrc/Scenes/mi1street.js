@@ -1,7 +1,7 @@
 var mi1Street = {
 	imageLayers:{
 		0:{
-			image:'mi1street/mi1street.png'
+			image:'assets/scenes/mi1street/street.png'
 		}
 	},
 	persPoint:{
