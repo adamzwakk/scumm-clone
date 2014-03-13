@@ -1,6 +1,6 @@
-function Layer(id,image,zindex){
+function Layer(id,image,zindex,w,h){
 	this.id = id;
-	this.canvas = $('<canvas></canvas>').attr({'id':id,'width':mainWidth,'height':mainHeight-invHeight}).css('z-index',zindex);
+	this.canvas = $('<canvas></canvas>').attr({'id':id,'width':mainWidth,'height':sceneHeight}).css('z-index',zindex);
 	this.ctx = this.canvas[0].getContext('2d');
 	if(image !== 0){
 		this.image = {};
@@ -14,9 +14,12 @@ function Layer(id,image,zindex){
 			that.image.width = this.width;
 			that.image.height = this.height;
 			that.image.newDM = calculateAspectRatioFit(this.width,this.height,1000000000,sceneHeight);
+			that.width = that.image.newDM.width;
+			that.height = that.image.newDM.height;
 			that.draw(that.image.x,that.image.y);
 		}
 	}
+
 	this.draw = function(x,y){
 		var image = this.image;
 		that.ctx.drawImage(image.src,0,0,image.width,image.height,x,y,image.newDM.width,image.newDM.height);

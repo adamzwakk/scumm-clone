@@ -8,7 +8,11 @@ function timestamp() {
 }
 
 function moveDirection(num1,num2,speed){
-	return (num1 > num2) ? -speed : speed;
+	if(!isset(num1) || !isset(num2)){
+		return 0;
+	} else {
+		return (num1 > num2) ? -speed : speed;
+	}
 }
 
 function moveDifference(src,dest,speed){

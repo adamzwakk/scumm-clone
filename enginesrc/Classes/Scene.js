@@ -1,20 +1,19 @@
 function Scene(scene){
 	this.bgLayers = new Array();
 	this.spriteLayers = new Array();
+	this.transporters = new Array();
 	this.moving = false;
 	this.scrollable;
 	this.padding;
 	this.scroll;
+	this.width = 0;
+	this.height = 0;
 	this.init = function(){
 		this.getLayers();
 		this.padding = scene.largePadding;
 		this.scrollable = (isset(scene.large) || !scene.large) ? true : false;
 		this.persPoint = scene.persPoint;
 		this.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
-		var l = new Layer('controlLayer',0,99999);
-		$('#container').append(l.canvas);
-		activeScene = this;
-		this.setupControls();
 	}
 
 	this.getLayers = function(){
@@ -22,13 +21,32 @@ function Scene(scene){
 		var count = 0;
 		for (var key in json) {
 			var obj = json[key];
-			for (var prop in obj) {
-				if(obj.hasOwnProperty(prop)){
-					var l = new Layer('background'+count,obj[prop],count);
-					this.bgLayers.push(l);
-					count++;
-				}
+			if(obj.type == 'bg'){
+				var l = new Layer('background'+count,obj.image,count,this.width,this.height);
+				this.bgLayers.push(l);
+				count++;
+			} else if(obj.type == 'sprite'){
+				var l = new Layer('spritelayer'+count,0,9999,this.width,this.height);
+				this.spriteLayers.push(l);
+				$('#container').append(l.canvas);
 			}
+		}
+
+		var l = new Layer('eventLayer',0,99999,this.width,this.height);
+		$('#container').append(l.canvas);
+		eventLayer = l;
+		activeScene = this;
+		this.getTransporters();
+		activeScene.setupControls();
+	}
+
+	this.getTransporters = function(){
+		var json = scene.transporters;
+		for (var key in json) {
+			var obj = json[key];
+			var t = new Transporter(obj);
+			activeTransporters.push(t);
+			this.transporters.push(t);
 		}
 	}
 
@@ -64,6 +82,15 @@ function Scene(scene){
 					s.destX = scrollRightX;
 					s.moving = true;
 				}
+			}
+			for (var i = 0; i < this.transporters.length; i++) {
+				var s = this.transporters[i];
+				if(!this.moving){
+					s.moving = false;
+				} else {
+					s.destX = scrollRightX;
+					s.moving = true;
+				}
 			};
 		}
 	}
@@ -72,9 +99,6 @@ function Scene(scene){
 		for (var i = 0; i < this.bgLayers.length; i++) {
 			$('#container').append(this.bgLayers[i].canvas);
 		};
-		var l = new Layer('spritelayer0',0,9999);
-		this.spriteLayers.push(l);
-		$('#container').append(l.canvas);
 	}
 
 	this.hide = function(){
@@ -84,7 +108,8 @@ function Scene(scene){
 	}
 
 	this.setupControls = function(){
-		$('#controlLayer').on('click', function(e){
+		$('canvas').on('click', function(e){
+			console.log(e.offsetX+' '+e.offsetY);
 			activePlayer.destX = e.offsetX; 
 			activePlayer.destY = e.offsetY;
 			activePlayer.moving = true;

@@ -11,9 +11,7 @@ function Sprite(scene){
 		
 	}
 
-	this.handleZ = function(){
-		console.log(this.z);
-		
+	this.handleZ = function(){		
 		if(this.z <= 0.8 || this.z >= 0.25){
 			this.scaleDiff = this.z;
 		} else {

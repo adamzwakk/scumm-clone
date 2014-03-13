@@ -48,6 +48,7 @@ function Actor(scene){
 	}
 
 	this.checkSceneEdge = function(x,y){
+
 		if((mainWidth - this.scene.padding) <= (this.sprite.x + this.sprite.w)){
 			this.scene.moving = true;
 			this.scene.scroll = 'r';

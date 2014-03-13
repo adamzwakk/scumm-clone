@@ -6,6 +6,8 @@ var now,
 var activeScene;
 var activePlayer;
 var activeSprites = new Array();
+var activeTransporters = new Array();
+var eventLayer;
 
 function frame() {
 	now = timestamp();
@@ -18,6 +20,9 @@ function frame() {
 function render(){
 	for (var i = 0; i < activeSprites.length; i++) {
 		activeSprites[i].move(dt);
+	};
+	for (var i = 0; i < activeTransporters.length; i++) {
+		activeTransporters[i].move();
 	};
 	activeScene.move();
 }
