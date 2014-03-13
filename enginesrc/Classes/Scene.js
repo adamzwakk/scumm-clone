@@ -28,34 +28,28 @@ function Scene(scene){
 	this.getLayers = function(){
 		var json = scene.imageLayers;
 		var count = 0;
+		var l;
 		for (var key in json) {
 			var obj = json[key];
 			if(obj.type == 'bg'){
-				var l = new Layer('background'+count,obj.image,count,this.width,this.height);
+				l = new Layer('background'+count,obj.image,count,this.width,this.height);
 				this.bgLayers.push(l);
-				this.layers.push(l);
 			} else if(obj.type == 'sprite'){
-				var l = new Layer('spritelayer'+count,0,9999,this.width,this.height);
+				l = new Layer('spritelayer'+count,0,9999,this.width,this.height);
 				this.spriteLayers.push(l);
-				this.layers.push(l);
-				$('#container').append(l.canvas);
 			} else if(obj.type == 'transporter'){
-				var l = new Layer('transportlayer'+count,0,9999,this.width,this.height);
+				l = new Layer('transportlayer'+count,0,9999,this.width,this.height);
 				this.transportLayers.push(l);
-				this.layers.push(l);
-				$('#container').append(l.canvas);
 			} else if(obj.type == 'player'){
-				var l = new Layer('player'+count,0,9999,this.width,this.height);
+				l = new Layer('player'+count,0,9999,this.width,this.height);
 				this.playerLayer = l;
-				this.layers.push(l);
-				$('#container').append(l.canvas);
 			}
+			this.layers.push(l);
 			count++;
 		}
 
 		activeScene = this;
 		this.getTransporters();
-		activeScene.setupControls();
 	}
 
 	this.getTransporters = function(){
@@ -69,8 +63,7 @@ function Scene(scene){
 					y0:obj.y,
 					x1:obj.x+obj.w,
 					y1:obj.y+obj.h,
-					name:obj.title,
-					action:'walk'
+					name:obj.title
 				}
 			);
 			var t = new Transporter(obj,this,l);
@@ -127,9 +120,10 @@ function Scene(scene){
 	}
 
 	this.show = function(){
-		for (var i = 0; i < this.bgLayers.length; i++) {
-			$('#container').append(this.bgLayers[i].canvas);
+		for (var i = 0; i < this.layers.length; i++) {
+			$('#container').append(this.layers[i].canvas);
 		};
+		this.setupControls();
 	}
 
 	this.hide = function(){
