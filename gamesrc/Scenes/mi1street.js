@@ -8,6 +8,9 @@ var mi1Street = {
 			type:'transporter'
 		},
 		{
+			type:'player'
+		},
+		{
 			type:'sprite'
 		}
 	],

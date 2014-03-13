@@ -1,8 +1,10 @@
 function Scene(scene){
+	this.layers = new Array();
 	this.bgLayers = new Array();
 	this.spriteLayers = new Array();
+	this.transportLayers = new Array();
 	this.transporters = new Array();
-	this.layers = new Array();
+	this.playerLayer;
 	this.moving = false;
 	this.scrollable;
 	this.padding;
@@ -31,13 +33,23 @@ function Scene(scene){
 				var l = new Layer('background'+count,obj.image,count,this.width,this.height);
 				this.bgLayers.push(l);
 				this.layers.push(l);
-				count++;
 			} else if(obj.type == 'sprite'){
 				var l = new Layer('spritelayer'+count,0,9999,this.width,this.height);
 				this.spriteLayers.push(l);
 				this.layers.push(l);
 				$('#container').append(l.canvas);
+			} else if(obj.type == 'transporter'){
+				var l = new Layer('transportlayer'+count,0,9999,this.width,this.height);
+				this.transportLayers.push(l);
+				this.layers.push(l);
+				$('#container').append(l.canvas);
+			} else if(obj.type == 'player'){
+				var l = new Layer('player'+count,0,9999,this.width,this.height);
+				this.playerLayer = l;
+				this.layers.push(l);
+				$('#container').append(l.canvas);
 			}
+			count++;
 		}
 
 		var l = new Layer('eventLayer',0,99999,this.width,this.height);
@@ -53,7 +65,8 @@ function Scene(scene){
 		var json = scene.transporters;
 		for (var key in json) {
 			var obj = json[key];
-			var t = new Transporter(obj);
+			var l = this.transportLayers[key];
+			var t = new Transporter(obj,this,l);
 			activeTransporters.push(t);
 			this.transporters.push(t);
 		}
@@ -127,7 +140,9 @@ function Scene(scene){
 			for (var i = 0; i < that.transporters.length; i++) {
 				var s = that.transporters[i];
 				if(s.x <= e.offsetX && e.offsetX <= (s.x+s.w) && s.y <= e.offsetY && e.offsetY <= (s.y+s.h)){
-					s.clicked = true;
+					s.intent = true;
+				} else {
+					s.intent = false;
 				}
 			}
 			activePlayer.moving = true;

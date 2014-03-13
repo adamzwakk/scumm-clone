@@ -1,4 +1,4 @@
-function SpriteBox(scene,w,h){
+function SpriteBox(scene,layer,w,h,rgb){
 	Sprite.call(this);
 	this.prototype = new Sprite(scene);
 	this.w = w;
@@ -7,8 +7,8 @@ function SpriteBox(scene,w,h){
 	this.realH = h;
 	this.realW = w;
 	this.init = function(){
-		this.ctx = scene.spriteLayers[0].ctx;
-		this.ctx.fillStyle = "rgb(244,244,244)";
+		this.ctx = layer.ctx;
+		this.ctx.fillStyle = rgb;
 	}
 
 	this.draw = function(x,y){

@@ -35,14 +35,9 @@ function MoveableObject(){
 			}
 
 			if(calDest.x !== 0 || calDest.y !== 0){
-				if(this.type == 'a'){
-					this.sprite.clear();
-					this.sprite.draw(newX, newY);
-					this.zHandler();
-				} else if(this.type == 't'){
-					this.clear();
-					this.spawn(newX, newY);
-				}
+				this.sprite.clear();
+				this.sprite.draw(newX, newY);
+				this.zHandler();
 				this.x = newX;
 				this.y = newY;
 			} else {
@@ -58,6 +53,14 @@ function MoveableObject(){
 					}
 				}
 			}
+		}
+	}
+
+	this.zHandler = function(){
+		if(isset(this.scene)){
+			var smallPoint = this.scene.horizonLine;
+			var bt = this.sprite.getBottomPos(this.x,this.y);
+			this.sprite.z = Math.abs(1-(bt.y/smallPoint));
 		}
 	}
 

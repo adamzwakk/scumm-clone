@@ -9,7 +9,7 @@ function Player(scene){
 	activePlayer = this;
 
 	this.init = function(){
-		this.sprite = new SpriteBox(scene,150,150);
+		this.sprite = new SpriteBox(scene,scene.playerLayer,150,150,"rgb(244,244,244)");
 		this.sprite.draw(this.x,this.y);
 		activeSprites.push(this);
 	}
