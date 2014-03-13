@@ -19,6 +19,7 @@ function MoveableObject(){
 			}
 			var dest = {x:this.destXs,y:this.destYs};
 			var calDest = moveDifference(src,dest,this.speed);
+
 			if(!isset(this.curDir.x)){
 				this.curDir.x = calDest.x;
 				this.curDir.y = calDest.y;
