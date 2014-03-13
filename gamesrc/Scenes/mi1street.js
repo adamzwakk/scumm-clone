@@ -15,7 +15,7 @@ var mi1Street = {
 		x:600,
 		y:300
 	},
-	large:true,
+	large:1,
 	largePadding:40,
 	persPoint:
 	{

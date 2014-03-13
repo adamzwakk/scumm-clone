@@ -15,6 +15,7 @@ function Scene(scene){
 		this.scrollable = (isset(scene.large) || !scene.large) ? true : false;
 		this.persPoint = scene.persPoint;
 		this.spawnStart = scene.spawnStart;
+		this.large = scene.large;
 		if(isset(scene.persPoint)){
 			this.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
 		}
@@ -66,15 +67,17 @@ function Scene(scene){
 		if(this.moving){
 			for (var i = 0; i < this.bgLayers.length; i++) {
 				var l = this.bgLayers[i];
-				if(this.scroll == 'r'){
-					dest.x = -(l.image.newDM.width - mainWidth);
-					scrollRightX = dest.x;
-					ifCheck = l.image.x >= dest.x;
-				}
-				if(this.scroll == 'l'){
-					dest.x = 0;
-					scrollLeftX = dest.x;
-					ifCheck = l.image.x <= dest.x;
+				if(this.large === 1){
+					if(this.scroll == 'r'){
+						dest.x = -(l.image.newDM.width - mainWidth);
+						scrollRightX = dest.x;
+						ifCheck = l.image.x >= dest.x;
+					}
+					if(this.scroll == 'l'){
+						dest.x = 0;
+						scrollLeftX = dest.x;
+						ifCheck = l.image.x <= dest.x;
+					}
 				}
 				if(ifCheck){
 					l.scroll(dest);

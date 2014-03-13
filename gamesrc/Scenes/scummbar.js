@@ -12,9 +12,9 @@ var scummbar = {
 		}
 	],
 	spawnStart:{
-		x:600,
+		x:170,
 		y:300
 	},
-	large:true,
+	large:2,
 	largePadding:10
 };
