@@ -130,12 +130,17 @@ function Scene(scene){
 	this.setupControls = function(){
 		var that = this;
 		$('canvas').on('click', function(e){
-			console.log(e.offsetX+' '+e.offsetY);
+			if(debugMode){
+				console.log('Click oordinates: '+e.offsetX+','+e.offsetY);
+			}
 			activePlayer.destX = e.offsetX; 
 			activePlayer.destY = e.offsetY;
 			for (var i = 0; i < that.transporters.length; i++) {
 				var s = that.transporters[i];
 				if(s.x <= e.offsetX && e.offsetX <= (s.x+s.w) && s.y <= e.offsetY && e.offsetY <= (s.y+s.h)){
+					if(debugMode){
+						console.log('Clicked Transporter for '+s.title);
+					}
 					s.intent = true;
 				} else {
 					s.intent = false;
