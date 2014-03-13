@@ -11,12 +11,11 @@ function Sprite(scene){
 		
 	}
 
-	this.handleZ = function(){		
-		if(this.z <= 0.8 || this.z >= 0.25){
+	this.handleZ = function(){
+		console.log(this.z);
+		if(this.z <= 0.95 && this.z >= 0.20){
 			this.scaleDiff = this.z;
-		} else {
-			this.scaleDiff = 1;	
-		}
+		} 
 	}
 
 	this.getBottomPos = function(x,y){

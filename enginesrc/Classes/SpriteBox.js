@@ -12,12 +12,13 @@ function SpriteBox(scene,w,h){
 	}
 
 	this.draw = function(x,y){
+		this.getBottomPos();
+		this.handleZ();
 		this.x = x;
 		this.y = y;
 		this.h = parseInt(this.realH*this.scaleDiff);
 		this.w = parseInt(this.realW*this.scaleDiff);		
 		this.ctx.fillRect(this.x,this.y,this.w,this.h);
-		this.getBottomPos();
 	}
 
 	this.clear = function(){

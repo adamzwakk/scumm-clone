@@ -10,7 +10,6 @@ function Actor(scene){
 		var smallPoint = this.scene.horizonLine;
 		var bt = this.sprite.getBottomPos(this.x,this.y);
 		this.sprite.z = Math.abs(1-(bt.y/smallPoint));
-		this.sprite.handleZ();
 	}
 
 	this.checkSceneEdge = function(x,y){
