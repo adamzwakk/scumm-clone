@@ -160,15 +160,19 @@ function Scene(scene){
 			activePlayer.moving = true;
 		});
 
-		$('canvas').on('mousemove',function(e){
+		$('canvas').not('#inv').on('mouseout',function(e){
+			Inventory.updateCanvas();
+		});
+
+		$('canvas').not('#inv').on('mousemove',function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
 			for (var i = 0; i < that.hotspots.length; i++) {
 				var h = that.hotspots[i];
 				if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
-					Inventory.updateInfoText(h.name,h.action);
+					Inventory.updateInfoText(h.name);
 				} else {
-					Inventory.updateInfoText('','walk');
+					Inventory.updateInfoText('');
 				}
 			};
 		});
