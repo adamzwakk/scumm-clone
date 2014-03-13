@@ -19,5 +19,15 @@ var scummbar = {
 		y:300
 	},
 	large:2,
-	largePadding:10
+	largePadding:10,
+	transporters:[
+		{
+			x:117,
+			y:280,
+			w:140,
+			h:180,
+			title:"Outside",
+			link:0
+		}
+	]
 };

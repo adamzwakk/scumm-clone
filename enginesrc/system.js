@@ -8,6 +8,7 @@ var activePlayer;
 var activeSprites = new Array();
 var activeTransporters = new Array();
 var eventLayer;
+var mousePos = {};
 
 function frame() {
 	now = timestamp();

@@ -18,7 +18,12 @@ function Transporter(param,scene,layer){
 		this.h = param.h;
 		this.title = param.title;
 		this.moving = false;
-		this.sprite = new SpriteBox(scene,layer,this.w,this.h,"rgba(55,55,244,0)");
+		if(debugMode){
+			var rgb = "rgba(55,55,244,0.5)";
+		} else {
+			var rgb = "rgba(55,55,244,0)";
+		}
+		this.sprite = new SpriteBox(scene,layer,this.w,this.h,rgb);
 		this.sprite.draw(this.x,this.y);
 	}
 
