@@ -24,7 +24,9 @@ function render(){
 	for (var i = 0; i < activeTransporters.length; i++) {
 		activeTransporters[i].move();
 	};
-	activeScene.move();
+	if(isset(activeScene)){
+		activeScene.move();
+	}
 }
 
 requestAnimationFrame(frame);

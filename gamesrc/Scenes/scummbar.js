@@ -8,6 +8,9 @@ var scummbar = {
 			type:'transporter'
 		},
 		{
+			type:'player'
+		},
+		{
 			type:'sprite'
 		}
 	],

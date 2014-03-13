@@ -52,10 +52,6 @@ function Scene(scene){
 			count++;
 		}
 
-		var l = new Layer('eventLayer',0,99999,this.width,this.height);
-		$('#container').append(l.canvas);
-		eventLayer = l;
-		this.layers.push(l);
 		activeScene = this;
 		this.getTransporters();
 		activeScene.setupControls();

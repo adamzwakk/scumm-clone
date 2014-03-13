@@ -47,7 +47,7 @@ function MoveableObject(){
 				if(this.type == 'a'){
 					for (var i = 0; i < activeTransporters.length; i++) {
 						var t = activeTransporters[i];
-						if(t.clicked){
+						if(t.intent){
 							t.transportMe();
 						}
 					}
