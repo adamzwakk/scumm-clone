@@ -1,10 +1,13 @@
 function Transporter(param){
+	MoveableObject.call(this);
+	this.prototype = new MoveableObject();
 	this.destX;
 	this.destY;
 	this.curDir = {};
 	this.speed = 4;
 	this.moving = false;
 	this.clicked = false;
+	this.type = 't';
 
 	this.init = function(param){
 		this.x = param.x;
@@ -30,38 +33,6 @@ function Transporter(param){
 	this.transportMe = function(){
 		World.changeScene(param.link);
 		this.clicked = false;
-	}
-
-	this.move = function(){
-		if(this.moving){
-			var src = {x:this.x,y:this.y};
-			if(isset(this.destX) || isset(this.destY)){
-				var dest = {x:this.destX,y:this.destY};
-			} else {
-				var dest = {x:this.origX,y:this.origY};
-			}
-			var calDest = moveDifference(src,dest,this.speed);
-			if(!isset(this.curDir.x)){
-				this.curDir.x = calDest.x;
-				this.curDir.y = calDest.y;
-			}
-			calDest.x = (this.curDir.x !== calDest.x) ? 0 : calDest.x;
-			calDest.y = (this.curDir.y !== calDest.y) ? 0 : calDest.y; 
-
-			var newX = this.x+calDest.x;
-			var newY = this.y+calDest.y;
-
-			if(calDest.x !== 0 || calDest.y !== 0){
-				this.clear();
-				this.spawn(newX, newY);
-				this.x = newX;
-				this.y = newY;
-			} else {
-				delete this.curDir.x;
-				delete this.curDir.y;
-				this.moving = false;
-			}
-		}
 	}
 
 	this.init(param);
