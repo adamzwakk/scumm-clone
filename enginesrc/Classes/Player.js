@@ -1,8 +1,8 @@
 function Player(scene){
 	Actor.call(this);
 	this.prototype = new Actor();
-	this.x = 600;
-	this.y = 300;
+	this.x = scene.spawnStart.x;
+	this.y = scene.spawnStart.y;
 	this.inventory = new Inventory();
 	this.scene = scene;
 	this.speed = 4;

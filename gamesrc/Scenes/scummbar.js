@@ -1,0 +1,20 @@
+var scummbar = {
+	imageLayers:[
+		{
+			type:'bg',
+			image:'assets/scenes/scummbar/scummbar.png'
+		},
+		{
+			type:'transporter'
+		},
+		{
+			type:'sprite'
+		}
+	],
+	spawnStart:{
+		x:600,
+		y:300
+	},
+	large:true,
+	largePadding:10
+};

@@ -4,6 +4,7 @@ function Transporter(param){
 	this.curDir = {};
 	this.speed = 4;
 	this.moving = false;
+	this.clicked = false;
 
 	this.init = function(param){
 		this.x = param.x;
@@ -24,6 +25,11 @@ function Transporter(param){
 
 	this.clear = function(){
 		this.ctx.clearRect(this.x,this.y,this.w,this.h);
+	}
+
+	this.transportMe = function(){
+		World.changeScene(param.link);
+		this.clicked = false;
 	}
 
 	this.move = function(){

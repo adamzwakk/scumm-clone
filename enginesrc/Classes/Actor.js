@@ -36,6 +36,12 @@ function Actor(scene){
 				delete this.curDir.x;
 				delete this.curDir.y;
 				this.moving = false;
+				for (var i = 0; i < activeTransporters.length; i++) {
+					var t = activeTransporters[i];
+					if(t.clicked){
+						t.transportMe();
+					}
+				};
 			}
 		}
 	}

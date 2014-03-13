@@ -18,8 +18,10 @@ module.exports = function(grunt) {
                     'enginesrc/utils.js',
                     'enginesrc/Classes/*',
                     'enginesrc/controls.js',
-                    'gamesrc/Scenes/*',
-        			'gamesrc/index.js',
+                    'gamesrc/Scenes/scummbar.js',
+                    'gamesrc/Scenes/mi1Street.js',
+        			'gamesrc/world.js',
+                    'gamesrc/index.js',
         		],
         		dest: 'public/js/main.js'
         	}
@@ -32,14 +34,14 @@ module.exports = function(grunt) {
         	},
         	game: {
         		files: {
-        			'public/js/main.js':'public/js/main.js'
+        			'public/js/main.js':'public/js/main.js',
         		}
         	}
         },
         watch: {
         	game: {
         		files: ['gamesrc/*.js', 'gamesrc/Scenes/*.js', 'enginesrc/*.js','enginesrc/Classes/*.js'],
-        		tasks:['concat:game','copy:game']
+        		tasks:['concat:game', 'copy:game']
         	}
         },
         copy:{

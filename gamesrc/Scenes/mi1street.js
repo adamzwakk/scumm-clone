@@ -11,6 +11,10 @@ var mi1Street = {
 			type:'sprite'
 		}
 	],
+	spawnStart:{
+		x:600,
+		y:300
+	},
 	large:true,
 	largePadding:40,
 	persPoint:
@@ -24,9 +28,8 @@ var mi1Street = {
 			y:250,
 			w:45,
 			h:70,
-			title:"Wally's House"
+			title:"SCUMM Bar",
+			link:1
 		}
-	]
-
-	
+	]	
 };
