@@ -18,6 +18,15 @@ function Transporter(param,scene,layer){
 		this.h = param.h;
 		this.title = param.title;
 		this.moving = false;
+		this.hspot = {
+			x0:this.x,
+			y0:this.y,
+			x1:this.x+this.w,
+			y1:this.y+this.h,
+			w:this.w,
+			h:this.h,
+			name:this.title
+		};
 		if(debugMode){
 			var rgb = "rgba(55,55,244,0.5)";
 		} else {

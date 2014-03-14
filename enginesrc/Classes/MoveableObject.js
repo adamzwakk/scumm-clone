@@ -2,6 +2,7 @@ function MoveableObject(){
 	this.destX;
 	this.destY;
 	this.curDir = {};
+	this.hspot;
 
 	this.move = function(dt){
 		if(this.moving){
@@ -37,6 +38,9 @@ function MoveableObject(){
 			if(calDest.x !== 0 || calDest.y !== 0){
 				this.sprite.clear();
 				this.sprite.draw(newX, newY);
+				if(isset(this.hspot)){
+					this.moveHSpot(newX, newY);
+				}
 				this.zHandler();
 				this.x = newX;
 				this.y = newY;
@@ -54,6 +58,13 @@ function MoveableObject(){
 				}
 			}
 		}
+	}
+
+	this.moveHSpot = function(nx,ny){
+		this.hspot.x0 = nx;
+		this.hspot.y0 = ny;
+		this.hspot.x1 = nx+this.hspot.w;
+		this.hspot.y1 = ny+this.hspot.h;
 	}
 
 	this.zHandler = function(){

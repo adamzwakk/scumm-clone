@@ -4,7 +4,6 @@ function Scene(scene){
 	this.spriteLayers = new Array();
 	this.transportLayers = new Array();
 	this.transporters = new Array();
-	this.hotspots = new Array();
 	this.playerLayer;
 	this.moving = false;
 	this.scrollable;
@@ -57,15 +56,6 @@ function Scene(scene){
 		for (var key in json) {
 			var obj = json[key];
 			var l = this.transportLayers[key];
-			this.hotspots.push(
-				{
-					x0:obj.x,
-					y0:obj.y,
-					x1:obj.x+obj.w,
-					y1:obj.y+obj.h,
-					name:obj.title
-				}
-			);
 			var t = new Transporter(obj,this,l);
 			activeTransporters.push(t);
 			this.transporters.push(t);
@@ -121,7 +111,7 @@ function Scene(scene){
 					s.destX = scrollRightX;
 					s.moving = true;
 				}
-			};
+			}
 		}
 	}
 
@@ -167,8 +157,8 @@ function Scene(scene){
 		$('canvas').not('#inv').on('mousemove',function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
-			for (var i = 0; i < that.hotspots.length; i++) {
-				var h = that.hotspots[i];
+			for (var i = 0; i < that.transporters.length; i++) {
+				var h = that.transporters[i].hspot;
 				if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
 					Inventory.updateInfoText(h.name);
 				} else {
