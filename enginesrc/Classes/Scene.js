@@ -77,20 +77,20 @@ function Scene(scene){
 		var ifCheck;
 		var scrollRightX;
 		var scrollLeftX;
+		var bgLayerW;
 		if(this.moving){
 			for (var i = 0; i < this.bgLayers.length; i++) {
 				var l = this.bgLayers[i];
-				if(this.large === 1){
-					if(this.scroll == 'r'){
-						dest.x = -(l.image.newDM.width - mainWidth);
-						scrollRightX = dest.x;
-						ifCheck = l.image.x >= dest.x;
-					}
-					if(this.scroll == 'l'){
-						dest.x = 0;
-						scrollLeftX = dest.x;
-						ifCheck = l.image.x <= dest.x;
-					}
+				bgLayerW = parseInt(l.image.newDM.width);
+				if(this.scroll == 'r'){
+					dest.x = -(bgLayerW - mainWidth);
+					scrollRightX = dest.x;
+					ifCheck = l.image.x >= dest.x;
+				}
+				if(this.scroll == 'l'){
+					dest.x = 0;
+					scrollLeftX = dest.x;
+					ifCheck = l.image.x <= dest.x;
 				}
 				if(ifCheck){
 					l.scroll(dest);
@@ -103,7 +103,13 @@ function Scene(scene){
 				if(!this.moving){
 					s.moving = false;
 				} else {
-					s.destX = scrollRightX;
+					if(this.scroll == 'r' && this.large === 2 && s.constructor.name == 'Player'){
+						s.destX = scrollRightX+(bgLayerW-mainWidth+(this.padding+100));
+					} else if(this.scroll == 'l' && this.large === 2 && s.constructor.name == 'Player'){
+						s.destX = scrollLeftX+(mainWidth-(this.padding+100));
+					} else {
+						s.destX = scrollRightX;
+					}
 					s.moving = true;
 				}
 			}
