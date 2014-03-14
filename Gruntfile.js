@@ -5,6 +5,9 @@ module.exports = function(grunt) {
         	required: {
         		src: [
         			'bower_components/jquery/dist/jquery.js',
+                    'bower_components/PxLoader/PxLoader.js',
+                    'bower_components/PxLoader/PxLoaderImage.js',
+                    'bower_components/PxLoader/PxLoaderSound.js',
         		],
         		dest: 'public/js/require.js'
         	},

@@ -4,24 +4,45 @@ function Scene(scene){
 	this.spriteLayers = new Array();
 	this.transportLayers = new Array();
 	this.transporters = new Array();
+	this.images = new Array();
 	this.playerLayer;
 	this.moving = false;
 	this.scrollable;
 	this.padding;
 	this.scroll;
-	this.width = 0;
-	this.height = 0;
+	this.width = mainWidth;
+	this.height = sceneHeight;
+	this.loader = new PxLoader();
+	
 	this.init = function(){
-		this.getLayers();
-		this.padding = scene.largePadding;
-		this.scrollable = (isset(scene.large) || !scene.large) ? true : false;
-		this.persPoint = scene.persPoint;
-		this.spawnStart = scene.spawnStart;
-		this.large = scene.large;
-		if(isset(scene.persPoint)){
-			this.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
+		var that = this;
+		this.preloadLayers();
+		this.loader.addCompletionListener(function(e) {
+			that.images.push(e.resource.img); 
+			that.getLayers();
+			that.padding = scene.largePadding;
+			that.scrollable = (isset(scene.large) || !scene.large) ? true : false;
+			that.persPoint = scene.persPoint;
+			that.spawnStart = scene.spawnStart;
+			that.large = scene.large;
+			if(isset(scene.persPoint)){
+				that.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
+			}
+			var guybrush = new Player(that);
+		});
+	}
+
+	this.preloadLayers = function(){
+		var json = scene.imageLayers;
+		var ti = new Array();
+		for (var key in json) {
+			var obj = json[key];
+			if(obj.type == 'bg'){
+				this.loader.addImage(obj.image);
+				console.log(obj.image);
+			}
 		}
-		var guybrush = new Player(this);
+		this.loader.start();
 	}
 
 	this.getLayers = function(){
@@ -31,7 +52,8 @@ function Scene(scene){
 		for (var key in json) {
 			var obj = json[key];
 			if(obj.type == 'bg'){
-				l = new Layer('background'+count,obj.image,count,this.width,this.height);
+				l = new Layer('background'+count,this.images[count],count,this.width,this.height);
+				this.width = l.width;
 				this.bgLayers.push(l);
 			} else if(obj.type == 'sprite'){
 				l = new Layer('spritelayer'+count,0,9999,this.width,this.height);
@@ -46,7 +68,6 @@ function Scene(scene){
 			this.layers.push(l);
 			count++;
 		}
-
 		activeScene = this;
 		this.getTransporters();
 	}
@@ -116,10 +137,13 @@ function Scene(scene){
 	}
 
 	this.show = function(){
-		for (var i = 0; i < this.layers.length; i++) {
-			$('#container').append(this.layers[i].canvas);
-		};
-		this.setupControls();
+		var that = this;
+		this.loader.addCompletionListener(function() { 
+			for (var i = 0; i < that.layers.length; i++) {
+				$('#container').append(that.layers[i].canvas);
+			};
+			that.setupControls();
+		});
 	}
 
 	this.hide = function(){
