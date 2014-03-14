@@ -130,7 +130,7 @@ function Scene(scene){
 
 	this.setupControls = function(){
 		var that = this;
-		$('canvas').on('click', function(e){
+		$('canvas').not('#inv').on('click', function(e){
 			if(debugMode){
 				console.log('Click coordinates: '+e.offsetX+','+e.offsetY);
 			}
