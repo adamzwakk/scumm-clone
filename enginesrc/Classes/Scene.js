@@ -134,6 +134,11 @@ function Scene(scene){
 		}
 	}
 
+	this.scrollTo = function(direction){
+		this.scroll = direction;
+		this.moving = true;
+	}
+
 	this.show = function(){
 		var that = this;
 		this.loader.addCompletionListener(function() { 

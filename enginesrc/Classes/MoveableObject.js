@@ -57,13 +57,6 @@ function MoveableObject(){
 		}
 	}
 
-	this.moveHSpot = function(nx,ny){
-		this.hspot.x0 = nx;
-		this.hspot.y0 = ny;
-		this.hspot.x1 = nx+this.hspot.w;
-		this.hspot.y1 = ny+this.hspot.h;
-	}
-
 	this.zHandler = function(){
 		if(isset(this.scene)){
 			var smallPoint = this.scene.horizonLine;
