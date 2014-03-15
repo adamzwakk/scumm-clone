@@ -22,6 +22,7 @@ module.exports = function(grunt) {
                     'enginesrc/Classes/*',
                     'enginesrc/controls.js',
                     'gamesrc/objects/actors/*',
+                    'gamesrc/objects/dialogs/*',
                     'gamesrc/objects/scenes/*',
         			'gamesrc/world.js',
                     'gamesrc/index.js',
@@ -43,7 +44,7 @@ module.exports = function(grunt) {
         },
         watch: {
         	game: {
-        		files: ['gamesrc/*.js', 'gamesrc/Scenes/*.js', 'enginesrc/*.js','enginesrc/Classes/*.js'],
+        		files: ['gamesrc/**/*.js', 'enginesrc/*.js','enginesrc/Classes/*.js'],
         		tasks:['concat:game', 'copy:game']
         	}
         },
