@@ -112,13 +112,13 @@ function Scene(scene){
 			}
 
 			if(this.large == 2){
-				console.log(scrollRightX);
 				for (var i = 0; i < activeSprites.length; i++) {
 					var s = activeSprites[i];
+					console.log(s.cX);
 					if(!this.moving){
+						console.log('STOP MOVING');
 						s.moving = false;
-					} else {
-
+					} else if(s.cX !== 0 || s.cY !== 0) {
 						if(s.constructor.name == 'Player'){
 							var pMovePadding = this.padding+150;
 							if(this.scroll == 'r'){

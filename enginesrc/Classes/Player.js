@@ -6,6 +6,7 @@ function Player(scene){
 	this.scene = scene;
 	this.speed = 4;
 	activePlayer = this;
+	this.type = 'p';
 
 	this.init = function(){
 		this.sprite = new SpriteBox(scene,scene.playerLayer,150,150,"rgb(244,244,244)");

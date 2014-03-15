@@ -7,17 +7,11 @@ function MoveableObject(){
 	this.move = function(dt){
 		if(this.moving){
 			var src = {x:this.x,y:this.y};
-			if(this.type == 'a'){
+			if(this.type == 'p'){
 				this.destXs = this.destX - (this.sprite.w/2);
 				this.destYs = this.destY - this.sprite.h;
 			}
-			if(this.type == 't' && (isset(this.destX) || isset(this.destY))){
-				this.destXs = this.destX;
-				this.destYs = this.destY;
-			} else if(this.type == 't'){
-				this.destXs = this.origX;
-				this.destYs = this.origY;
-			}
+		
 			var dest = {x:this.destXs,y:this.destYs};
 			var calDest = moveDifference(src,dest,this.speed);
 
@@ -31,9 +25,12 @@ function MoveableObject(){
 			var newX = this.x+calDest.x;
 			var newY = this.y+calDest.y;
 
-			if(this.type == 'a' && this.scene.scrollable && !this.scene.moving){
+			if(this.type == 'p' && this.scene.scrollable && !this.scene.moving){
 				this.checkSceneEdge(newX,newY);
 			}
+
+			this.cX = calDest.x;
+			this.cY = calDest.y;
 
 			if(calDest.x !== 0 || calDest.y !== 0){
 				this.sprite.clear();
@@ -48,7 +45,7 @@ function MoveableObject(){
 				delete this.curDir.x;
 				delete this.curDir.y;
 				this.moving = false;
-				if(this.type == 'a'){
+				if(this.type == 'p'){
 					for (var i = 0; i < activeTransporters.length; i++) {
 						var t = activeTransporters[i];
 						if(t.intent){
