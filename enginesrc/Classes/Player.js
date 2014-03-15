@@ -14,13 +14,19 @@ function Player(scene){
 	}
 
 	this.checkSceneEdge = function(x,y){
-		if((mainWidth - this.scene.padding) <= (this.sprite.x + this.sprite.w)){
+		if(this.scene.x == 0 && (mainWidth - this.scene.padding) <= (this.sprite.x + this.sprite.w)){
 			this.scene.moving = true;
 			this.scene.scroll = 'r';
+			if(debugMode){
+				console.log('Scrolling scene right');
+			}
 			return true;
-		} else if(this.sprite.x <= (this.scene.padding)) {
+		} else if(this.scene.x < 0 && this.sprite.x <= ((scene.width-mainWidth)+this.scene.padding)) {
 			this.scene.moving = true;
 			this.scene.scroll = 'l';
+			if(debugMode){
+				console.log('Scrolling scene left');
+			}
 			return true;
 		} else {
 			return false;

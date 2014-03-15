@@ -13,6 +13,7 @@ function Scene(scene){
 	this.width = mainWidth;
 	this.height = sceneHeight;
 	this.loader = new PxLoader();
+	this.x = 0;
 	
 	this.init = function(){
 		var that = this;
@@ -39,7 +40,6 @@ function Scene(scene){
 			var obj = json[key];
 			if(obj.type == 'bg'){
 				this.loader.addImage(obj.image);
-				console.log(obj.image);
 			}
 		}
 		this.loader.start();
@@ -62,7 +62,7 @@ function Scene(scene){
 				l = new Layer('transportlayer'+count,0,9999,this.width,this.height);
 				this.transportLayers.push(l);
 			} else if(obj.type == 'player'){
-				l = new Layer('player'+count,0,9999,this.width,this.height);
+				l = new Layer('player',0,9999,this.width,this.height);
 				this.playerLayer = l;
 			}
 			this.layers.push(l);
@@ -88,49 +88,40 @@ function Scene(scene){
 		var ifCheck;
 		var scrollRightX;
 		var scrollLeftX;
-		var bgLayerW;
 		if(this.moving){
-			for (var i = 0; i < this.bgLayers.length; i++) {
-				var l = this.bgLayers[i];
-				bgLayerW = parseInt(l.image.newDM.width);
+			for (var i = 0; i < this.layers.length; i++) {
+				var l = this.layers[i];
 				if(this.scroll == 'r'){
-					dest.x = -(bgLayerW - mainWidth);
+					dest.x = -(this.width - mainWidth);
 					scrollRightX = dest.x;
-					ifCheck = l.image.x >= dest.x;
+					ifCheck = l.x >= dest.x;
 				}
 				if(this.scroll == 'l'){
 					dest.x = 0;
 					scrollLeftX = dest.x;
-					ifCheck = l.image.x <= dest.x;
+					ifCheck = l.x <= dest.x;
+				}
+				this.x = dest.x;
+
+				if(this.large == 2){
+					for (var i = 0; i < activeSprites.length; i++) {
+						var s = activeSprites[i];
+						if(!this.moving){
+							s.moving = false;
+						} else {
+							if(this.scroll == 'r' && s.constructor.name == 'Player'){
+								s.destX = scrollRightX+(this.width-mainWidth+(this.padding+100));
+							} else if(this.scroll == 'l' && s.constructor.name == 'Player'){
+								s.destX = scrollLeftX+(mainWidth-(this.padding+100));
+							}
+							s.moving = true;
+						}
+					}
 				}
 				if(ifCheck){
 					l.scroll(dest);
 				} else {
 					this.moving = false;
-				}
-			}
-			for (var i = 0; i < activeSprites.length; i++) {
-				var s = activeSprites[i];
-				if(!this.moving){
-					s.moving = false;
-				} else {
-					if(this.scroll == 'r' && this.large === 2 && s.constructor.name == 'Player'){
-						s.destX = scrollRightX+(bgLayerW-mainWidth+(this.padding+100));
-					} else if(this.scroll == 'l' && this.large === 2 && s.constructor.name == 'Player'){
-						s.destX = scrollLeftX+(mainWidth-(this.padding+100));
-					} else {
-						s.destX = scrollRightX;
-					}
-					s.moving = true;
-				}
-			}
-			for (var i = 0; i < this.transporters.length; i++) {
-				var s = this.transporters[i];
-				if(!this.moving){
-					s.moving = false;
-				} else {
-					s.destX = scrollRightX;
-					s.moving = true;
 				}
 			}
 		}
