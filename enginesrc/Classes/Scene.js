@@ -101,27 +101,34 @@ function Scene(scene){
 					scrollLeftX = dest.x;
 					ifCheck = l.x <= dest.x;
 				}
+				
 				this.x = dest.x;
 
-				if(this.large == 2){
-					for (var i = 0; i < activeSprites.length; i++) {
-						var s = activeSprites[i];
-						if(!this.moving){
-							s.moving = false;
-						} else {
-							if(this.scroll == 'r' && s.constructor.name == 'Player'){
-								s.destX = scrollRightX+(this.width-mainWidth+(this.padding+100));
-							} else if(this.scroll == 'l' && s.constructor.name == 'Player'){
-								s.destX = scrollLeftX+(mainWidth-(this.padding+100));
-							}
-							s.moving = true;
-						}
-					}
-				}
 				if(ifCheck){
 					l.scroll(dest);
 				} else {
 					this.moving = false;
+				}
+			}
+
+			if(this.large == 2){
+				console.log(scrollRightX);
+				for (var i = 0; i < activeSprites.length; i++) {
+					var s = activeSprites[i];
+					if(!this.moving){
+						s.moving = false;
+					} else {
+
+						if(s.constructor.name == 'Player'){
+							var pMovePadding = this.padding+150;
+							if(this.scroll == 'r'){
+								s.destX = -scrollRightX+pMovePadding;
+							} else if(this.scroll == 'l'){
+								s.destX = -scrollLeftX+mainWidth-pMovePadding;
+							}
+						}
+						s.moving = true;
+					}
 				}
 			}
 		}

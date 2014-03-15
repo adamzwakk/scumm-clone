@@ -1,6 +1,4 @@
 function Transporter(param,scene,layer){
-	MoveableObject.call(this);
-	this.prototype = new MoveableObject();
 	this.destX;
 	this.destY;
 	this.curDir = {};

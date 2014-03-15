@@ -22,9 +22,6 @@ function render(){
 	for (var i = 0; i < activeSprites.length; i++) {
 		activeSprites[i].move(dt);
 	};
-	for (var i = 0; i < activeTransporters.length; i++) {
-		activeTransporters[i].move();
-	};
 	if(isset(activeScene)){
 		activeScene.move();
 	}

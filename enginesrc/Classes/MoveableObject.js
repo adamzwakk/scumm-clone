@@ -31,7 +31,7 @@ function MoveableObject(){
 			var newX = this.x+calDest.x;
 			var newY = this.y+calDest.y;
 
-			if(this.type == 'a' && this.scene.scrollable){
+			if(this.type == 'a' && this.scene.scrollable && !this.scene.moving){
 				this.checkSceneEdge(newX,newY);
 			}
 
