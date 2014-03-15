@@ -1,4 +1,4 @@
-#WIP Scumm/Adventure game engine in JS
+##WIP Scumm/Adventure game engine in JS
 
 I'm trying to somewhat recreate an engine like ScummVM that allows developers to easily create point and click adventure games.
 
