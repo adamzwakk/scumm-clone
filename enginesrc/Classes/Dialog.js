@@ -2,7 +2,6 @@ function Dialog(s){
 	this.tree = s;
 	this.color = 'white';
 	this.loader = new PxLoader();
-	this.curPos = 0;
 
 	this.init = function(){
 		this.canvas = $('<canvas></canvas>').attr({'id':'dialog','width':mainWidth,'height':sceneHeight}).css({'z-index':9000000});
@@ -13,13 +12,39 @@ function Dialog(s){
 		$('#container').append(this.canvas);
 	}
 
-	this.write = function(){
-		var o = this.tree[this.curPos];
+	this.play = function(){
+		var n = this.tree.length;
+		var i = 0;
+		var that = this;
+		var curTime = 0;
+		if(n == 0){
+			alert('No dialog on this tree');
+		}
+		this.write(this.tree[i]);
+		for (var j = 0; j < n; j++) {
+			curTime += (1000*that.tree[j].d);
+			setTimeout(function() { 
+				i++; 
+				if (i < n) { 
+					that.write(that.tree[i]); 
+				} else {
+					that.clear();
+				}
+			}, curTime);
+		}
+	}
+
+	this.write = function(o){
+		this.clear();
 		if(!isset(o.a)){
 			x = mainWidth/2;
 			y = 50;
 		}
 		this.ctx.fillText(o.t, x, y);
+	}
+
+	this.clear = function(){
+		this.ctx.clearRect(0,0,mainWidth,sceneHeight);
 	}
 
 	this.init();
