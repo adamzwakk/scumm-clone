@@ -174,9 +174,14 @@ function Scene(scene){
 		for (var i = 0; i < objs.length; i++) {
 			var h = objs[i].hspot;
 			if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
-				Inventory.updateInfoText(h.name);
+				Inventory.target = h.name;
+				break;
 			} else {
-				Inventory.updateInfoText('');
+				if(debugMode){
+					Inventory.target = mousePos.x+', '+mousePos.y;
+				} else {
+					Inventory.target = '';
+				}
 			}
 		}
 	}
@@ -203,11 +208,11 @@ function Scene(scene){
 			activePlayer.moving = true;
 		});
 
-		$('canvas').not('#inv').on('mouseout',function(e){
+		$('canvas').not('#inv,#dialog').on('mouseout',function(e){
 			Inventory.updateCanvas();
 		});
 
-		$('canvas').not('#inv').on('mousemove',function(e){
+		$('canvas').not('#inv,#dialog').on('mousemove',function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
 			that.showHotspotText(mousePos, that.checkSpots);

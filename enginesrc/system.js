@@ -31,6 +31,7 @@ function render(){
 	if(isset(activeScene)){
 		activeScene.move();
 	}
+	Inventory.updateCanvas();
 }
 
 requestAnimationFrame(frame);

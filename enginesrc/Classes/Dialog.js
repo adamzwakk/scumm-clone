@@ -4,7 +4,7 @@ function Dialog(s){
 	this.loader = new PxLoader();
 
 	this.init = function(){
-		this.canvas = $('<canvas></canvas>').attr({'id':'dialog','width':mainWidth,'height':sceneHeight}).css({'z-index':9000000});
+		this.canvas = $('<canvas></canvas>').attr({'id':'dialog','width':mainWidth,'height':sceneHeight}).css({'z-index':9});
 		this.ctx = this.canvas[0].getContext('2d');
 		this.ctx.font = '28px perfect_dos_vga_437regular';
 		this.ctx.fillStyle = this.color;

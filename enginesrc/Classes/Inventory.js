@@ -1,7 +1,7 @@
 function Inventory(){
 	this.items = {};
-	this.textAction;
 	this.textAction = 'Walk to ';
+	this.target = '';
 	this.init = function(){
 		this.canvas = $('<canvas></canvas>').attr({'id':'inv','width':mainWidth,'height':invHeight}).css({'z-index':9000000,'top':mainHeight-invHeight});
 		this.ctx = this.canvas[0].getContext('2d');
@@ -11,9 +11,8 @@ function Inventory(){
 		return this;
 	}
 
-	this.updateInfoText = function(text){
-		this.clear();
-		var finalText = this.textAction+text;
+	this.updateInfoText = function(){
+		var finalText = this.textAction+this.target;
 		this.ctx.textAlign = 'center';
 		this.ctx.fillStyle = 'white';
 		this.ctx.font = "bold 16px Arial";
@@ -26,7 +25,7 @@ function Inventory(){
 	}
 
 	this.draw = function(){
-
+		this.updateInfoText();
 	}
 
 	this.clear = function(){
