@@ -1,11 +1,8 @@
-var mi1Street = {
+var test_room = {
 	imageLayers:[
 		{
 			type:'bg',
-			image:'assets/scenes/mi1street/street.png'
-		},
-		{
-			type:'transporter'
+			image:'assets/scenes/test_room/test_bg.jpg'
 		},
 		{
 			type:'transporter'
@@ -23,32 +20,19 @@ var mi1Street = {
 	},
 	large:1,
 	largePadding:40,
-	persPoint:
-	{
-		x:579,
-		y:259
-	},
 	transporters:[
 		{
-			x:830,
-			y:250,
+			x:40,
+			y:330,
 			w:45,
 			h:70,
-			title:"SCUMM Bar",
-			link:1
-		},
-		{
-			x:344,
-			y:254,
-			w:20,
-			h:30,
-			title:"Test Room",
-			link:2
+			title:"Street",
+			link:0
 		}
 	],
 	actors:[
 		{
-			a:luigi,
+			a:new_guy,
 			x:158,
 			y:370
 		}

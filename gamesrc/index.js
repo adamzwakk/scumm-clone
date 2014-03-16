@@ -3,6 +3,8 @@ var mainHeight = 768;
 var invHeight = 250;
 var sceneHeight = mainHeight - invHeight;
 
+playerSprite = mario;
+
 var debugMode = true;
 
 var Inventory = new Inventory();

@@ -7,11 +7,12 @@ function MoveableObject(){
 	this.move = function(dt){
 		if(this.moving){
 			var src = {x:this.x,y:this.y};
+
 			if(this.type == 'p'){
 				this.destXs = this.destX - (this.sprite.w/2);
 				this.destYs = this.destY - this.sprite.h;
 			}
-		
+
 			var dest = {x:this.destXs,y:this.destYs};
 			var calDest = moveDifference(src,dest,this.speed);
 
@@ -35,9 +36,6 @@ function MoveableObject(){
 			if(calDest.x !== 0 || calDest.y !== 0){
 				this.sprite.clear();
 				this.sprite.draw(newX, newY);
-				if(isset(this.hspot)){
-					this.moveHSpot(newX, newY);
-				}
 				this.zHandler();
 				this.x = newX;
 				this.y = newY;

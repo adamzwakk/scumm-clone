@@ -4,7 +4,8 @@ var now,
     step = 1/60;
 
 var activeScene;
-var activePlayer;
+var activePlayer = {};
+var playerSprite;
 var activeSprites = new Array();
 var activeTransporters = new Array();
 var eventLayer;

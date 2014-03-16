@@ -1,16 +1,21 @@
-function Actor(scene,params){
+function Actor(scene,params,key){
 	MoveableObject.call(this);
 	this.prototype = new MoveableObject();
 	this.speed = 2;
+	this.orientation = 'down';
 	this.moving = false;
 	this.type = 'a';
 	if(isset(params)){
-		this.x = params.x;
-		this.y = params.y;
-		this.h = params.a.h;
-		this.w = params.a.w;
-		this.a = params.a;
-
+		if(isset(params.a)){
+			this.a = params.a;
+			this.x = params.x;
+			this.y = params.y;
+			this.w = this.a.actions.stand.down[0].width;
+			this.h = this.a.actions.stand.down[0].height;
+		} else {
+			this.a = params;
+		}			
+	
 		this.hspot = {
 			x0:this.x,
 			y0:this.y,
@@ -20,16 +25,27 @@ function Actor(scene,params){
 			h:this.h,
 			name:this.a.name
 		};
+
+		if(isset(key)){
+			this.x = scene.orig.actors[key].x;
+			this.y = scene.orig.actors[key].y;
+		}
+		
 	}
 
 	this.spawn = function(layer){
 		this.ctx = layer.ctx;
-		if(!isset(this.a.sprite)){
+		if(!isset(this.a.path)){
 			this.sprite = new SpriteBox(scene,layer,this.w,this.h,this.a.rgbBox);
+		} else {
+			this.sprite = new Sprite(scene,this,layer);
 		}
-
 		this.sprite.draw(this.x,this.y);
 		activeSprites.push(this);
+	}
+
+	this.draw = function(){
+		this.sprite.draw(this.x,this.y);
 	}
 
 }

@@ -1,6 +1,6 @@
 function SpriteBox(scene,layer,w,h,rgb){
-	Sprite.call(this);
-	this.prototype = new Sprite(scene);
+	// Sprite.call(this);
+	// this.prototype = new Sprite(scene);
 	this.w = w;
 	this.h = h;
 	this.scene = scene;
@@ -12,8 +12,8 @@ function SpriteBox(scene,layer,w,h,rgb){
 	}
 
 	this.draw = function(x,y){
-		this.getBottomPos();
-		this.handleZ();
+		// this.getBottomPos();
+		// this.handleZ();
 		this.x = x;
 		this.y = y;
 		this.h = parseInt(this.realH*this.scaleDiff);

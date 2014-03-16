@@ -15,6 +15,7 @@ function Scene(scene){
 	this.width = mainWidth;
 	this.height = sceneHeight;
 	this.loader = new PxLoader();
+	this.orig = scene;
 	this.x = 0;
 	
 	this.init = function(){
@@ -91,10 +92,11 @@ function Scene(scene){
 		var json = scene.actors;
 		for (var key in json) {
 			var obj = json[key];
-			var a = new Actor(this,obj);
+			var a = new Actor(this,obj,key);
 			a.spawn(this.spriteLayers[key]);
 			this.actors.push(a);
 			this.checkSpots.push(a);
+			activeSprites.push(a);
 		}
 	}
 
