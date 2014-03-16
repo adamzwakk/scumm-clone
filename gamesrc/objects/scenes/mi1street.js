@@ -34,5 +34,12 @@ var mi1Street = {
 			title:"SCUMM Bar",
 			link:1
 		}
-	]	
+	],
+	actors:[
+		{
+			a:greenguy,
+			x:158,
+			y:370
+		}
+	]
 };

@@ -4,6 +4,8 @@ function Scene(scene){
 	this.spriteLayers = new Array();
 	this.transportLayers = new Array();
 	this.transporters = new Array();
+	this.actors = new Array();
+	this.checkSpots = new Array();
 	this.images = new Array();
 	this.playerLayer;
 	this.moving = false;
@@ -29,7 +31,7 @@ function Scene(scene){
 			if(isset(scene.persPoint)){
 				that.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
 			}
-			var guybrush = new Player(that);
+			var player = new Player(that);
 		});
 	}
 
@@ -70,6 +72,7 @@ function Scene(scene){
 		}
 		activeScene = this;
 		this.getTransporters();
+		this.getActors();
 	}
 
 	this.getTransporters = function(){
@@ -80,6 +83,18 @@ function Scene(scene){
 			var t = new Transporter(obj,this,l);
 			activeTransporters.push(t);
 			this.transporters.push(t);
+			this.checkSpots.push(t);
+		}
+	}
+
+	this.getActors = function(){
+		var json = scene.actors;
+		for (var key in json) {
+			var obj = json[key];
+			var a = new Actor(this,obj);
+			a.spawn(this.spriteLayers[key]);
+			this.actors.push(a);
+			this.checkSpots.push(a);
 		}
 	}
 
@@ -155,6 +170,17 @@ function Scene(scene){
 		};
 	}
 
+	this.showHotspotText = function(mousePos,objs){
+		for (var i = 0; i < objs.length; i++) {
+			var h = objs[i].hspot;
+			if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
+				Inventory.updateInfoText(h.name);
+			} else {
+				Inventory.updateInfoText('');
+			}
+		}
+	}
+
 	this.setupControls = function(){
 		var that = this;
 		$('canvas').not('#inv').on('click', function(e){
@@ -184,14 +210,7 @@ function Scene(scene){
 		$('canvas').not('#inv').on('mousemove',function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
-			for (var i = 0; i < that.transporters.length; i++) {
-				var h = that.transporters[i].hspot;
-				if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
-					Inventory.updateInfoText(h.name);
-				} else {
-					Inventory.updateInfoText('');
-				}
-			};
+			that.showHotspotText(mousePos, that.checkSpots);
 		});
 	}
 
