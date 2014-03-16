@@ -34,7 +34,6 @@ function Scene(scene){
 			if(isset(scene.persPoint)){
 				that.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
 			}
-			var player = new Player(that);
 		});
 	}
 
@@ -94,12 +93,14 @@ function Scene(scene){
 		var json = scene.actors;
 		for (var key in json) {
 			var obj = json[key];
-			if(obj.t != 'p'){
+			if(obj.t == 'n'){
 				var a = new Actor(this,obj,key);
 				a.spawn(this.spriteLayers[key-1]);
 				this.actors.push(a);
 				this.checkSpots.push(a);
 				activeSprites.push(a);
+			} else {
+				var player = new Player(this,obj,0);
 			}
 		}
 	}
