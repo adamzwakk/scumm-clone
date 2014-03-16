@@ -9,6 +9,12 @@ var activeSprites = new Array();
 var activeTransporters = new Array();
 var eventLayer;
 var mousePos = {};
+var mainPreloader = new PxLoader();
+mainPreloader.addImage('fonts/perfectdos-webfont.eot');
+mainPreloader.addImage('fonts/perfectdos-webfont.woff');
+mainPreloader.addImage('fonts/perfectdos-webfont.ttf');
+mainPreloader.addImage('fonts/perfectdos-webfont.svg#perfect_dos_vga_437regular');
+mainPreloader.start();
 
 function frame() {
 	now = timestamp();

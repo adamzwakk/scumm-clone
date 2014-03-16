@@ -10,5 +10,8 @@ var World = new World();
 
 var introDialog = new Dialog(introDialog);
 var MI1City = new Scene(mi1Street);
-MI1City.show();
-introDialog.play();
+
+mainPreloader.addCompletionListener(function(e) {
+	MI1City.show();
+	introDialog.play();
+});

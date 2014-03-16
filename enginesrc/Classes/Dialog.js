@@ -9,6 +9,7 @@ function Dialog(s){
 		this.ctx.font = '28px perfect_dos_vga_437regular';
 		this.ctx.fillStyle = this.color;
 		this.ctx.textAlign = 'center';
+		this.ctx.fillText('', 0, 0);
 		$('#container').append(this.canvas);
 	}
 
@@ -18,19 +19,20 @@ function Dialog(s){
 		var that = this;
 		var curTime = 0;
 		if(n == 0){
-			alert('No dialog on this tree');
-		}
-		this.write(this.tree[i]);
-		for (var j = 0; j < n; j++) {
-			curTime += (1000*that.tree[j].d);
-			setTimeout(function() { 
-				i++; 
-				if (i < n) { 
-					that.write(that.tree[i]); 
-				} else {
-					that.clear();
-				}
-			}, curTime);
+			console.log('No dialog attached to me')
+		} else {
+			this.write(this.tree[i]);
+			for (var j = 0; j < n; j++) {
+				curTime += (1000*that.tree[j].d);
+				setTimeout(function() { 
+					i++; 
+					if (i < n) { 
+						that.write(that.tree[i]); 
+					} else {
+						that.clear();
+					}
+				}, curTime);
+			}
 		}
 	}
 
