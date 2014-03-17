@@ -930,12 +930,6 @@ var hammerItem = {
 	w:100,
 	h:100
 }
-var greenguy = {
-	name:"Dat Green Guy",
-	rgbBox:"rgb(23,227,70)",
-	w:100,
-	h:100
-};
 var luigi = {
 	name: 'luigi',
 	path: 'assets/actors/luigi/luigi.png',
@@ -1019,12 +1013,6 @@ var mario = {
 			],
 		},
 	}
-};
-var new_guy = {
-	name:"Dat New Guy",
-	rgbBox:"rgb(43,227,70)",
-	w:50,
-	h:50
 };
 var introDialog = 
 [
@@ -1160,46 +1148,6 @@ var scummbar = {
 			t:'p',
 			x:600,
 			y:300
-		}
-	]
-};
-var test_room = {
-	imageLayers:[
-		{
-			type:'bg',
-			image:'assets/scenes/test_room/test_bg.jpg'
-		},
-		{
-			type:'transporter'
-		},
-		{
-			type:'player'
-		},
-		{
-			type:'sprite'
-		}
-	],
-	spawnStart:{
-		x:600,
-		y:300
-	},
-	large:1,
-	largePadding:40,
-	transporters:[
-		{
-			x:40,
-			y:330,
-			w:45,
-			h:70,
-			title:"Street",
-			link:0
-		}
-	],
-	actors:[
-		{
-			a:new_guy,
-			x:158,
-			y:370
 		}
 	]
 };
