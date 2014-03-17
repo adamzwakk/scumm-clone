@@ -35,14 +35,6 @@ var mi1Street = {
 			h:70,
 			title:"SCUMM Bar",
 			link:1
-		},
-		{
-			x:344,
-			y:254,
-			w:20,
-			h:30,
-			title:"Test Room",
-			link:2
 		}
 	],
 	items:[
