@@ -8,6 +8,7 @@ module.exports = function(grunt) {
                     'bower_components/PxLoader/PxLoader.js',
                     'bower_components/PxLoader/PxLoaderImage.js',
                     'bower_components/PxLoader/PxLoaderSound.js',
+                    'bower_components/javascript-astar/astar.js',
         		],
         		dest: 'public/js/require.js'
         	},

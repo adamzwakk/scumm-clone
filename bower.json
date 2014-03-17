@@ -15,6 +15,7 @@
   ],
   "devDependencies": {
     "jquery": "~2.1.0",
-    "PxLoader": "*"
+    "PxLoader": "*",
+    "javascript-astar": "https://github.com/bgrins/javascript-astar.git#~0.2.0"
   }
 }

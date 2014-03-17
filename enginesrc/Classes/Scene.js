@@ -22,6 +22,10 @@ function Scene(scene){
 	this.spawnStart = {};
 	this.spawnStart.x = scene.actors[0].x;
 	this.spawnStart.y = scene.actors[0].y;
+	this.grid = new Array();
+	this.squareSize = 16;
+	this.graph;
+	this.walkLayer;
 	
 	this.init = function(){
 		var that = this;
@@ -29,6 +33,7 @@ function Scene(scene){
 		this.loader.addCompletionListener(function(e) {
 			that.images.push(e.resource.img);
 			that.getLayers();
+			that.drawPathGrid();
 			that.padding = scene.largePadding;
 			that.scrollable = (isset(scene.large) || !scene.large) ? true : false;
 			that.persPoint = scene.persPoint;
@@ -37,6 +42,52 @@ function Scene(scene){
 				that.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
 			}
 		});
+	}
+
+	this.drawPathGrid = function(){
+		if(isset(scene.walkable)){
+			var l = new Layer('walkable',0,9999,this.width,this.height);
+			this.layers.push(l);
+			this.walkLayer = l.ctx;
+			var ctx = l.ctx;
+			ctx.beginPath();
+			for (var i = 0; i < scene.walkable.length; i++) {
+				var w = scene.walkable[i];
+			 	ctx.lineTo(w.x,w.y);
+			}
+			if(debugMode){
+				ctx.fillStyle = "rgba(150,150,150,0.4)";
+				l.ctx.fill();
+			}
+			var gridSize = {};
+			var curGrid = {};
+			gridSize.x = parseInt(this.width/this.squareSize);
+			gridSize.y = parseInt(this.height/this.squareSize);
+			curGrid.x = 0
+			curGrid.y = 0;
+			var touchArray = new Array();
+			var touchArrayX;
+			for (var i = 0; i < gridSize.y; i++) {
+				curGrid.y = i*this.squareSize;
+				touchArrayX = new Array();
+				for (var j = 0; j < gridSize.x; j++) {
+					//on x axis
+					var s = {};
+					s.x0 = j*this.squareSize;
+					s.y0 = curGrid.y;
+					s.x1 = (j*this.squareSize)+this.squareSize;
+					s.y1 = curGrid.y+this.squareSize;
+					curGrid.x = j*this.squareSize;
+					if(this.walkLayer.isPointInPath(s.x0,s.y0) || this.walkLayer.isPointInPath(s.x1,s.y1)){
+						touchArrayX.push(1);
+					} else {
+						touchArrayX.push(0);
+					}
+				}
+				touchArray.push(touchArrayX);
+			}
+			this.graph = new Graph(touchArray);
+		}
 	}
 
 	this.preloadLayers = function(){
