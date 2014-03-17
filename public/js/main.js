@@ -1,1 +1,1015 @@
-$(document).ready(function(){function a(){s=d(),v+=Math.min(1,(s-w)/1e3),b(v),w=s,requestAnimationFrame(a)}function b(){for(var a=0;a<A.length;a++)A[a].move(v);g(t)&&t.move(),j.updateCanvas()}function c(a,b,c,d){var e=Math.min(c/a,d/b);return{width:a*e,height:b*e}}function d(){return window.performance&&window.performance.now?window.performance.now():(new Date).getTime()}function e(a,b,c){return g(a)&&g(b)?a>b?-c:c:0}function f(a,b,c){return"undefined"!=typeof b.x?{x:e(a.x,b.x,c),y:e(a.y,b.y,c)}:void 0}function g(a){return"undefined"!=typeof a}function h(a,b,c){l.call(this),this.prototype=new l,this.speed=2,this.orientation="down",this.moving=!1,this.type="a",g(b)&&(this.a=b.a,this.x=b.x,this.y=b.y,this.w=this.a.actions.stand.down[0].width,this.h=this.a.actions.stand.down[0].height,this.hspot={x0:this.x,y0:this.y,x1:this.x+this.w,y1:this.y+this.h,w:this.w,h:this.h,name:this.a.name},this.x=a.orig.actors[c].x,this.y=a.orig.actors[c].y),this.spawn=function(b){this.ctx=b.ctx,this.sprite=g(this.a.path)?new o(a,this,b):new p(a,b,this.w,this.h,this.a.rgbBox),this.sprite.draw(this.x,this.y),A.push(this)},this.draw=function(){this.sprite.draw(this.x,this.y)}}function i(a){this.tree=a,this.color="white",this.loader=new PxLoader,this.init=function(){this.canvas=$("<canvas></canvas>").attr({id:"dialog",width:M,height:P}).css({"z-index":9}),this.ctx=this.canvas[0].getContext("2d"),this.ctx.font="28px perfect_dos_vga_437regular",this.ctx.fillStyle=this.color,this.ctx.textAlign="center",this.ctx.fillText("",0,0),$("#container").append(this.canvas)},this.play=function(){var a=this.tree.length,b=0,c=this,d=0;if(0==a)console.log("No dialog attached to me");else{this.write(this.tree[b]);for(var e=0;a>e;e++)d+=1e3*c.tree[e].d,setTimeout(function(){b++,a>b?c.write(c.tree[b]):c.clear()},d)}},this.write=function(a){this.clear(),g(a.a)||(x=M/2,y=50),this.ctx.fillText(a.t,x,y)},this.clear=function(){this.ctx.clearRect(0,0,M,P)},this.init()}function j(){this.items={},this.textAction="Walk to ",this.target="",this.init=function(){return this.canvas=$("<canvas></canvas>").attr({id:"inv",width:M,height:O}).css({"z-index":9e6,top:N-O}),this.ctx=this.canvas[0].getContext("2d"),this.ctx.fillStyle="rgba(0, 0, 0, 1)",this.ctx.fillRect(0,0,M,O),$("#container").append(this.canvas),this},this.updateInfoText=function(){var a=this.textAction+this.target;this.ctx.textAlign="center",this.ctx.fillStyle="white",this.ctx.font="bold 16px Arial",this.ctx.fillText(a,M/2,20)},this.updateCanvas=function(){this.clear(),this.draw()},this.draw=function(){this.updateInfoText()},this.clear=function(){this.ctx.clearRect(0,0,M,50),this.ctx.fillStyle="rgba(0, 0, 0, 1)",this.ctx.fillRect(0,0,M,O)},this.init()}function k(a,b,d,e,g){return this.init=function(){if(this.id=a,this.canvas=$("<canvas></canvas>").attr({id:a,width:e,height:g}).css({"z-index":d,left:"0px"}),this.ctx=this.canvas[0].getContext("2d"),this.x=parseInt(this.canvas.css("left")),0!==b){var f=b;this.image={x:0,y:0,src:f,width:f.width,height:f.height},this.image.newDM=c(f.width,f.height,1e9,P),this.width=parseInt(this.image.newDM.width),this.height=parseInt(this.image.newDM.height),this.canvas.attr("width",this.width),this.draw(this.image.x,this.image.y)}},this.draw=function(a,b){var c=this.image;this.ctx.drawImage(c.src,0,0,c.width,c.height,a,b,c.newDM.width,c.newDM.height)},this.scroll=function(a){var b=a.x,c=f({x:0,y:0},{x:b,y:0},4),d=this.x+c.x;this.canvas.css("left",d+"px"),this.x=parseInt(this.canvas.css("left"))},this.clear=function(){this.ctx.clearRect(0,0,M,N-O)},this.init(),this}function l(){this.destX,this.destY,this.curDir={},this.hspot,this.move=function(){if(this.moving){var a={x:this.x,y:this.y};"p"==this.type&&(this.destXs=this.destX-this.sprite.w/2,this.destYs=this.destY-this.sprite.h);var b={x:this.destXs,y:this.destYs},c=f(a,b,this.speed);g(this.curDir.x)||(this.curDir.x=c.x,this.curDir.y=c.y),c.x=this.curDir.x!==c.x?0:c.x,c.y=this.curDir.y!==c.y?0:c.y;var d=this.x+c.x,e=this.y+c.y;if("p"==this.type&&this.scene.scrollable&&!this.scene.moving&&this.checkSceneEdge(d,e),this.cX=c.x,this.cY=c.y,0!==c.x||0!==c.y)this.sprite.clear(),this.sprite.draw(d,e),this.zHandler(),this.x=d,this.y=e;else if(delete this.curDir.x,delete this.curDir.y,this.moving=!1,"p"==this.type)for(var h=0;h<B.length;h++){var i=B[h];i.intent&&i.transportMe()}}},this.zHandler=function(){if(g(this.scene)){var a=this.scene.horizonLine,b=this.sprite.getBottomPos(this.x,this.y);this.sprite.z=Math.abs(1-b.y/a)}}}function m(a,b,c){h.call(this),this.prototype=new h(a,b,c),this.x=a.spawnStart.x,this.y=a.spawnStart.y,this.scene=a,this.speed=4,z=this,this.type="p",this.actor=u,this.init=function(){this.sprite=new o(this.scene,this.actor,this.scene.playerLayer),this.sprite.draw(this.x,this.y),A.push(this)},this.checkSceneEdge=function(){return 0==this.scene.x&&M-this.scene.padding<=this.sprite.x+this.sprite.w?(this.scene.moving=!0,this.scene.scroll="r",Q&&console.log("Scrolling scene right"),!0):this.scene.x<0&&this.sprite.x<=a.width-M+this.scene.padding?(this.scene.moving=!0,this.scene.scroll="l",Q&&console.log("Scrolling scene left"),!0):!1},this.init()}function n(a){this.layers=new Array,this.bgLayers=new Array,this.spriteLayers=new Array,this.transportLayers=new Array,this.transporters=new Array,this.actors=new Array,this.checkSpots=new Array,this.images=new Array,this.playerLayer,this.moving=!1,this.scrollable,this.padding,this.scroll,this.width=M,this.height=P,this.loader=new PxLoader,this.orig=a,this.x=0,this.spawnStart={},this.spawnStart.x=a.actors[0].x,this.spawnStart.y=a.actors[0].y,this.init=function(){var b=this;this.preloadLayers(),this.loader.addCompletionListener(function(c){b.images.push(c.resource.img),b.getLayers(),b.padding=a.largePadding,b.scrollable=g(a.large)||!a.large?!0:!1,b.persPoint=a.persPoint,b.large=a.large,g(a.persPoint)&&(b.horizonLine=N-O-a.persPoint.y)})},this.preloadLayers=function(){{var b=a.imageLayers;new Array}for(var c in b){var d=b[c];"bg"==d.type&&this.loader.addImage(d.image)}this.loader.start()},this.getLayers=function(){var b,c=a.imageLayers,d=0;for(var e in c){var f=c[e];"bg"==f.type?(b=new k("background"+d,this.images[d],d,this.width,this.height),this.width=b.width,this.bgLayers.push(b)):"sprite"==f.type?(b=new k("spritelayer"+d,0,9999,this.width,this.height),this.spriteLayers.push(b)):"transporter"==f.type?(b=new k("transportlayer"+d,0,9999,this.width,this.height),this.transportLayers.push(b)):"player"==f.type&&(b=new k("player",0,9999,this.width,this.height),this.playerLayer=b),this.layers.push(b),d++}t=this,this.getTransporters(),this.getActors()},this.getTransporters=function(){var b=a.transporters;for(var c in b){var d=b[c],e=this.transportLayers[c],f=new q(d,this,e);B.push(f),this.transporters.push(f),this.checkSpots.push(f)}},this.getActors=function(){var b=a.actors;for(var c in b){var d=b[c];if("n"==d.t){var e=new h(this,d,c);e.spawn(this.spriteLayers[c-1]),this.actors.push(e),this.checkSpots.push(e),A.push(e)}else{new m(this,d,0)}}},this.move=function(){var a,b,c,d={x:0,y:0};if(this.moving){for(var e=0;e<this.layers.length;e++){var f=this.layers[e];"r"==this.scroll&&(d.x=-(this.width-M),b=d.x,a=f.x>=d.x),"l"==this.scroll&&(d.x=0,c=d.x,a=f.x<=d.x),this.x=d.x,a?f.scroll(d):this.moving=!1}if(2==this.large){var g=z;if(this.moving){if(0!==g.cX||0!==g.cY){if("Player"==g.constructor.name){var h=this.padding+150;"r"==this.scroll?g.destX=-b+h:"l"==this.scroll&&(g.destX=-c+M-h)}g.moving=!0}}else console.log("STOP MOVING"),g.moving=!1}}},this.scrollTo=function(a){this.scroll=a,this.moving=!0},this.show=function(){var a=this;this.loader.addCompletionListener(function(){for(var b=0;b<a.layers.length;b++)$("#container").append(a.layers[b].canvas);a.setupControls()})},this.hide=function(){for(var a=0;a<this.layers.length;a++)$("#"+this.layers[a].id).remove()},this.showHotspotText=function(a,b){for(var c=0;c<b.length;c++){var d=b[c].hspot;if(d.x0<=a.x&&a.x<=d.x1&&d.y0<=a.y&&a.y<=d.y1){j.target=d.name;break}j.target=Q?a.x+", "+a.y:""}},this.setupControls=function(){var a=this;$("canvas").not("#inv").on("click",function(b){Q&&console.log("Click coordinates: "+b.offsetX+","+b.offsetY),z.destX=b.offsetX,z.destY=b.offsetY;for(var c=0;c<a.transporters.length;c++){var d=a.transporters[c];d.x<=b.offsetX&&b.offsetX<=d.x+d.w&&d.y<=b.offsetY&&b.offsetY<=d.y+d.h?(Q&&console.log("Clicked Transporter for "+d.title),d.intent=!0):d.intent=!1}z.moving=!0}),$("canvas").not("#inv,#dialog").on("mouseout",function(){j.updateCanvas()}),$("canvas").not("#inv,#dialog").on("mousemove",function(b){C.x=b.offsetX,C.y=b.offsetY,a.showHotspotText(C,a.checkSpots)})},this.init()}function o(a,b,c){if(this.x,this.y,this.w,this.h,this.z,this.scene=a,g(b)&&(this.layer=c.ctx),this.actor=b,this.image=null,this.scaleDiff=1,this.loaded=!1,this.loader=new PxLoader,g(b.a)){var d=b.x,e=b.y;this.actor=b.a,this.actor.x=d,this.actor.y=e}else this.actor.x=a.spawnStart.x,this.actor.y=a.spawnStart.y;this.direction=this.actor.actions.stand.down,this.init=function(){var a=this;this.loader.addImage(this.actor.path),this.loader.start(),this.loader.addCompletionListener(function(b){a.image=b.resource.img,a.loaded=!0,a.draw(a.actor.x,a.actor.y)})},this.handleZ=function(){this.z<=.95&&this.z>=.2&&(this.scaleDiff=this.z)},this.getBottomPos=function(a,b){var c={};return c.x=a+this.w/2,c.y=b+this.h,c},this.draw=function(a,b){if(this.loaded){var c=this.direction[0];this.x=a,this.y=b,this.h=c.height,this.w=c.width,this.clear(),this.layer.drawImage(this.image,c.x,c.y,c.width,c.height,this.x,this.y,c.width,c.height)}},this.clear=function(){var a=this.direction[0];this.layer.clearRect(this.x,this.y,a.width,a.height)},this.init()}function p(a,b,c,d,e){this.w=c,this.h=d,this.scene=a,this.realH=d,this.realW=c,this.init=function(){this.ctx=b.ctx,this.ctx.fillStyle=e},this.draw=function(a,b){this.x=a,this.y=b,this.h=parseInt(this.realH*this.scaleDiff),this.w=parseInt(this.realW*this.scaleDiff),this.ctx.fillRect(this.x,this.y,this.w,this.h)},this.clear=function(){this.ctx.clearRect(this.x,this.y,this.w,this.h)},this.init()}function q(a,b,c){this.destX,this.destY,this.curDir={},this.speed=4,this.moving=!1,this.intent=!1,this.type="t",this.init=function(a){if(this.x=a.x,this.y=a.y,this.origX=this.x,this.origY=this.y,this.w=a.w,this.h=a.h,this.title=a.title,this.moving=!1,this.hspot={x0:this.x,y0:this.y,x1:this.x+this.w,y1:this.y+this.h,w:this.w,h:this.h,name:this.title},Q)var d="rgba(55,55,244,0.5)";else var d="rgba(55,55,244,0)";this.sprite=new p(b,c,this.w,this.h,d),this.sprite.draw(this.x,this.y)},this.transportMe=function(){r.changeScene(a.link),this.intent=!1},this.init(a)}function r(){this.locations=L,this.changeScene=function(a){t.hide();var b=new n(this.locations[a]);b.show()}}var s,t,u,v=0,w=d(),z={},A=new Array,B=new Array,C={},D=new PxLoader;D.addImage("fonts/perfectdos-webfont.eot"),D.addImage("fonts/perfectdos-webfont.woff"),D.addImage("fonts/perfectdos-webfont.ttf"),D.addImage("fonts/perfectdos-webfont.svg#perfect_dos_vga_437regular"),D.start(),requestAnimationFrame(a);var E={name:"luigi",path:"assets/actors/luigi/luigi.png",actions:{walk:{up:[{width:20,height:33,x:3,y:123},{width:22,height:36,x:31,y:120},{width:20,height:33,x:61,y:123}],down:[{width:23,height:35,x:3,y:2},{width:22,height:37,x:31,y:0},{width:23,height:35,x:58,y:2}],right:[{width:21,height:36,x:3,y:81},{width:19,height:37,x:32,y:80},{width:22,height:36,x:59,y:81}],left:[{width:22,height:36,x:3,y:41},{width:19,height:37,x:33,y:40},{width:21,height:36,x:60,y:41}]},stand:{up:[{width:22,height:36,x:31,y:120}],down:[{width:22,height:37,x:31,y:0}],right:[{width:19,height:37,x:32,y:80}],left:[{width:19,height:37,x:33,y:40}]}}},F={name:"mario",path:"assets/actors/mario/mario.png",actions:{walk:{up:[{width:20,height:33,x:3,y:123},{width:22,height:36,x:31,y:120},{width:20,height:33,x:61,y:123}],down:[{width:23,height:35,x:3,y:2},{width:22,height:37,x:31,y:0},{width:23,height:35,x:58,y:2}],right:[{width:21,height:36,x:3,y:81},{width:19,height:37,x:32,y:80},{width:22,height:36,x:59,y:81}],left:[{width:22,height:36,x:3,y:41},{width:19,height:37,x:33,y:40},{width:21,height:36,x:60,y:41}]},stand:{up:[{width:22,height:36,x:31,y:120}],down:[{width:22,height:37,x:31,y:0}],right:[{width:19,height:37,x:32,y:80}],left:[{width:19,height:37,x:33,y:40}]}}},G={name:"Dat New Guy",rgbBox:"rgb(43,227,70)",w:50,h:50},H=[{t:"Welcome to ScummVM-clone",d:3},{t:"This is a work in progress, so expect literally nothing",d:3},{t:"But at least this little dialog works pretty well right?",d:4},{t:"Everything here is brought to the engine via JSON",d:3},{t:"At least that's the idea",d:1.5},{t:"Anyways, Enjoy!",d:3}],I={imageLayers:[{type:"bg",image:"assets/scenes/mi1street/street.png"},{type:"transporter"},{type:"transporter"},{type:"player"},{type:"sprite"}],large:1,largePadding:40,persPoint:{x:579,y:259},transporters:[{x:830,y:250,w:45,h:70,title:"SCUMM Bar",link:1},{x:344,y:254,w:20,h:30,title:"Test Room",link:2}],actors:[{a:F,t:"p",x:600,y:300},{a:E,t:"n",x:158,y:370}]},J={imageLayers:[{type:"bg",image:"assets/scenes/scummbar/scummbar.png"},{type:"transporter"},{type:"player"},{type:"sprite"}],spawnStart:{x:170,y:300},large:2,largePadding:10,transporters:[{x:117,y:280,w:140,h:180,title:"Outside",link:0}],actors:[{a:F,t:"p",x:600,y:300}]},K={imageLayers:[{type:"bg",image:"assets/scenes/test_room/test_bg.jpg"},{type:"transporter"},{type:"player"},{type:"sprite"}],spawnStart:{x:600,y:300},large:1,largePadding:40,transporters:[{x:40,y:330,w:45,h:70,title:"Street",link:0}],actors:[{a:G,x:158,y:370}]},L=new Array;L[0]=I,L[1]=J,L[2]=K;var M=1024,N=768,O=250,P=N-O;u=F;var Q=!0,j=new j,r=new r,H=new i(H),R=new n(I);D.addCompletionListener(function(){R.show(),H.play()})});
+$(document).ready(function(){ 
+var now,
+	dt   = 0,
+    last = timestamp(),
+    step = 1/60;
+
+var activeScene;
+var activePlayer = {};
+var playerSprite;
+var activeSprites = new Array();
+var activeTransporters = new Array();
+var eventLayer;
+var mousePos = {};
+var mainPreloader = new PxLoader();
+mainPreloader.addImage('fonts/perfectdos-webfont.eot');
+mainPreloader.addImage('fonts/perfectdos-webfont.woff');
+mainPreloader.addImage('fonts/perfectdos-webfont.ttf');
+mainPreloader.addImage('fonts/perfectdos-webfont.svg#perfect_dos_vga_437regular');
+mainPreloader.start();
+
+function frame() {
+	now = timestamp();
+	dt = dt + Math.min(1, (now - last) / 1000);
+	render(dt);
+	last = now;
+	requestAnimationFrame(frame);
+}
+
+function render(){
+	for (var i = 0; i < activeSprites.length; i++) {
+		activeSprites[i].move(dt);
+	};
+	if(isset(activeScene)){
+		activeScene.move();
+	}
+	Inventory.updateCanvas();
+}
+
+requestAnimationFrame(frame);
+function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+	var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+	return { width: srcWidth*ratio, height: srcHeight*ratio };
+}
+
+function timestamp() {
+	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+}
+
+function moveDirection(num1,num2,speed){
+	if(!isset(num1) || !isset(num2)){
+		return 0;
+	} else {
+		return (num1 > num2) ? -speed : speed;
+	}
+}
+
+function moveDifference(src,dest,speed){
+	if(typeof dest.x !== 'undefined'){
+		return {x:moveDirection(src.x,dest.x,speed),y:moveDirection(src.y,dest.y,speed)}
+	}
+}
+
+function isset(v){
+	return (typeof v !== 'undefined');
+}
+function Actor(scene,params,key){
+	MoveableObject.call(this);
+	this.prototype = new MoveableObject();
+	this.speed = 2;
+	this.orientation = 'down';
+	this.moving = false;
+	this.type = 'a';
+	if(isset(params)){
+		this.a = params.a;
+		this.x = params.x;
+		this.y = params.y;
+		this.w = this.a.actions.stand.down[0].width;
+		this.h = this.a.actions.stand.down[0].height;		
+	
+		this.hspot = {
+			x0:this.x,
+			y0:this.y,
+			x1:this.x+this.w,
+			y1:this.y+this.h,
+			w:this.w,
+			h:this.h,
+			name:this.a.name
+		};
+
+		this.x = scene.orig.actors[key].x;
+		this.y = scene.orig.actors[key].y;
+		
+	}
+
+	this.spawn = function(layer){
+		this.ctx = layer.ctx;
+		if(!isset(this.a.path)){
+			this.sprite = new SpriteBox(scene,layer,this.w,this.h,this.a.rgbBox);
+		} else {
+			this.sprite = new Sprite(scene,this,layer);
+		}
+		this.sprite.draw(this.x,this.y);
+		activeSprites.push(this);
+	}
+
+	this.draw = function(){
+		this.sprite.draw(this.x,this.y);
+	}
+
+}
+function Dialog(s){
+	this.tree = s;
+	this.color = 'white';
+	this.loader = new PxLoader();
+
+	this.init = function(){
+		this.canvas = $('<canvas></canvas>').attr({'id':'dialog','width':mainWidth,'height':sceneHeight}).css({'z-index':9});
+		this.ctx = this.canvas[0].getContext('2d');
+		this.ctx.font = '28px perfect_dos_vga_437regular';
+		this.ctx.fillStyle = this.color;
+		this.ctx.textAlign = 'center';
+		this.ctx.fillText('', 0, 0);
+		$('#container').append(this.canvas);
+	}
+
+	this.play = function(){
+		var n = this.tree.length;
+		var i = 0;
+		var that = this;
+		var curTime = 0;
+		if(n == 0){
+			console.log('No dialog attached to me')
+		} else {
+			this.write(this.tree[i]);
+			for (var j = 0; j < n; j++) {
+				curTime += (1000*that.tree[j].d);
+				setTimeout(function() { 
+					i++; 
+					if (i < n) { 
+						that.write(that.tree[i]); 
+					} else {
+						that.clear();
+					}
+				}, curTime);
+			}
+		}
+	}
+
+	this.write = function(o){
+		this.clear();
+		if(!isset(o.a)){
+			x = mainWidth/2;
+			y = 50;
+		}
+		this.ctx.fillText(o.t, x, y);
+	}
+
+	this.clear = function(){
+		this.ctx.clearRect(0,0,mainWidth,sceneHeight);
+	}
+
+	this.init();
+}
+function Inventory(){
+	this.items = {};
+	this.textAction = 'Walk to ';
+	this.target = '';
+	this.init = function(){
+		this.canvas = $('<canvas></canvas>').attr({'id':'inv','width':mainWidth,'height':invHeight}).css({'z-index':9000000,'top':mainHeight-invHeight});
+		this.ctx = this.canvas[0].getContext('2d');
+		this.ctx.fillStyle = "rgba(0, 0, 0, 1)";
+		this.ctx.fillRect(0, 0, mainWidth, invHeight);
+		$('#container').append(this.canvas);
+		return this;
+	}
+
+	this.updateInfoText = function(){
+		var finalText = this.textAction+this.target;
+		this.ctx.textAlign = 'center';
+		this.ctx.fillStyle = 'white';
+		this.ctx.font = "bold 16px Arial";
+		this.ctx.fillText(finalText,mainWidth/2,20);
+	}
+
+	this.updateCanvas = function(){
+		this.clear();
+		this.draw();
+	}
+
+	this.draw = function(){
+		this.updateInfoText();
+	}
+
+	this.clear = function(){
+		this.ctx.clearRect(0,0,mainWidth,50);
+		this.ctx.fillStyle = "rgba(0, 0, 0, 1)";
+		this.ctx.fillRect(0, 0, mainWidth, invHeight);
+	}
+
+	this.init();
+}
+function Layer(id,image,zindex,w,h){
+
+	this.init = function(){
+		this.id = id;
+		this.canvas = $('<canvas></canvas>').attr({'id':id,'width':w,'height':h}).css({'z-index':zindex,'left':'0px'});
+		this.ctx = this.canvas[0].getContext('2d');
+		this.x = parseInt(this.canvas.css('left'));
+		if(image !== 0){
+			var bg = image;
+			this.image = {
+				x:0,
+				y:0,
+				src:bg,
+				width:bg.width,
+				height:bg.height
+			};
+			this.image.newDM = calculateAspectRatioFit(bg.width,bg.height,1000000000,sceneHeight);
+			this.width = parseInt(this.image.newDM.width);
+			this.height = parseInt(this.image.newDM.height);
+			this.canvas.attr('width',this.width);
+			this.draw(this.image.x,this.image.y);
+		}
+	}
+
+	this.draw = function(x,y){
+		var image = this.image;
+		this.ctx.drawImage(image.src,0,0,image.width,image.height,x,y,image.newDM.width,image.newDM.height);
+	}
+
+	this.scroll = function(dest){
+		var destX = dest.x;
+		var calDest = moveDifference({x:0,y:0},{x:destX,y:0},4);
+		var x = this.x+calDest.x;
+		this.canvas.css('left',x+'px');
+		this.x = parseInt(this.canvas.css('left'));
+	}
+
+	this.clear = function(){
+		this.ctx.clearRect(0,0,mainWidth,mainHeight-invHeight);
+	}
+
+	this.init();
+	return this;
+}
+function MoveableObject(){
+	this.destX;
+	this.destY;
+	this.curDir = {};
+	this.hspot;
+
+	this.move = function(dt){
+		if(this.moving){
+			var src = {x:this.x,y:this.y};
+
+			if(this.type == 'p'){
+				this.destXs = this.destX - (this.sprite.w/2);
+				this.destYs = this.destY - this.sprite.h;
+			}
+
+			var dest = {x:this.destXs,y:this.destYs};
+			var calDest = moveDifference(src,dest,this.speed);
+
+			if(!isset(this.curDir.x)){
+				this.curDir.x = calDest.x;
+				this.curDir.y = calDest.y;
+			}
+			calDest.x = (this.curDir.x !== calDest.x) ? 0 : calDest.x;
+			calDest.y = (this.curDir.y !== calDest.y) ? 0 : calDest.y; 
+
+			var newX = this.x+calDest.x;
+			var newY = this.y+calDest.y;
+
+			if(this.type == 'p' && this.scene.scrollable && !this.scene.moving){
+				this.checkSceneEdge(newX,newY);
+			}
+
+			this.cX = calDest.x;
+			this.cY = calDest.y;
+
+			if(calDest.x !== 0 || calDest.y !== 0){
+				this.sprite.clear();
+				this.sprite.draw(newX, newY);
+				this.zHandler();
+				this.x = newX;
+				this.y = newY;
+			} else {
+				delete this.curDir.x;
+				delete this.curDir.y;
+				this.moving = false;
+				if(this.type == 'p'){
+					for (var i = 0; i < activeTransporters.length; i++) {
+						var t = activeTransporters[i];
+						if(t.intent){
+							t.transportMe();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	this.zHandler = function(){
+		if(isset(this.scene)){
+			var smallPoint = this.scene.horizonLine;
+			var bt = this.sprite.getBottomPos(this.x,this.y);
+			this.sprite.z = Math.abs(1-(bt.y/smallPoint));
+		}
+	}
+
+}
+function Player(scene,params,key){
+	Actor.call(this);
+	this.prototype = new Actor(scene,params,key);
+	this.x = scene.spawnStart.x;
+	this.y = scene.spawnStart.y;
+	this.scene = scene;
+	this.speed = 4;
+	activePlayer = this;
+	this.type = 'p';
+	this.actor = playerSprite;
+	this.init = function(){
+		this.sprite = new Sprite(this.scene, this.actor, this.scene.playerLayer);
+		this.sprite.draw(this.x,this.y);
+		activeSprites.push(this);
+	}
+
+	this.checkSceneEdge = function(x,y){
+		if(this.scene.x == 0 && (mainWidth - this.scene.padding) <= (this.sprite.x + this.sprite.w)){
+			this.scene.moving = true;
+			this.scene.scroll = 'r';
+			if(debugMode){
+				console.log('Scrolling scene right');
+			}
+			return true;
+		} else if(this.scene.x < 0 && this.sprite.x <= ((scene.width-mainWidth)+this.scene.padding)) {
+			this.scene.moving = true;
+			this.scene.scroll = 'l';
+			if(debugMode){
+				console.log('Scrolling scene left');
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	this.init();
+}
+function Scene(scene){
+	this.layers = new Array();
+	this.bgLayers = new Array();
+	this.spriteLayers = new Array();
+	this.transportLayers = new Array();
+	this.transporters = new Array();
+	this.actors = new Array();
+	this.checkSpots = new Array();
+	this.images = new Array();
+	this.playerLayer;
+	this.moving = false;
+	this.scrollable;
+	this.padding;
+	this.scroll;
+	this.width = mainWidth;
+	this.height = sceneHeight;
+	this.loader = new PxLoader();
+	this.orig = scene;
+	this.x = 0;
+	this.spawnStart = {};
+	this.spawnStart.x = scene.actors[0].x;
+	this.spawnStart.y = scene.actors[0].y;
+	
+	this.init = function(){
+		var that = this;
+		this.preloadLayers();
+		this.loader.addCompletionListener(function(e) {
+			that.images.push(e.resource.img); 
+			that.getLayers();
+			that.padding = scene.largePadding;
+			that.scrollable = (isset(scene.large) || !scene.large) ? true : false;
+			that.persPoint = scene.persPoint;
+			that.large = scene.large;
+			if(isset(scene.persPoint)){
+				that.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
+			}
+		});
+	}
+
+	this.preloadLayers = function(){
+		var json = scene.imageLayers;
+		var ti = new Array();
+		for (var key in json) {
+			var obj = json[key];
+			if(obj.type == 'bg'){
+				this.loader.addImage(obj.image);
+			}
+		}
+		this.loader.start();
+	}
+
+	this.getLayers = function(){
+		var json = scene.imageLayers;
+		var count = 0;
+		var l;
+		for (var key in json) {
+			var obj = json[key];
+			if(obj.type == 'bg'){
+				l = new Layer('background'+count,this.images[count],count,this.width,this.height);
+				this.width = l.width;
+				this.bgLayers.push(l);
+			} else if(obj.type == 'sprite'){
+				l = new Layer('spritelayer'+count,0,9999,this.width,this.height);
+				this.spriteLayers.push(l);
+			} else if(obj.type == 'transporter'){
+				l = new Layer('transportlayer'+count,0,9999,this.width,this.height);
+				this.transportLayers.push(l);
+			} else if(obj.type == 'player'){
+				l = new Layer('player',0,9999,this.width,this.height);
+				this.playerLayer = l;
+			}
+			this.layers.push(l);
+			count++;
+		}
+		activeScene = this;
+		this.getTransporters();
+		this.getActors();
+	}
+
+	this.getTransporters = function(){
+		var json = scene.transporters;
+		for (var key in json) {
+			var obj = json[key];
+			var l = this.transportLayers[key];
+			var t = new Transporter(obj,this,l);
+			activeTransporters.push(t);
+			this.transporters.push(t);
+			this.checkSpots.push(t);
+		}
+	}
+
+	this.getActors = function(){
+		var json = scene.actors;
+		for (var key in json) {
+			var obj = json[key];
+			if(obj.t == 'n'){
+				var a = new Actor(this,obj,key);
+				a.spawn(this.spriteLayers[key-1]);
+				this.actors.push(a);
+				this.checkSpots.push(a);
+				activeSprites.push(a);
+			} else {
+				var player = new Player(this,obj,0);
+			}
+		}
+	}
+
+	this.move = function(){
+		var dest = {x:0,y:0};
+		var ifCheck;
+		var scrollRightX;
+		var scrollLeftX;
+		if(this.moving){
+			for (var i = 0; i < this.layers.length; i++) {
+				var l = this.layers[i];
+				if(this.scroll == 'r'){
+					dest.x = -(this.width - mainWidth);
+					scrollRightX = dest.x;
+					ifCheck = l.x >= dest.x;
+				}
+				if(this.scroll == 'l'){
+					dest.x = 0;
+					scrollLeftX = dest.x;
+					ifCheck = l.x <= dest.x;
+				}
+				
+				this.x = dest.x;
+
+				if(ifCheck){
+					l.scroll(dest);
+				} else {
+					this.moving = false;
+				}
+			}
+
+			if(this.large == 2){
+				var s = activePlayer;
+				if(!this.moving){
+					console.log('STOP MOVING');
+					s.moving = false;
+				} else if(s.cX !== 0 || s.cY !== 0) {
+					if(s.constructor.name == 'Player'){
+						var pMovePadding = this.padding+150;
+						if(this.scroll == 'r'){
+							s.destX = -scrollRightX+pMovePadding;
+						} else if(this.scroll == 'l'){
+							s.destX = -scrollLeftX+mainWidth-pMovePadding;
+						}
+					}
+					s.moving = true;
+				}
+			}
+		}
+	}
+
+	this.scrollTo = function(direction){
+		this.scroll = direction;
+		this.moving = true;
+	}
+
+	this.show = function(){
+		var that = this;
+		this.loader.addCompletionListener(function() { 
+			for (var i = 0; i < that.layers.length; i++) {
+				$('#container').append(that.layers[i].canvas);
+			};
+			that.setupControls();
+		});
+	}
+
+	this.hide = function(){
+		for (var i = 0; i < this.layers.length; i++) {
+			$('#'+this.layers[i].id).remove();
+		};
+	}
+
+	this.showHotspotText = function(mousePos,objs){
+		for (var i = 0; i < objs.length; i++) {
+			var h = objs[i].hspot;
+			if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
+				Inventory.target = h.name;
+				break;
+			} else {
+				if(debugMode){
+					Inventory.target = mousePos.x+', '+mousePos.y;
+				} else {
+					Inventory.target = '';
+				}
+			}
+		}
+	}
+
+	this.setupControls = function(){
+		var that = this;
+		$('canvas').not('#inv').on('click', function(e){
+			if(debugMode){
+				console.log('Click coordinates: '+e.offsetX+','+e.offsetY);
+			}
+			activePlayer.destX = e.offsetX; 
+			activePlayer.destY = e.offsetY;
+			for (var i = 0; i < that.transporters.length; i++) {
+				var s = that.transporters[i];
+				if(s.x <= e.offsetX && e.offsetX <= (s.x+s.w) && s.y <= e.offsetY && e.offsetY <= (s.y+s.h)){
+					if(debugMode){
+						console.log('Clicked Transporter for '+s.title);
+					}
+					s.intent = true;
+				} else {
+					s.intent = false;
+				}
+			}
+			activePlayer.moving = true;
+		});
+
+		$('canvas').not('#inv,#dialog').on('mouseout',function(e){
+			Inventory.updateCanvas();
+		});
+
+		$('canvas').not('#inv,#dialog').on('mousemove',function(e){
+			mousePos.x = e.offsetX;
+			mousePos.y = e.offsetY;
+			that.showHotspotText(mousePos, that.checkSpots);
+		});
+	}
+
+	this.init();
+}
+function Sprite(scene, actor, layer){
+	this.x;
+	this.y;
+	this.w;
+	this.h;
+	this.z;
+	this.scene = scene;
+	if (isset(actor) ) {
+		this.layer = layer.ctx;
+	};
+	this.actor = actor;
+	this.image = null;
+	this.scaleDiff = 1;
+	this.loaded = false;
+	this.loader = new PxLoader();
+	if(isset(actor.a)){
+		var x = actor.x;
+		var y = actor.y;
+		this.actor = actor.a;
+		this.actor.x = x;
+		this.actor.y = y;
+	} else {
+		this.actor.x = scene.spawnStart.x;
+		this.actor.y = scene.spawnStart.y;
+	}
+	
+	this.direction = this.actor.actions.stand.down;
+
+	this.init = function(){
+		var that = this;
+		this.loader.addImage(this.actor.path);
+		this.loader.start();
+		this.loader.addCompletionListener(function(e) {
+			that.image = e.resource.img;
+			that.loaded = true;
+			that.draw(that.actor.x, that.actor.y);
+		});
+	}
+
+	this.handleZ = function(){
+		if(this.z <= 0.95 && this.z >= 0.20){
+			this.scaleDiff = this.z;
+		} 
+	}
+
+	this.getBottomPos = function(x,y){
+		var b = {};
+		b.x = x + (this.w/2);
+		b.y = y+this.h;
+		return b;
+	}
+
+	this.draw = function(x,y){
+		if(this.loaded){
+			var up = this.direction[0];
+			this.x = x;
+			this.y = y;
+			this.h = up.height;
+			this.w = up.width;
+			this.clear();
+			this.layer.drawImage(this.image, up.x, up.y, up.width, up.height, this.x, this.y, up.width, up.height);
+		}
+	}
+
+	this.clear = function() {
+		var up = this.direction[0];
+		this.layer.clearRect(this.x, this.y, up.width, up.height);
+	}
+
+	this.init();
+}
+function SpriteBox(scene,layer,w,h,rgb){
+	// Sprite.call(this);
+	// this.prototype = new Sprite(scene);
+	this.w = w;
+	this.h = h;
+	this.scene = scene;
+	this.realH = h;
+	this.realW = w;
+	this.init = function(){
+		this.ctx = layer.ctx;
+		this.ctx.fillStyle = rgb;
+	}
+
+	this.draw = function(x,y){
+		// this.getBottomPos();
+		// this.handleZ();
+		this.x = x;
+		this.y = y;
+		this.h = parseInt(this.realH*this.scaleDiff);
+		this.w = parseInt(this.realW*this.scaleDiff);		
+		this.ctx.fillRect(this.x,this.y,this.w,this.h);
+	}
+
+	this.clear = function(){
+		this.ctx.clearRect(this.x,this.y,this.w,this.h);
+	}
+
+	this.init();
+}
+function Transporter(param,scene,layer){
+	this.destX;
+	this.destY;
+	this.curDir = {};
+	this.speed = 4;
+	this.moving = false;
+	this.intent = false;
+	this.type = 't';
+
+	this.init = function(param){		
+		this.x = param.x;
+		this.y = param.y;
+		this.origX = this.x;
+		this.origY = this.y;
+		this.w = param.w;
+		this.h = param.h;
+		this.title = param.title;
+		this.moving = false;
+		this.hspot = {
+			x0:this.x,
+			y0:this.y,
+			x1:this.x+this.w,
+			y1:this.y+this.h,
+			w:this.w,
+			h:this.h,
+			name:this.title
+		};
+		if(debugMode){
+			var rgb = "rgba(55,55,244,0.5)";
+		} else {
+			var rgb = "rgba(55,55,244,0)";
+		}
+		this.sprite = new SpriteBox(scene,layer,this.w,this.h,rgb);
+		this.sprite.draw(this.x,this.y);
+	}
+
+	this.transportMe = function(){
+		World.changeScene(param.link);
+		this.intent = false;
+	}
+
+	this.init(param);
+}
+function World(){
+	this.locations = world;
+
+	this.changeScene = function(ns){
+		activeScene.hide();
+		var newScene = new Scene(this.locations[ns]);
+		newScene.show();
+	}
+}
+var greenguy = {
+	name:"Dat Green Guy",
+	rgbBox:"rgb(23,227,70)",
+	w:100,
+	h:100
+};
+var luigi = {
+	name: 'luigi',
+	path: 'assets/actors/luigi/luigi.png',
+	actions: {
+		walk: {
+			up:[
+				{ width: 20, height: 33, x: 3, y: 123 },
+				{ width: 22, height: 36, x: 31, y: 120 },
+				{ width: 20, height: 33, x: 61, y: 123 },
+			],
+			down:[
+				{ width: 23, height: 35, x: 3, y: 2 },
+				{ width: 22, height: 37, x: 31, y: 0 },
+				{ width: 23, height: 35, x: 58, y: 2 },
+			],
+			right:[
+				{ width: 21, height: 36, x: 3, y: 81 },
+				{ width: 19, height: 37, x: 32, y: 80 },
+				{ width: 22, height: 36, x: 59, y: 81 },
+			],
+			left:[
+				{ width: 22, height: 36, x: 3, y: 41 },
+				{ width: 19, height: 37, x: 33, y: 40 },
+				{ width: 21, height: 36, x: 60, y: 41 },
+			],
+		},
+		stand: {
+			up:[
+				{ width: 22, height: 36, x: 31, y: 120 },
+			],
+			down:[
+				{ width: 22, height: 37, x: 31, y: 0 },
+			],
+			right:[
+				{ width: 19, height: 37, x: 32, y: 80 },
+			],
+			left:[
+				{ width: 19, height: 37, x: 33, y: 40 },
+			],
+		},
+	}
+};
+var mario = {
+	name: 'mario',
+	path: 'assets/actors/mario/mario.png',
+	actions: {
+		walk: {
+			up:[
+				{ width: 20, height: 33, x: 3, y: 123 },
+				{ width: 22, height: 36, x: 31, y: 120 },
+				{ width: 20, height: 33, x: 61, y: 123 },
+			],
+			down:[
+				{ width: 23, height: 35, x: 3, y: 2 },
+				{ width: 22, height: 37, x: 31, y: 0 },
+				{ width: 23, height: 35, x: 58, y: 2 },
+			],
+			right:[
+				{ width: 21, height: 36, x: 3, y: 81 },
+				{ width: 19, height: 37, x: 32, y: 80 },
+				{ width: 22, height: 36, x: 59, y: 81 },
+			],
+			left:[
+				{ width: 22, height: 36, x: 3, y: 41 },
+				{ width: 19, height: 37, x: 33, y: 40 },
+				{ width: 21, height: 36, x: 60, y: 41 },
+			],
+		},
+		stand: {
+			up:[
+				{ width: 22, height: 36, x: 31, y: 120 },
+			],
+			down:[
+				{ width: 22, height: 37, x: 31, y: 0 },
+			],
+			right:[
+				{ width: 19, height: 37, x: 32, y: 80 },
+			],
+			left:[
+				{ width: 19, height: 37, x: 33, y: 40 },
+			],
+		},
+	}
+};
+var new_guy = {
+	name:"Dat New Guy",
+	rgbBox:"rgb(43,227,70)",
+	w:50,
+	h:50
+};
+var introDialog = 
+[
+	{
+		t:'Welcome to ScummVM-clone',
+		d:3
+	},
+	{
+		t:'This is a work in progress, so expect literally nothing',
+		d:3
+	},
+	{
+		t:'But at least this little dialog works pretty well right?',
+		d:4
+	},
+	{
+		t:'Everything here is brought to the engine via JSON',
+		d:3
+	},
+	{
+		t:'At least that\'s the idea',
+		d:1.5
+	},
+	{
+		t:'Anyways, Enjoy!',
+		d:3
+	}
+]
+var mi1Street = {
+	imageLayers:[
+		{
+			type:'bg',
+			image:'assets/scenes/mi1street/street.png'
+		},
+		{
+			type:'transporter'
+		},
+		{
+			type:'transporter'
+		},
+		{
+			type:'player'
+		},
+		{
+			type:'sprite'
+		}
+	],
+	large:1,
+	largePadding:40,
+	persPoint:
+	{
+		x:579,
+		y:259
+	},
+	transporters:[
+		{
+			x:830,
+			y:250,
+			w:45,
+			h:70,
+			title:"SCUMM Bar",
+			link:1
+		},
+		{
+			x:344,
+			y:254,
+			w:20,
+			h:30,
+			title:"Test Room",
+			link:2
+		}
+	],
+	actors:[
+		{
+			a:mario,
+			t:'p',
+			x:600,
+			y:300
+		},
+		{
+			a:luigi,
+			t:'n',
+			x:158,
+			y:370
+		}
+	]
+};
+var scummbar = {
+	imageLayers:[
+		{
+			type:'bg',
+			image:'assets/scenes/scummbar/scummbar.png'
+		},
+		{
+			type:'transporter'
+		},
+		{
+			type:'player'
+		},
+		{
+			type:'sprite'
+		}
+	],
+	spawnStart:{
+		x:170,
+		y:300
+	},
+	large:2,
+	largePadding:10,
+	transporters:[
+		{
+			x:117,
+			y:280,
+			w:140,
+			h:180,
+			title:"Outside",
+			link:0
+		}
+	],
+	actors:[
+		{
+			a:mario,
+			t:'p',
+			x:600,
+			y:300
+		}
+	]
+};
+var test_room = {
+	imageLayers:[
+		{
+			type:'bg',
+			image:'assets/scenes/test_room/test_bg.jpg'
+		},
+		{
+			type:'transporter'
+		},
+		{
+			type:'player'
+		},
+		{
+			type:'sprite'
+		}
+	],
+	spawnStart:{
+		x:600,
+		y:300
+	},
+	large:1,
+	largePadding:40,
+	transporters:[
+		{
+			x:40,
+			y:330,
+			w:45,
+			h:70,
+			title:"Street",
+			link:0
+		}
+	],
+	actors:[
+		{
+			a:new_guy,
+			x:158,
+			y:370
+		}
+	]
+};
+var world = new Array();
+world[0] = 	mi1Street;
+world[1] = 	scummbar;
+world[2] = 	test_room;
+var mainWidth = 1024;
+var mainHeight = 768;
+var invHeight = 250;
+var sceneHeight = mainHeight - invHeight;
+
+playerSprite = mario;
+
+var debugMode = true;
+
+var Inventory = new Inventory();
+var World = new World();
+
+var introDialog = new Dialog(introDialog);
+var MI1City = new Scene(mi1Street);
+
+mainPreloader.addCompletionListener(function(e) {
+	MI1City.show();
+	introDialog.play();
+});
+ });
