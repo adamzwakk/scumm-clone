@@ -3,8 +3,6 @@ var mainHeight = 768;
 var invHeight = 250;
 var sceneHeight = mainHeight - invHeight;
 
-playerSprite = mario;
-
 var debugMode = true;
 
 var Inventory = new Inventory();
@@ -14,6 +12,7 @@ var introDialog = new Dialog(introDialog);
 var MI1City = new Scene(mi1Street);
 
 mainPreloader.addCompletionListener(function(e) {
+	playerSprite = mario;
 	MI1City.show();
 	introDialog.play();
 });

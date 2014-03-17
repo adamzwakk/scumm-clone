@@ -11,6 +11,9 @@ var mi1Street = {
 			type:'transporter'
 		},
 		{
+			type:'item'
+		},
+		{
 			type:'player'
 		},
 		{
@@ -40,6 +43,13 @@ var mi1Street = {
 			h:30,
 			title:"Test Room",
 			link:2
+		}
+	],
+	items:[
+		{
+			i:hammerItem,
+			x:352,
+			y:416
 		}
 	],
 	actors:[

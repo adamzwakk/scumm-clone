@@ -21,6 +21,7 @@ module.exports = function(grunt) {
                     'enginesrc/utils.js',
                     'enginesrc/Classes/*',
                     'enginesrc/controls.js',
+                    'gamesrc/objects/items/*',
                     'gamesrc/objects/actors/*',
                     'gamesrc/objects/dialogs/*',
                     'gamesrc/objects/scenes/*',
