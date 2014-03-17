@@ -25,6 +25,7 @@ function Scene(scene){
 	this.grid = new Array();
 	this.squareSize = 16;
 	this.graph;
+	this.graphCO = new Array();
 	this.walkLayer;
 	
 	this.init = function(){
@@ -49,7 +50,12 @@ function Scene(scene){
 			var l = new Layer('walkable',0,9999,this.width,this.height);
 			this.layers.push(l);
 			this.walkLayer = l.ctx;
+
 			var ctx = l.ctx;
+			var gridSize = {};
+			var curGrid = {};
+			var touchArray = new Array();
+			var touchArrayX;
 			ctx.beginPath();
 			for (var i = 0; i < scene.walkable.length; i++) {
 				var w = scene.walkable[i];
@@ -57,33 +63,37 @@ function Scene(scene){
 			}
 			if(debugMode){
 				ctx.fillStyle = "rgba(150,150,150,0.4)";
-				l.ctx.fill();
+				ctx.fill();
 			}
-			var gridSize = {};
-			var curGrid = {};
 			gridSize.x = parseInt(this.width/this.squareSize);
 			gridSize.y = parseInt(this.height/this.squareSize);
 			curGrid.x = 0
 			curGrid.y = 0;
-			var touchArray = new Array();
-			var touchArrayX;
 			for (var i = 0; i < gridSize.y; i++) {
 				curGrid.y = i*this.squareSize;
 				touchArrayX = new Array();
+				var thisXGrid = new Array();
 				for (var j = 0; j < gridSize.x; j++) {
-					//on x axis
 					var s = {};
+					var p;
 					s.x0 = j*this.squareSize;
 					s.y0 = curGrid.y;
 					s.x1 = (j*this.squareSize)+this.squareSize;
 					s.y1 = curGrid.y+this.squareSize;
+					s.posY = touchArray.length;
+					s.posX = touchArrayX.length;
 					curGrid.x = j*this.squareSize;
 					if(this.walkLayer.isPointInPath(s.x0,s.y0) || this.walkLayer.isPointInPath(s.x1,s.y1)){
 						touchArrayX.push(1);
+						s.p = 1;
 					} else {
 						touchArrayX.push(0);
+						s.p = 0;
 					}
+					thisXGrid.push(s);
+
 				}
+				this.graphCO.push(thisXGrid);
 				touchArray.push(touchArrayX);
 			}
 			this.graph = new Graph(touchArray);
@@ -268,12 +278,47 @@ function Scene(scene){
 		}
 	}
 
+	this.findPath = function(){
+		var gridStart;
+		var gridEnd;
+		var start;
+		var end;
+		var ppos = {};
+		ppos.x = activePlayer.sprite.x+(activePlayer.sprite.w/2);
+		ppos.y = activePlayer.sprite.y+(activePlayer.sprite.h);
+		startPath:
+		for (var i = 0; i < this.graphCO.length; i++) {
+			for (var j = 0; j < this.graphCO[i].length; j++) {
+				var h = this.graphCO[i][j];
+
+				if(h.x0 <= ppos.x && ppos.x <= h.x1 && h.y0 <= ppos.y && ppos.y <= h.y1){
+					gridStart = h;
+					break startPath;
+				}
+			};
+		};
+		endPath:
+		for (var i = 0; i < this.graphCO.length; i++) {
+			for (var j = 0; j < this.graphCO[i].length; j++) {
+				var h = this.graphCO[i][j];
+				if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
+					gridEnd = h;
+					break endPath;
+				}
+			};
+		};
+		start = this.graph.nodes[gridStart.posY][gridStart.posX];
+		end = this.graph.nodes[gridEnd.posY][gridEnd.posX];
+		var result = astar.search(this.graph.nodes, start, end);
+	}
+
 	this.setupControls = function(){
 		var that = this;
 		$('canvas').not('#inv,#dialog,#actions').on('click', function(e){
 			if(debugMode){
 				console.log('Click coordinates: '+e.offsetX+','+e.offsetY);
 			}
+			var currentPath = that.findPath();
 			activePlayer.destX = e.offsetX; 
 			activePlayer.destY = e.offsetY;
 			for (var i = 0; i < that.transporters.length; i++) {
