@@ -278,6 +278,21 @@ function Scene(scene){
 		}
 	}
 
+	this.findGraphPos = function(ppos){
+		var gridPos;
+		findPos:
+		for (var i = 0; i < this.graphCO.length; i++) {
+			for (var j = 0; j < this.graphCO[i].length; j++) {
+				var h = this.graphCO[i][j];
+				if(h.x0 <= ppos.x && ppos.x <= h.x1 && h.y0 <= ppos.y && ppos.y <= h.y1){
+					gridPos = h;
+					break findPos;
+				}
+			};
+		};
+		return gridPos;
+	}
+
 	this.findPath = function(){
 		var gridStart;
 		var gridEnd;
@@ -286,35 +301,20 @@ function Scene(scene){
 		var ppos = {};
 		ppos.x = activePlayer.sprite.x+(activePlayer.sprite.w/2);
 		ppos.y = activePlayer.sprite.y+(activePlayer.sprite.h);
-		startPath:
-		for (var i = 0; i < this.graphCO.length; i++) {
-			for (var j = 0; j < this.graphCO[i].length; j++) {
-				var h = this.graphCO[i][j];
+		gridStart = this.findGraphPos(ppos);
+		gridEnd = this.findGraphPos(mousePos);
 
-				if(h.x0 <= ppos.x && ppos.x <= h.x1 && h.y0 <= ppos.y && ppos.y <= h.y1){
-					gridStart = h;
-					break startPath;
-				}
-			};
-		};
-		endPath:
-		for (var i = 0; i < this.graphCO.length; i++) {
-			for (var j = 0; j < this.graphCO[i].length; j++) {
-				var h = this.graphCO[i][j];
-				if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
-					gridEnd = h;
-					break endPath;
-				}
-			};
-		};
 		start = this.graph.nodes[gridStart.posY][gridStart.posX];
 		end = this.graph.nodes[gridEnd.posY][gridEnd.posX];
 		var result = astar.search(this.graph.nodes, start, end);
+		console.log(result);
 	}
 
 	this.setupControls = function(){
 		var that = this;
 		$('canvas').not('#inv,#dialog,#actions').on('click', function(e){
+			mousePos.x = e.offsetX;
+			mousePos.y = e.offsetY;
 			if(debugMode){
 				console.log('Click coordinates: '+e.offsetX+','+e.offsetY);
 			}
