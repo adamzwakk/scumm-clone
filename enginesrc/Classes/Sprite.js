@@ -24,7 +24,11 @@ function Sprite(scene, actor, layer){
 		this.actor.y = scene.spawnStart.y;
 	}
 	
-	this.direction = this.actor.actions.stand.down;
+	this.direction = this.actor.actions.walk.down;
+	this.directionFrameLenght = this.direction.length;
+	this.directionFrameIndex = 0;
+	this.UpdateDelayCount = 3;
+	this.UpdateDelayIndex = 0;
 
 	this.init = function(){
 		var that = this;
@@ -50,9 +54,49 @@ function Sprite(scene, actor, layer){
 		return b;
 	}
 
-	this.draw = function(x,y){
+	this.updateDirectionFrameIndex = function(){
+		if(this.UpdateDelayCount != this.UpdateDelayIndex){
+			this.UpdateDelayIndex++;
+			return;
+		}
+
+		if(this.directionFrameIndex >= this.directionFrameLenght - 1){
+			this.directionFrameIndex = 0;
+		}else{
+			this.directionFrameIndex++;
+		}
+
+		this.UpdateDelayIndex = 0;
+	}
+
+	this.updateDirection = function(curDir){
+		if( ! isset(curDir) ) return;
+
+		switch (true) {
+			case curDir.y < 0 && curDir.x > 0:
+				this.direction = this.actor.actions.walk.up;
+				break;
+			case curDir.y > 0 && curDir.x < 0:
+				this.direction = this.actor.actions.walk.down;
+				break;
+			case curDir.x > 0:
+				this.direction = this.actor.actions.walk.right;
+				break;
+			case curDir.x < 0:
+				this.direction = this.actor.actions.walk.left;
+				break;
+		}
+
+	}
+
+	this.draw = function(x, y, curDir){
+
 		if(this.loaded){
-			var up = this.direction[0];
+			
+			this.updateDirection(curDir);
+			this.updateDirectionFrameIndex();
+
+			var up = this.direction[ this.directionFrameIndex ];
 			this.x = x;
 			this.y = y;
 			this.h = up.height;
@@ -63,7 +107,7 @@ function Sprite(scene, actor, layer){
 	}
 
 	this.clear = function() {
-		var up = this.direction[0];
+		var up = this.direction[ this.directionFrameIndex ];
 		this.layer.clearRect(this.x, this.y, up.width, up.height);
 	}
 

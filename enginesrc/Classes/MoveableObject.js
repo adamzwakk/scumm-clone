@@ -35,7 +35,7 @@ function MoveableObject(){
 
 			if(calDest.x !== 0 || calDest.y !== 0){
 				this.sprite.clear();
-				this.sprite.draw(newX, newY);
+				this.sprite.draw(newX, newY, this.curDir);
 				this.zHandler();
 				this.x = newX;
 				this.y = newY;

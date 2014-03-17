@@ -19,6 +19,6 @@ function InventoryItem(item,l){
 
 	this.spawn = function(){
 		console.log(this);
-		this.layer.ctx.drawImage(this.image, 0, 0, 500, 500, this.x, this.y, this.w, this.h);
+		this.layer.ctx.drawImage(this.image, 0, 0, this.w, this.h, this.x, this.y, this.w, this.h);
 	}
 }
