@@ -4,6 +4,8 @@ function Scene(scene){
 	this.spriteLayers = new Array();
 	this.transportLayers = new Array();
 	this.transporters = new Array();
+	this.itemLayers = new Array();
+	this.items = new Array();
 	this.actors = new Array();
 	this.checkSpots = new Array();
 	this.images = new Array();
@@ -25,7 +27,7 @@ function Scene(scene){
 		var that = this;
 		this.preloadLayers();
 		this.loader.addCompletionListener(function(e) {
-			that.images.push(e.resource.img); 
+			that.images.push(e.resource.img);
 			that.getLayers();
 			that.padding = scene.largePadding;
 			that.scrollable = (isset(scene.large) || !scene.large) ? true : false;
@@ -39,7 +41,6 @@ function Scene(scene){
 
 	this.preloadLayers = function(){
 		var json = scene.imageLayers;
-		var ti = new Array();
 		for (var key in json) {
 			var obj = json[key];
 			if(obj.type == 'bg'){
@@ -68,6 +69,9 @@ function Scene(scene){
 			} else if(obj.type == 'player'){
 				l = new Layer('player',0,9999,this.width,this.height);
 				this.playerLayer = l;
+			} else if(obj.type == 'item'){
+				l = new Layer('item'+count,0,9999,this.width,this.height);
+				this.itemLayers.push(l);
 			}
 			this.layers.push(l);
 			count++;
@@ -75,6 +79,7 @@ function Scene(scene){
 		activeScene = this;
 		this.getTransporters();
 		this.getActors();
+		this.getItems();
 	}
 
 	this.getTransporters = function(){
@@ -103,6 +108,28 @@ function Scene(scene){
 				var player = new Player(this,obj,0);
 			}
 		}
+	}
+
+	this.getItems = function(){
+		var json = scene.items;
+		var that = this;
+		var loader = new PxLoader();
+		for (var key in json) {
+			var obj = json[key];
+			loader.addImage(obj.i.image);
+		}
+		loader.start();
+		loader.addCompletionListener(function(e) {
+			for (var key in json) {
+				var obj = json[key];
+				var l = that.itemLayers[key];
+				var i = new InventoryItem(obj,l);
+				i.image = e.resource.img;
+				i.spawn();
+				that.items.push(i);
+				that.checkSpots.push(i);
+			}
+		});
 	}
 
 	this.move = function(){
