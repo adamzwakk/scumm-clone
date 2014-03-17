@@ -83,8 +83,8 @@ function Scene(scene){
 					s.y0 = curGrid.y;
 					s.x1 = (j*this.squareSize)+this.squareSize;
 					s.y1 = curGrid.y+this.squareSize;
-					s.posY = touchArray.length;
-					s.posX = touchArrayX.length;
+					s.posY = i;
+					s.posX = j;
 					curGrid.x = j*this.squareSize;
 					if(this.walkLayer.isPointInPath(s.x0,s.y0) || this.walkLayer.isPointInPath(s.x1,s.y1)){
 						touchArrayX.push(1);
@@ -227,7 +227,6 @@ function Scene(scene){
 			if(this.large == 2){
 				var s = activePlayer;
 				if(!this.moving){
-					console.log('STOP MOVING');
 					s.moving = false;
 				} else if(s.cX !== 0 || s.cY !== 0) {
 					if(s.constructor.name == 'Player'){
@@ -312,21 +311,22 @@ function Scene(scene){
 			end = this.graph.nodes[gridEnd.posY][gridEnd.posX];
 			result = astar.search(this.graph.nodes, start, end);
 		}
-		console.log(result);
 		return result;
 	}
 
 	this.nodeToXY = function(cp){
+		var node2get;
+		foundNode:
 		for (var i = 0; i < this.graphCO.length; i++) {
 			for (var j = 0; j < this.graphCO[i].length; j++) {
 				var h = this.graphCO[i][j];
-				if(h.p == 1 && h.posY == cp.y){
-					console.log('dfgdfgdf');
-					break;
+				if(h.posX == cp.y && h.posY == cp.x){
+					node2get = h;
 				}
 				
 			}
 		}
+		return node2get;
 	}
 
 	this.setupControls = function(){
@@ -339,9 +339,14 @@ function Scene(scene){
 			}
 			var currentPath = that.findPath();
 			if(currentPath.length > 0){
+				if(debugMode){
+					var mc = that.findGraphPos(mousePos);
+					console.log('Grid coordinates: '+mc.posX+', '+mc.posY);
+				}
 				var pathQueue = new Array();
 				for (var i = 0; i < currentPath.length; i++) {
 					var q = that.nodeToXY(currentPath[i]);
+					activePlayer.moveQueue.push(q);
 				};
 
 				activePlayer.destX = e.offsetX;

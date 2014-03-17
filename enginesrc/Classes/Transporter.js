@@ -1,21 +1,13 @@
 function Transporter(param,scene,layer){
-	this.destX;
-	this.destY;
-	this.curDir = {};
-	this.speed = 4;
-	this.moving = false;
 	this.intent = false;
 	this.type = 't';
 
 	this.init = function(param){		
 		this.x = param.x;
 		this.y = param.y;
-		this.origX = this.x;
-		this.origY = this.y;
 		this.w = param.w;
 		this.h = param.h;
 		this.title = param.title;
-		this.moving = false;
 		this.hspot = {
 			x0:this.x,
 			y0:this.y,

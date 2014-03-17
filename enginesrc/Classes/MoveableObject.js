@@ -3,9 +3,10 @@ function MoveableObject(){
 	this.destY;
 	this.curDir = {};
 	this.hspot;
+	this.moveQueue = new Array();
 
 	this.move = function(dt){
-		if(this.moving){
+		if(this.moving && this.moveQueue.length > 0){
 			var src = {x:this.x,y:this.y};
 
 			if(this.type == 'p'){
