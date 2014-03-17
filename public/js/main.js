@@ -280,7 +280,7 @@ function MoveableObject(){
 
 			if(calDest.x !== 0 || calDest.y !== 0){
 				this.sprite.clear();
-				this.sprite.draw(newX, newY);
+				this.sprite.draw(newX, newY, this.curDir);
 				this.zHandler();
 				this.x = newX;
 				this.y = newY;
@@ -645,11 +645,32 @@ function Sprite(scene, actor, layer){
 		this.UpdateDelayIndex = 0;
 	}
 
-	this.draw = function(x,y){
+	this.updateDirection = function(curDir){
+		if( ! isset(curDir) ) return;
+
+		switch (true) {
+			case curDir.y < 0 && curDir.x > 0:
+				this.direction = this.actor.actions.walk.up;
+				break;
+			case curDir.y > 0 && curDir.x < 0:
+				this.direction = this.actor.actions.walk.down;
+				break;
+			case curDir.x > 0:
+				this.direction = this.actor.actions.walk.right;
+				break;
+			case curDir.x < 0:
+				this.direction = this.actor.actions.walk.left;
+				break;
+		}
+
+	}
+
+	this.draw = function(x, y, curDir){
 
 		if(this.loaded){
-
-			this.updateDirectionFrameIndex()
+			
+			this.updateDirection(curDir);
+			this.updateDirectionFrameIndex();
 
 			var up = this.direction[ this.directionFrameIndex ];
 			this.x = x;
