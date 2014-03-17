@@ -3,3 +3,4 @@
 bower_components/
 public/assets/
 node_modules/
+public/js/main.js
