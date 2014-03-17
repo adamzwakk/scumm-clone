@@ -219,7 +219,7 @@ function Scene(scene){
 
 	this.setupControls = function(){
 		var that = this;
-		$('canvas').not('#inv').on('click', function(e){
+		$('canvas').not('#inv,#dialog,#actions').on('click', function(e){
 			if(debugMode){
 				console.log('Click coordinates: '+e.offsetX+','+e.offsetY);
 			}
@@ -239,11 +239,11 @@ function Scene(scene){
 			activePlayer.moving = true;
 		});
 
-		$('canvas').not('#inv,#dialog').on('mouseout',function(e){
+		$('canvas').not('#inv,#dialog,#actions').on('mouseout',function(e){
 			Inventory.updateCanvas();
 		});
 
-		$('canvas').not('#inv,#dialog').on('mousemove',function(e){
+		$('canvas').not('#inv,#dialog,#actions').on('mousemove',function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
 			that.showHotspotText(mousePos, that.checkSpots);
