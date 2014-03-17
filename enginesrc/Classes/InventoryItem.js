@@ -1,12 +1,14 @@
 function InventoryItem(item,l){
 	this.pickedUp;
 	this.image;
+	this.intent = false;
 
 	this.x = item.x;
 	this.y = item.y;
 	this.w = item.i.w;
 	this.h = item.i.h;
 	this.layer = l;
+	this.name = item.i.name;
 	this.hspot = {
 		x0:this.x,
 		y0:this.y,
@@ -19,5 +21,16 @@ function InventoryItem(item,l){
 
 	this.spawn = function(){
 		this.layer.ctx.drawImage(this.image, 0, 0, this.w, this.h, this.x, this.y, this.w, this.h);
+	}
+
+	this.checkClick = function(e){
+		if(this.x <= e.offsetX && e.offsetX <= (this.x+this.w) && this.y <= e.offsetY && e.offsetY <= (this.y+this.h)){
+			if(debugMode){
+				console.log('Clicked Item '+this.name);
+			}
+			this.intent = true;
+		} else {
+			this.intent = false;
+		}
 	}
 }

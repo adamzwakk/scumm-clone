@@ -4,7 +4,6 @@ function Action(w,h,type,key,layer){
 	this.hoverColor = 'lightblue';
 	this.color = this.normalColor;
 
-
 	this.init = function(){
 		this.layer = layer;
 		this.type = type;

@@ -45,12 +45,7 @@ function MoveableObject(){
 				delete this.curDir.y;
 				this.moving = false;
 				if(this.type == 'p'){
-					for (var i = 0; i < activeTransporters.length; i++) {
-						var t = activeTransporters[i];
-						if(t.intent){
-							t.transportMe();
-						}
-					}
+					activePlayer.whatDoOnStop();
 				}
 			}
 		}

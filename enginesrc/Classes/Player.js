@@ -34,5 +34,14 @@ function Player(scene,params,key){
 		}
 	}
 
+	this.whatDoOnStop = function(){
+		for (var i = 0; i < activeTransporters.length; i++) {
+			var t = activeTransporters[i];
+			if(t.intent && t.withinPadding(this)){
+				t.transportMe();
+			}
+		}
+	}
+
 	this.init();
 }
