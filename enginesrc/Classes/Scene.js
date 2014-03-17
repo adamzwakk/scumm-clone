@@ -67,6 +67,9 @@ function Scene(scene){
 			}
 			gridSize.x = parseInt(this.width/this.squareSize);
 			gridSize.y = parseInt(this.height/this.squareSize);
+			if(debugMode){
+				console.log('Creating Grid '+gridSize.x+', '+gridSize.y);
+			}
 			curGrid.x = 0
 			curGrid.y = 0;
 			for (var i = 0; i < gridSize.y; i++) {
@@ -284,7 +287,7 @@ function Scene(scene){
 		for (var i = 0; i < this.graphCO.length; i++) {
 			for (var j = 0; j < this.graphCO[i].length; j++) {
 				var h = this.graphCO[i][j];
-				if(h.x0 <= ppos.x && ppos.x <= h.x1 && h.y0 <= ppos.y && ppos.y <= h.y1){
+				if(h.p == 1 && h.x0 <= ppos.x && ppos.x <= h.x1 && h.y0 <= ppos.y && ppos.y <= h.y1){
 					gridPos = h;
 					break findPos;
 				}
@@ -299,15 +302,31 @@ function Scene(scene){
 		var start;
 		var end;
 		var ppos = {};
+		var result = new Array();
 		ppos.x = activePlayer.sprite.x+(activePlayer.sprite.w/2);
 		ppos.y = activePlayer.sprite.y+(activePlayer.sprite.h);
 		gridStart = this.findGraphPos(ppos);
 		gridEnd = this.findGraphPos(mousePos);
-
-		start = this.graph.nodes[gridStart.posY][gridStart.posX];
-		end = this.graph.nodes[gridEnd.posY][gridEnd.posX];
-		var result = astar.search(this.graph.nodes, start, end);
+		if(isset(gridEnd)){
+			start = this.graph.nodes[gridStart.posY][gridStart.posX];
+			end = this.graph.nodes[gridEnd.posY][gridEnd.posX];
+			result = astar.search(this.graph.nodes, start, end);
+		}
 		console.log(result);
+		return result;
+	}
+
+	this.nodeToXY = function(cp){
+		for (var i = 0; i < this.graphCO.length; i++) {
+			for (var j = 0; j < this.graphCO[i].length; j++) {
+				var h = this.graphCO[i][j];
+				if(h.p == 1 && h.posY == cp.y){
+					console.log('dfgdfgdf');
+					break;
+				}
+				
+			}
+		}
 	}
 
 	this.setupControls = function(){
@@ -319,20 +338,28 @@ function Scene(scene){
 				console.log('Click coordinates: '+e.offsetX+','+e.offsetY);
 			}
 			var currentPath = that.findPath();
-			activePlayer.destX = e.offsetX; 
-			activePlayer.destY = e.offsetY;
-			for (var i = 0; i < that.transporters.length; i++) {
-				var s = that.transporters[i];
-				if(s.x <= e.offsetX && e.offsetX <= (s.x+s.w) && s.y <= e.offsetY && e.offsetY <= (s.y+s.h)){
-					if(debugMode){
-						console.log('Clicked Transporter for '+s.title);
+			if(currentPath.length > 0){
+				var pathQueue = new Array();
+				for (var i = 0; i < currentPath.length; i++) {
+					var q = that.nodeToXY(currentPath[i]);
+				};
+
+				activePlayer.destX = e.offsetX;
+				activePlayer.destY = e.offsetY;
+				
+				for (var i = 0; i < that.transporters.length; i++) {
+					var s = that.transporters[i];
+					if(s.x <= e.offsetX && e.offsetX <= (s.x+s.w) && s.y <= e.offsetY && e.offsetY <= (s.y+s.h)){
+						if(debugMode){
+							console.log('Clicked Transporter for '+s.title);
+						}
+						s.intent = true;
+					} else {
+						s.intent = false;
 					}
-					s.intent = true;
-				} else {
-					s.intent = false;
 				}
+				activePlayer.moving = true;
 			}
-			activePlayer.moving = true;
 		});
 
 		$('canvas').not('#inv,#dialog,#actions').on('mouseout',function(e){
