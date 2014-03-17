@@ -57,11 +57,9 @@ function Inventory(){
 				var h = that.actions[i];
 				if(h.mouseOn(e)){
 					h.color = h.hoverColor;
-					h.clear();
 					h.draw(h.x,h.y);
 				} else {
 					h.color = h.normalColor;
-					h.clear();
 					h.draw(h.x,h.y);
 				}
 			};	
