@@ -17,10 +17,6 @@ var mi1Street = {
 			type:'sprite'
 		}
 	],
-	spawnStart:{
-		x:600,
-		y:300
-	},
 	large:1,
 	largePadding:40,
 	persPoint:
@@ -48,7 +44,14 @@ var mi1Street = {
 	],
 	actors:[
 		{
+			a:mario,
+			t:'p',
+			x:600,
+			y:300
+		},
+		{
 			a:luigi,
+			t:'n',
 			x:158,
 			y:370
 		}

@@ -6,15 +6,11 @@ function Actor(scene,params,key){
 	this.moving = false;
 	this.type = 'a';
 	if(isset(params)){
-		if(isset(params.a)){
-			this.a = params.a;
-			this.x = params.x;
-			this.y = params.y;
-			this.w = this.a.actions.stand.down[0].width;
-			this.h = this.a.actions.stand.down[0].height;
-		} else {
-			this.a = params;
-		}			
+		this.a = params.a;
+		this.x = params.x;
+		this.y = params.y;
+		this.w = this.a.actions.stand.down[0].width;
+		this.h = this.a.actions.stand.down[0].height;		
 	
 		this.hspot = {
 			x0:this.x,
@@ -26,10 +22,8 @@ function Actor(scene,params,key){
 			name:this.a.name
 		};
 
-		if(isset(key)){
-			this.x = scene.orig.actors[key].x;
-			this.y = scene.orig.actors[key].y;
-		}
+		this.x = scene.orig.actors[key].x;
+		this.y = scene.orig.actors[key].y;
 		
 	}
 

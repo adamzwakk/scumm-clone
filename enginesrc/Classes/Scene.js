@@ -17,6 +17,9 @@ function Scene(scene){
 	this.loader = new PxLoader();
 	this.orig = scene;
 	this.x = 0;
+	this.spawnStart = {};
+	this.spawnStart.x = scene.actors[0].x;
+	this.spawnStart.y = scene.actors[0].y;
 	
 	this.init = function(){
 		var that = this;
@@ -27,12 +30,10 @@ function Scene(scene){
 			that.padding = scene.largePadding;
 			that.scrollable = (isset(scene.large) || !scene.large) ? true : false;
 			that.persPoint = scene.persPoint;
-			that.spawnStart = scene.spawnStart;
 			that.large = scene.large;
 			if(isset(scene.persPoint)){
 				that.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
 			}
-			var player = new Player(that);
 		});
 	}
 
@@ -92,11 +93,15 @@ function Scene(scene){
 		var json = scene.actors;
 		for (var key in json) {
 			var obj = json[key];
-			var a = new Actor(this,obj,key);
-			a.spawn(this.spriteLayers[key]);
-			this.actors.push(a);
-			this.checkSpots.push(a);
-			activeSprites.push(a);
+			if(obj.t == 'n'){
+				var a = new Actor(this,obj,key);
+				a.spawn(this.spriteLayers[key-1]);
+				this.actors.push(a);
+				this.checkSpots.push(a);
+				activeSprites.push(a);
+			} else {
+				var player = new Player(this,obj,0);
+			}
 		}
 	}
 
@@ -129,23 +134,20 @@ function Scene(scene){
 			}
 
 			if(this.large == 2){
-				for (var i = 0; i < activeSprites.length; i++) {
-					var s = activeSprites[i];
-					console.log(s.cX);
-					if(!this.moving){
-						console.log('STOP MOVING');
-						s.moving = false;
-					} else if(s.cX !== 0 || s.cY !== 0) {
-						if(s.constructor.name == 'Player'){
-							var pMovePadding = this.padding+150;
-							if(this.scroll == 'r'){
-								s.destX = -scrollRightX+pMovePadding;
-							} else if(this.scroll == 'l'){
-								s.destX = -scrollLeftX+mainWidth-pMovePadding;
-							}
+				var s = activePlayer;
+				if(!this.moving){
+					console.log('STOP MOVING');
+					s.moving = false;
+				} else if(s.cX !== 0 || s.cY !== 0) {
+					if(s.constructor.name == 'Player'){
+						var pMovePadding = this.padding+150;
+						if(this.scroll == 'r'){
+							s.destX = -scrollRightX+pMovePadding;
+						} else if(this.scroll == 'l'){
+							s.destX = -scrollLeftX+mainWidth-pMovePadding;
 						}
-						s.moving = true;
 					}
+					s.moving = true;
 				}
 			}
 		}

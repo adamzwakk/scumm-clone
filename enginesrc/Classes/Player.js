@@ -1,6 +1,6 @@
-function Player(scene){
+function Player(scene,params,key){
 	Actor.call(this);
-	
+	this.prototype = new Actor(scene,params,key);
 	this.x = scene.spawnStart.x;
 	this.y = scene.spawnStart.y;
 	this.scene = scene;
@@ -8,7 +8,6 @@ function Player(scene){
 	activePlayer = this;
 	this.type = 'p';
 	this.actor = playerSprite;
-	this.prototype = new Actor(scene,playerSprite);
 	this.init = function(){
 		this.sprite = new Sprite(this.scene, this.actor, this.scene.playerLayer);
 		this.sprite.draw(this.x,this.y);

@@ -29,5 +29,13 @@ var scummbar = {
 			title:"Outside",
 			link:0
 		}
+	],
+	actors:[
+		{
+			a:mario,
+			t:'p',
+			x:600,
+			y:300
+		}
 	]
 };
