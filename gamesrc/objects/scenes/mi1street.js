@@ -89,6 +89,7 @@ var mi1Street = {
 		x:579,
 		y:259
 	},
+	persThreshold:[3,1.5],
 	transporters:[
 		{
 			x:830,

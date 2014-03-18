@@ -38,6 +38,9 @@ function Scene(scene){
 			that.padding = scene.largePadding;
 			that.scrollable = (isset(scene.large) || !scene.large) ? true : false;
 			that.persPoint = scene.persPoint;
+			if(isset(scene.persThreshold)){
+				that.persThreshold = new Array(scene.persThreshold[0],scene.persThreshold[1]);
+			}
 			that.large = scene.large;
 			if(isset(scene.persPoint)){
 				that.horizonLine = ((mainHeight - invHeight) - scene.persPoint.y);
