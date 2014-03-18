@@ -4,6 +4,16 @@ I'm trying to somewhat recreate an engine like ScummVM that allows developers to
 
 My main priority is to seperate the main engine code, and the actual game/asset code. Everything in the gamesrc folder is configured via JSON objects.
 
+You will need grunt and bower to install dependencies and build the demo project with the engine.
+
+```
+npm install -g bower
+npm install -g grunt-cli
+npm install
+bower update
+grunt dist
+```
+
 ###Folders
 
 - enginesrc = main code
@@ -25,6 +35,10 @@ It also has the ability to have a perspective point, so actors will get smaller 
 ######Actor
 
 An actor is a character on the scene, including the main player. Actors can move freely on the scene background. Only player actors can use transporters.
+
+######Sprite
+
+Where the different sprites live for the actor, support multiple frames per action (walking, talking, etc).
 
 
 ######Transporter
