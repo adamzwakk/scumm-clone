@@ -24,7 +24,7 @@ function Sprite(scene, actor, layer){
 		this.actor.y = scene.spawnStart.y;
 	}
 	
-	this.direction = this.actor.actions.stand.down;
+	this.direction = this.actor.actions.walk.down;
 	this.directionFrameLenght = this.direction.length;
 	this.directionFrameIndex = 0;
 	this.UpdateDelayCount = 3;
@@ -49,7 +49,6 @@ function Sprite(scene, actor, layer){
 			if(isset(activeScene.persThreshold) && this.z <= activeScene.persThreshold[0] && this.z >= activeScene.persThreshold[1]){
 				this.scaleDiff = this.z;
 			}
-			console.log(this.z);
 		}
 	}
 
