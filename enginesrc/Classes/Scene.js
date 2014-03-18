@@ -308,7 +308,11 @@ function Scene(scene){
 		var result = new Array();
 		ppos.x = activePlayer.sprite.x+(activePlayer.sprite.realW/2);
 		ppos.y = activePlayer.sprite.y+(activePlayer.sprite.realH);
+		if(ppos.y > sceneHeight){
+			ppos.y = sceneHeight-10;
+		}
 		gridStart = this.findGraphPos(ppos);
+		console.log(ppos);
 		gridEnd = this.findGraphPos(playerDest);
 		if(isset(gridEnd)){
 			start = this.graph.nodes[gridStart.posY][gridStart.posX];

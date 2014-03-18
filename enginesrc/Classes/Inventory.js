@@ -82,7 +82,7 @@ function Inventory(){
 		});
 
 		$('canvas#invItems').on('mousemove',function(e){
-			for (var i = 0; i < this.items.length; i++) {
+			for (var i = 0; i < that.items.length; i++) {
 				var it = this.items[i];
 			};
 		});
