@@ -49,7 +49,7 @@ function Player(scene,params,key){
 		}
 		for (var i = 0; i < activeItems.length; i++) {
 			var i = activeItems[i];
-			if(i.intent && i.withinPadding(this.sprite.hspot)){
+			if(i.intent && i.withinPadding(this.sprite.hspot) && Inventory.textAction == Inventory.possibleActions[1]){
 				i.pickMeUp();
 			}
 		};

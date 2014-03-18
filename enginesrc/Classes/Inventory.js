@@ -1,5 +1,5 @@
 function Inventory(){
-	this.items = {};
+	this.items = new Array();
 	this.possibleActions = new Array('Walk to ','Pick Up ','Talk To ');
 	this.textAction = this.possibleActions[0];
 	this.target = '';
@@ -42,7 +42,7 @@ function Inventory(){
 				startX = 10;
 			} else {
 				startX += w+startX;
-			}	
+			}
 		}
 
 		$('canvas#actions').on('click',function(e){
@@ -78,6 +78,11 @@ function Inventory(){
 		$('#container').append(this.itemArea.canvas);
 	}
 
+	this.addItem = function(i){
+		this.items.push(i);
+		i.layer.canvas.remove();
+	}
+
 	this.updateInfoText = function(){
 		var finalText = this.textAction+this.target;
 		this.ctx.textAlign = 'center';
@@ -91,14 +96,48 @@ function Inventory(){
 		this.draw();
 	}
 
+	this.drawItems = function(){
+		var ctx = this.itemArea.ctx;
+		var x,y;
+		var startX = 10;
+		var startY = 10;
+		var w = 150;
+		var h = 80;
+		for (var i = 0; i < 12; i++) {
+			ctx.beginPath();
+			ctx.rect(startX,startY,w,h);
+			ctx.lineWidth = 2;
+			ctx.strokeStyle = 'lightblue';
+			ctx.stroke();
+
+			if(isset(this.items[i])){
+				var it = this.items[i];
+				it.layer = this.itemArea;
+				it.drawInv(w,h,startX,startY);
+			}
+
+			if(i && i%2 === 0){
+				startY += h+startY;
+				startX = 10;
+			} else {
+				startX += w+10;
+			}
+		}
+	}
+
 	this.draw = function(){
 		this.updateInfoText();
+		this.drawItems();
 	}
 
 	this.clear = function(){
 		this.ctx.clearRect(0,0,mainWidth,this.textHeight);
 		this.ctx.fillStyle = "black";
 		this.ctx.fillRect(0, 0, mainWidth, invHeight);
+
+		this.itemArea.ctx.clearRect(0,0,mainWidth,this.textHeight);
+		this.itemArea.ctx.fillStyle = "black";
+		this.itemArea.ctx.fillRect(0, 0, mainWidth, invHeight);
 	}
 
 	this.init();
