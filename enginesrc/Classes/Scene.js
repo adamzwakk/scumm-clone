@@ -169,8 +169,6 @@ function Scene(scene){
 				var a = new Actor(this,obj,key);
 				a.spawn(this.spriteLayers[key-1]);
 				this.actors.push(a);
-				a.spotIndex = this.checkSpots.push(a);
-				activeSprites.push(a);
 			} else {
 				var player = new Player(this,obj,0);
 			}
@@ -312,7 +310,6 @@ function Scene(scene){
 			ppos.y = sceneHeight-10;
 		}
 		gridStart = this.findGraphPos(ppos);
-		console.log(ppos);
 		gridEnd = this.findGraphPos(playerDest);
 		if(isset(gridEnd)){
 			start = this.graph.nodes[gridStart.posY][gridStart.posX];

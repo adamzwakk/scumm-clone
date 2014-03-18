@@ -13,6 +13,7 @@ function Sprite(scene, actor, layer){
 	this.scaleDiff = 1;
 	this.loaded = false;
 	this.loader = new PxLoader();
+	this.hspot;
 	if(isset(actor.a)){
 		var x = actor.x;
 		var y = actor.y;
@@ -20,6 +21,7 @@ function Sprite(scene, actor, layer){
 		this.actor.x = x;
 		this.actor.y = y;
 	} else {
+		// main player
 		this.actor.x = scene.spawnStart.x;
 		this.actor.y = scene.spawnStart.y;
 	}
@@ -111,11 +113,10 @@ function Sprite(scene, actor, layer){
 			this.realH = this.h*this.scaleDiff;
 			this.realW = this.w*this.scaleDiff;
 
-			this.hspot = {
-				x0:this.x,
-				x1:this.x+this.w,
-				y0:this.y,
-				y1:this.y+this.h
+			if(!isset(this.hspot)){
+				this.hspot = new Hotspot(this.w,this.h,this.x,this.y);
+			} else {
+				this.hspot.updatePos(this.w,this.h,this.x,this.y);
 			}
 		
 			this.clear();

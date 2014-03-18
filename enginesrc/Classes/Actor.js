@@ -5,24 +5,14 @@ function Actor(scene,params,key){
 	this.orientation = 'down';
 	this.moving = false;
 	this.type = 'a';
+	this.hspot = {};
 	if(isset(params)){
 		this.a = params.a;
-		this.x = params.x;
-		this.y = params.y;
-	
-		this.hspot = {
-			x0:this.x,
-			y0:this.y,
-			x1:this.x+this.w,
-			y1:this.y+this.h,
-			w:this.w,
-			h:this.h,
-			name:this.a.name
-		};
+		this.w = this.a.actions.stand.down[0].width;
+		this.h = this.a.actions.stand.down[0].height;
 
 		this.x = scene.orig.actors[key].x;
 		this.y = scene.orig.actors[key].y;
-		
 	}
 
 	this.spawn = function(layer){
@@ -34,10 +24,6 @@ function Actor(scene,params,key){
 		}
 		this.sprite.draw(this.x,this.y);
 		activeSprites.push(this);
-	}
-
-	this.draw = function(){
-		this.sprite.draw(this.x,this.y);
 	}
 
 }
