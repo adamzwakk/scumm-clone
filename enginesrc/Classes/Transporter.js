@@ -16,6 +16,10 @@ function Transporter(param,scene,layer){
 			y1:this.y+this.h,
 			w:this.w,
 			h:this.h,
+			bm:{
+				x:(this.x+(this.w/2)),
+				y:this.y+this.h
+			},
 			name:this.title
 		};
 		if(debugMode){
@@ -28,9 +32,14 @@ function Transporter(param,scene,layer){
 	}
 
 	this.checkClick = function(e){
+		var s = this.hspot;
 		if(this.x <= e.offsetX && e.offsetX <= (this.x+this.w) && this.y <= e.offsetY && e.offsetY <= (this.y+this.h)){
 			if(debugMode){
 				console.log('Clicked Transporter for '+this.title);
+			}
+			if(activeScene.walkLayer.isPointInPath(s.x0,s.y1) || activeScene.walkLayer.isPointInPath(s.x1,s.y1)){
+				playerDest.x = this.hspot.bm.x;
+				playerDest.y = this.hspot.bm.y;
 			}
 			this.intent = true;
 		} else {

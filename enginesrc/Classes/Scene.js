@@ -305,7 +305,7 @@ function Scene(scene){
 		ppos.x = activePlayer.sprite.x+(activePlayer.sprite.w/2);
 		ppos.y = activePlayer.sprite.y+(activePlayer.sprite.h);
 		gridStart = this.findGraphPos(ppos);
-		gridEnd = this.findGraphPos(mousePos);
+		gridEnd = this.findGraphPos(playerDest);
 		if(isset(gridEnd)){
 			start = this.graph.nodes[gridStart.posY][gridStart.posX];
 			end = this.graph.nodes[gridEnd.posY][gridEnd.posX];
@@ -334,6 +334,7 @@ function Scene(scene){
 		$('canvas').not('#inv,#dialog,#actions').on('click', function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
+			playerDest = mousePos;
 			if(debugMode){
 				console.log('Click coordinates: '+e.offsetX+','+e.offsetY);
 			}
@@ -348,7 +349,7 @@ function Scene(scene){
 			var currentPath = that.findPath();
 			if(currentPath.length > 0){
 				if(debugMode){
-					var mc = that.findGraphPos(mousePos);
+					var mc = that.findGraphPos(playerDest);
 					console.log('Grid coordinates: '+mc.posX+', '+mc.posY);
 				}
 				var pathQueue = new Array();
@@ -357,8 +358,8 @@ function Scene(scene){
 					activePlayer.moveQueue.push(q);
 				};
 
-				activePlayer.destX = e.offsetX;
-				activePlayer.destY = e.offsetY;
+				activePlayer.destX = playerDest.x;
+				activePlayer.destY = playerDest.y;
 				activePlayer.moving = true;
 			}
 		});
