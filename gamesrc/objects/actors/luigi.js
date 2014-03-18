@@ -29,7 +29,7 @@ var luigi = {
 				{ width: 22, height: 36, x: 31, y: 120 },
 			],
 			down:[
-				{ width: 22, height: 37, x: 31, y: 0 },
+				{ width: 22, height: 37, x: 28, y: 0 },
 			],
 			right:[
 				{ width: 19, height: 37, x: 32, y: 80 },

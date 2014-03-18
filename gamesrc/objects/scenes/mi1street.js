@@ -117,8 +117,8 @@ var mi1Street = {
 		{
 			a:luigi,
 			t:'n',
-			x:158,
-			y:370
+			x:100,
+			y:300
 		}
 	]
 };

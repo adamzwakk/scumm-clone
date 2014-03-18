@@ -24,7 +24,7 @@ function Sprite(scene, actor, layer){
 		this.actor.y = scene.spawnStart.y;
 	}
 	
-	this.direction = this.actor.actions.walk.down;
+	this.direction = this.actor.actions.stand.down;
 	this.directionFrameLenght = this.direction.length;
 	this.directionFrameIndex = 0;
 	this.UpdateDelayCount = 3;
@@ -107,10 +107,10 @@ function Sprite(scene, actor, layer){
 			this.h = up.height;
 			this.w = up.width;
 
+			this.zHandler();
+
 			this.realH = this.h*this.scaleDiff;
 			this.realW = this.w*this.scaleDiff;
-
-			this.zHandler();
 
 			this.hspot = {
 				x0:this.x,

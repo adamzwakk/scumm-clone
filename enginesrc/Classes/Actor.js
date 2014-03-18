@@ -9,8 +9,6 @@ function Actor(scene,params,key){
 		this.a = params.a;
 		this.x = params.x;
 		this.y = params.y;
-		this.w = this.a.actions.stand.down[0].width;
-		this.h = this.a.actions.stand.down[0].height;		
 	
 		this.hspot = {
 			x0:this.x,
