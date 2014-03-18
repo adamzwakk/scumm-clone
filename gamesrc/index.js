@@ -3,7 +3,7 @@ var mainHeight = 768;
 var invHeight = 250;
 var sceneHeight = mainHeight - invHeight;
 
-var debugMode = false;
+var debugMode = true;
 
 var Inventory = new Inventory();
 var World = new World();

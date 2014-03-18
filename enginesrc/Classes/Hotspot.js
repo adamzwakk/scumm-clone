@@ -1,4 +1,4 @@
-function Hotspot(w,h,x,y,name){
+function Hotspot(w,h,x,y,name,bm){
 	this.init = function(){
 		this.w = w;
 		this.h = h;
@@ -9,11 +9,16 @@ function Hotspot(w,h,x,y,name){
 		if(isset(name)){
 			this.name = name;
 		}
+		if(isset(bm) && bm){
+			this.bm = {};
+			this.bm.x = (x+(this.w/2));
+			this.bm.y = y+this.h;
+		}
 		this.instanceKey = Hotspot.allInstances.push(this)-1;
 	}
 
 	this.remove = function(){
-		delete Hotspot.allInstances[this.instanceKey];
+		Hotspot.allInstances.splice(this.instanceKey,1);
 	}
 
 	this.updatePos = function(w,h,x,y){

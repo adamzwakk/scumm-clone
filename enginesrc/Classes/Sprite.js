@@ -1,31 +1,38 @@
-function Sprite(scene, actor, layer){
+function Sprite(scene, parentA, layer){
 	this.x;
 	this.y;
 	this.w;
 	this.h;
 	this.z;
+	this.image;
+	this.hspotTarget;
+	this.name;
 	this.scene = scene;
-	if(isset(actor)){
+	if(isset(parentA)){
 		this.layer = layer.ctx;
 	};
-	this.actor = actor;
-	this.image = null;
+	this.actor = parentA;
 	this.scaleDiff = 1;
 	this.loaded = false;
 	this.loader = new PxLoader();
-	this.hspot;
-	if(isset(actor.a)){
-		var x = actor.x;
-		var y = actor.y;
-		this.actor = actor.a;
+	
+	if(parentA.constructor.name == 'Actor'){
+		var x = parentA.x;
+		var y = parentA.y;
+		this.actor = parentA.a;
 		this.actor.x = x;
 		this.actor.y = y;
-	} else {
+		this.hspotTarget = parentA;
+		this.name = this.hspotTarget.a.name;
+	} else if(parentA.constructor.name == 'Player') {
 		// main player
+		this.actor = parentA.actor;
+		this.hspotTarget = parentA;
 		this.actor.x = scene.spawnStart.x;
 		this.actor.y = scene.spawnStart.y;
 	}
-	
+
+
 	this.direction = this.actor.actions.walk.down;
 	this.directionFrameLenght = this.direction.length;
 	this.directionFrameIndex = 0;
@@ -113,10 +120,10 @@ function Sprite(scene, actor, layer){
 			this.realH = this.h*this.scaleDiff;
 			this.realW = this.w*this.scaleDiff;
 
-			if(!isset(this.hspot)){
-				this.hspot = new Hotspot(this.w,this.h,this.x,this.y);
+			if(!isset(this.hspotTarget.hspot)){
+				this.hspotTarget.hspot = new Hotspot(this.realW,this.realH,this.x,this.y,this.name);
 			} else {
-				this.hspot.updatePos(this.w,this.h,this.x,this.y);
+				this.hspotTarget.hspot.updatePos(this.realW,this.realH,this.x,this.y);
 			}
 		
 			this.clear();

@@ -9,19 +9,8 @@ function Transporter(param,scene,layer){
 		this.w = param.w;
 		this.h = param.h;
 		this.title = param.title;
-		this.hspot = {
-			x0:this.x,
-			y0:this.y,
-			x1:this.x+this.w,
-			y1:this.y+this.h,
-			w:this.w,
-			h:this.h,
-			bm:{
-				x:(this.x+(this.w/2)),
-				y:this.y+this.h
-			},
-			name:this.title
-		};
+		this.hspot = new Hotspot(this.w,this.h,this.x,this.y,this.title,true);
+
 		if(debugMode){
 			var rgb = "rgba(55,55,244,0.5)";
 		} else {
@@ -37,6 +26,7 @@ function Transporter(param,scene,layer){
 			if(debugMode){
 				console.log('Clicked Transporter for '+this.title);
 			}
+			console.log(this.hspot);
 			if(activeScene.walkLayer.isPointInPath(s.x0,s.y1) || activeScene.walkLayer.isPointInPath(s.x1,s.y1)){
 				playerDest.x = this.hspot.bm.x;
 				playerDest.y = this.hspot.bm.y;

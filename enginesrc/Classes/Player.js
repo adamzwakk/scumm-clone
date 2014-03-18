@@ -1,18 +1,17 @@
 function Player(scene,params,key){
-	Actor.call(this);
-	this.prototype = new Actor(scene,params,key);
+	MoveableObject.call(this);
+	this.prototype = new MoveableObject();
 	this.x = scene.spawnStart.x;
 	this.y = scene.spawnStart.y;
 	this.w;
 	this.h;
-	this.hspot = {};
 	this.scene = scene;
 	this.speed = 4;
 	activePlayer = this;
 	this.type = 'p';
 	this.actor = playerSprite;
 	this.init = function(){
-		this.sprite = new Sprite(this.scene, this.actor, this.scene.playerLayer);
+		this.sprite = new Sprite(this.scene, this, this.scene.playerLayer);
 		this.sprite.draw(this.x,this.y);
 		this.w = this.sprite.w;
 		activeSprites.push(this);
@@ -43,13 +42,13 @@ function Player(scene,params,key){
 		this.h = this.sprite.h;
 		for (var i = 0; i < activeTransporters.length; i++) {
 			var t = activeTransporters[i];
-			if(t.intent && t.withinPadding(this.sprite.hspot)){
+			if(t.intent && t.withinPadding(this.hspot)){
 				t.transportMe();
 			}
 		}
 		for (var i = 0; i < activeItems.length; i++) {
 			var i = activeItems[i];
-			if(i.intent && i.withinPadding(this.sprite.hspot) && Inventory.textAction == Inventory.possibleActions[1]){
+			if(i.intent && i.withinPadding(this.hspot) && Inventory.textAction == Inventory.possibleActions[1]){
 				i.pickMeUp();
 			}
 		};

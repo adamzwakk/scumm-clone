@@ -169,7 +169,7 @@ function Scene(scene){
 				var a = new Actor(this,obj,key);
 				a.spawn(this.spriteLayers[key-1]);
 				this.actors.push(a);
-			} else {
+			} else if(obj.t == 'p') {
 				var player = new Player(this,obj,0);
 			}
 		}
@@ -267,8 +267,9 @@ function Scene(scene){
 	}
 
 	this.showHotspotText = function(mousePos,objs){
-		for (var i = 0; i < objs.length; i++) {
-			var h = objs[i].hspot;
+		for (var i = 0; i < Hotspot.allInstances.length; i++) {
+			var h = Hotspot.allInstances[i];
+			console.log(h);
 			if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
 				Inventory.target = h.name;
 				break;

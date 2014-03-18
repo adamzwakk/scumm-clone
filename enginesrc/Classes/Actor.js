@@ -5,7 +5,7 @@ function Actor(scene,params,key){
 	this.orientation = 'down';
 	this.moving = false;
 	this.type = 'a';
-	this.hspot = {};
+	this.hspot;
 	if(isset(params)){
 		this.a = params.a;
 		this.w = this.a.actions.stand.down[0].width;
