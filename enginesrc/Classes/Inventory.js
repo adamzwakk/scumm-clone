@@ -1,6 +1,6 @@
 function Inventory(){
 	this.items = new Array();
-	this.possibleActions = new Array('Walk to ','Pick Up ','Talk To ');
+	this.possibleActions = new Array('Walk to ','Pick Up ','Talk To ', 'Use ');
 	this.textAction = this.possibleActions[0];
 	this.target = '';
 	this.actionWidth = mainWidth/2;
@@ -98,12 +98,11 @@ function Inventory(){
 
 	this.drawItems = function(){
 		var ctx = this.itemArea.ctx;
-		var x,y;
 		var startX = 10;
 		var startY = 10;
 		var w = 150;
 		var h = 80;
-		for (var i = 0; i < 12; i++) {
+		for (var i = 0; i < 6; i++) {
 			ctx.beginPath();
 			ctx.rect(startX,startY,w,h);
 			ctx.lineWidth = 2;
@@ -117,7 +116,7 @@ function Inventory(){
 			}
 
 			if(i && i%2 === 0){
-				startY += h+startY;
+				startY += h+10;
 				startX = 10;
 			} else {
 				startX += w+10;
