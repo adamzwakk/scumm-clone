@@ -5,7 +5,7 @@ function Sprite(scene, actor, layer){
 	this.h;
 	this.z;
 	this.scene = scene;
-	if (isset(actor) ) {
+	if(isset(actor)){
 		this.layer = layer.ctx;
 	};
 	this.actor = actor;
@@ -44,18 +44,19 @@ function Sprite(scene, actor, layer){
 	this.zHandler = function(){
 		if(isset(this.scene)){
 			var smallPoint = activeScene.horizonLine;
-			var bt = this.getBottomPos(this.x,this.y);
+			var bt = this.getBottomPos();
 			this.z = Math.abs(1-(bt.y/smallPoint))*10;
 			if(isset(activeScene.persThreshold) && this.z <= activeScene.persThreshold[0] && this.z >= activeScene.persThreshold[1]){
 				this.scaleDiff = this.z;
-			} 
+			}
+			console.log(this.z);
 		}
 	}
 
-	this.getBottomPos = function(x,y){
+	this.getBottomPos = function(){
 		var b = {
-			x:x+(this.w/2),
-			y:y+this.h
+			x:this.x+(this.w/2),
+			y:this.y+this.h
 		}
 		return b;
 	}
@@ -96,9 +97,7 @@ function Sprite(scene, actor, layer){
 	}
 
 	this.draw = function(x, y, curDir){
-
 		if(this.loaded){
-			
 			this.updateDirection(curDir);
 			this.updateDirectionFrameIndex();
 
@@ -107,6 +106,10 @@ function Sprite(scene, actor, layer){
 			this.y = y;
 			this.h = up.height;
 			this.w = up.width;
+
+			this.realH = this.h*this.scaleDiff;
+			this.realW = this.w*this.scaleDiff;
+
 			this.zHandler();
 
 			this.hspot = {
@@ -115,9 +118,9 @@ function Sprite(scene, actor, layer){
 				y0:this.y,
 				y1:this.y+this.h
 			}
-
+		
 			this.clear();
-			this.layer.drawImage(this.image, up.x, up.y, up.width, up.height, this.x, this.y, up.width*this.scaleDiff, up.height*this.scaleDiff);
+			this.layer.drawImage(this.image, up.x, up.y, up.width, up.height, this.x, this.y, this.realW, this.realH);
 		}
 	}
 

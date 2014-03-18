@@ -305,8 +305,8 @@ function Scene(scene){
 		var end;
 		var ppos = {};
 		var result = new Array();
-		ppos.x = activePlayer.sprite.x+(activePlayer.sprite.w/2);
-		ppos.y = activePlayer.sprite.y+(activePlayer.sprite.h);
+		ppos.x = activePlayer.sprite.x+(activePlayer.sprite.realW/2);
+		ppos.y = activePlayer.sprite.y+(activePlayer.sprite.realH);
 		gridStart = this.findGraphPos(ppos);
 		gridEnd = this.findGraphPos(playerDest);
 		if(isset(gridEnd)){

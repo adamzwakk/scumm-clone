@@ -10,8 +10,8 @@ function MoveableObject(){
 			var src = {x:this.x,y:this.y};
 
 			if(this.type == 'p'){
-				this.destXs = this.destX - (this.sprite.w/2);
-				this.destYs = this.destY - this.sprite.h;
+				this.destXs = this.destX - (this.sprite.realW/2);
+				this.destYs = this.destY - this.sprite.realH;
 			}
 
 			var dest = {x:this.destXs,y:this.destYs};
