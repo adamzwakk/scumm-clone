@@ -193,6 +193,7 @@ function Scene(scene){
 				var i = new InventoryItem(obj,l);
 				i.image = e.resource.img;
 				i.spawn();
+				activeItems.push(i);
 				that.items.push(i);
 				that.checkSpots.push(i);
 			}

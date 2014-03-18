@@ -33,7 +33,7 @@ function Transporter(param,scene,layer){
 
 	this.checkClick = function(e){
 		var s = this.hspot;
-		if(this.x <= e.offsetX && e.offsetX <= (this.x+this.w) && this.y <= e.offsetY && e.offsetY <= (this.y+this.h)){
+		if(this.x-this.padding <= e.offsetX && e.offsetX <= (this.x+(this.w+this.padding)) && this.y-this.padding <= e.offsetY && e.offsetY <= (this.y+(this.h+this.padding))){
 			if(debugMode){
 				console.log('Clicked Transporter for '+this.title);
 			}

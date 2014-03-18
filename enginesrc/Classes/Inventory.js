@@ -5,8 +5,12 @@ function Inventory(){
 	this.target = '';
 	this.actionWidth = mainWidth/2;
 	this.invTop = mainHeight-invHeight;
+	this.textHeight = 30;
+	this.areasYStart = sceneHeight+this.textHeight;
 	this.actionArea = {};
+	this.itemArea = {};
 	this.actions = new Array();
+	
 
 	this.init = function(){
 		this.canvas = $('<canvas></canvas>').attr({'id':'inv','width':mainWidth,'height':invHeight}).css({'z-index':9,'top':this.invTop});
@@ -15,16 +19,17 @@ function Inventory(){
 		this.ctx.fillRect(0, 0, mainWidth, invHeight);
 		$('#container').append(this.canvas);
 		this.setupActions();
+		this.setupItemGrid();
 		return this;
 	}
 
 	this.setupActions = function(){
 		var that = this;
-		this.actionArea.canvas = $('<canvas></canvas>').attr({'id':'actions','width':this.actionWidth,'height':invHeight}).css({'z-index':10,'top':this.invTop});
+		this.actionArea.canvas = $('<canvas></canvas>').attr({'id':'actions','width':this.actionWidth,'height':invHeight}).css({'z-index':10,'top':this.areasYStart});
 		this.actionArea.ctx = this.actionArea.canvas[0].getContext('2d');
 		$('#container').append(this.actionArea.canvas);
-		var startX = 20;
-		var startY = 20;
+		var startX = 10;
+		var startY = 10;
 		var w = 150;
 		var h = 60;
 		for (var i = 0; i < this.possibleActions.length; i++) {
@@ -34,7 +39,7 @@ function Inventory(){
 			this.actions.push(a);
 			if(i % 3 === 1 && i != 0){
 				startY += h+startY;
-				startX = 20;
+				startX = 10;
 			} else {
 				startX += w+startX;
 			}	
@@ -66,6 +71,13 @@ function Inventory(){
 		});
 	}
 
+	this.setupItemGrid = function(){
+		var that = this;
+		this.itemArea.canvas = $('<canvas></canvas>').attr({'id':'invItems','width':this.actionWidth,'height':invHeight}).css({'z-index':10,'top':this.areasYStart,'left':this.actionWidth});
+		this.itemArea.ctx = this.itemArea.canvas[0].getContext('2d');
+		$('#container').append(this.itemArea.canvas);
+	}
+
 	this.updateInfoText = function(){
 		var finalText = this.textAction+this.target;
 		this.ctx.textAlign = 'center';
@@ -84,7 +96,7 @@ function Inventory(){
 	}
 
 	this.clear = function(){
-		this.ctx.clearRect(0,0,mainWidth,50);
+		this.ctx.clearRect(0,0,mainWidth,this.textHeight);
 		this.ctx.fillStyle = "black";
 		this.ctx.fillRect(0, 0, mainWidth, invHeight);
 	}

@@ -23,6 +23,10 @@ function InventoryItem(item,l){
 		this.layer.ctx.drawImage(this.image, 0, 0, this.w, this.h, this.x, this.y, this.w, this.h);
 	}
 
+	this.withinPadding = function(a){
+		return (a.x1 >= this.hspot.x0 || a.x0 <= this.hspot.x1)
+	}
+
 	this.checkClick = function(e){
 		if(this.x <= e.offsetX && e.offsetX <= (this.x+this.w) && this.y <= e.offsetY && e.offsetY <= (this.y+this.h)){
 			if(debugMode){
@@ -32,5 +36,9 @@ function InventoryItem(item,l){
 		} else {
 			this.intent = false;
 		}
+	}
+
+	this.pickMeUp = function(){
+		
 	}
 }
