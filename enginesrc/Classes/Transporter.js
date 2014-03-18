@@ -26,7 +26,6 @@ function Transporter(param,scene,layer){
 			if(debugMode){
 				console.log('Clicked Transporter for '+this.title);
 			}
-			console.log(this.hspot);
 			if(activeScene.walkLayer.isPointInPath(s.x0,s.y1) || activeScene.walkLayer.isPointInPath(s.x1,s.y1)){
 				playerDest.x = this.hspot.bm.x;
 				playerDest.y = this.hspot.bm.y;

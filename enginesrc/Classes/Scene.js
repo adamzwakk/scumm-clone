@@ -269,7 +269,6 @@ function Scene(scene){
 	this.showHotspotText = function(mousePos,objs){
 		for (var i = 0; i < Hotspot.allInstances.length; i++) {
 			var h = Hotspot.allInstances[i];
-			console.log(h);
 			if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
 				Inventory.target = h.name;
 				break;
