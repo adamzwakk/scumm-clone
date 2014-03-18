@@ -76,6 +76,16 @@ function Inventory(){
 		this.itemArea.canvas = $('<canvas></canvas>').attr({'id':'invItems','width':this.actionWidth,'height':invHeight}).css({'z-index':10,'top':this.areasYStart,'left':this.actionWidth});
 		this.itemArea.ctx = this.itemArea.canvas[0].getContext('2d');
 		$('#container').append(this.itemArea.canvas);
+
+		$('canvas#invItems').on('click',function(e){
+			//nothing yet
+		});
+
+		$('canvas#invItems').on('mousemove',function(e){
+			for (var i = 0; i < this.items.length; i++) {
+				var it = this.items[i];
+			};
+		});
 	}
 
 	this.addItem = function(i){

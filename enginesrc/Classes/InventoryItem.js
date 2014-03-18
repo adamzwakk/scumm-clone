@@ -39,7 +39,8 @@ function InventoryItem(item,l){
 	}
 
 	this.pickMeUp = function(){
-		Inventory.addItem(this);		
+		Inventory.addItem(this);
+		delete activeScene.checkSpots[this.spotIndex];
 	}
 
 	this.drawInv = function(w,h,x,y){

@@ -157,7 +157,7 @@ function Scene(scene){
 			var t = new Transporter(obj,this,l);
 			activeTransporters.push(t);
 			this.transporters.push(t);
-			this.checkSpots.push(t);
+			t.spotIndex = this.checkSpots.push(t);
 		}
 	}
 
@@ -169,7 +169,7 @@ function Scene(scene){
 				var a = new Actor(this,obj,key);
 				a.spawn(this.spriteLayers[key-1]);
 				this.actors.push(a);
-				this.checkSpots.push(a);
+				a.spotIndex = this.checkSpots.push(a);
 				activeSprites.push(a);
 			} else {
 				var player = new Player(this,obj,0);
@@ -335,7 +335,7 @@ function Scene(scene){
 
 	this.setupControls = function(){
 		var that = this;
-		$('canvas').not('#inv,#dialog,#actions').on('click', function(e){
+		$('canvas').not('#inv,#dialog,#actions,#invItems').on('click', function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
 			playerDest = mousePos;
@@ -368,11 +368,11 @@ function Scene(scene){
 			}
 		});
 
-		$('canvas').not('#inv,#dialog,#actions').on('mouseout',function(e){
+		$('canvas').not('#inv,#dialog,#actions,#invItems').on('mouseout',function(e){
 			Inventory.updateCanvas();
 		});
 
-		$('canvas').not('#inv,#dialog,#actions').on('mousemove',function(e){
+		$('canvas').not('#inv,#dialog,#actions,#invItems').on('mousemove',function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
 			that.showHotspotText(mousePos, that.checkSpots);
