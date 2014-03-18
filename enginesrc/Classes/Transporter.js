@@ -39,7 +39,7 @@ function Transporter(param,scene,layer){
 	}
 
 	this.withinPadding = function(a){
-		return (a.x >= this.hspot.x0-this.padding || a.x <= this.hspot.x1+this.padding);
+		return (a.x1 >= this.hspot.x0 || a.x0 <= this.hspot.x1)
 	}
 
 	this.transportMe = function(){

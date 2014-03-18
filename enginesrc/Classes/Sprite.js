@@ -101,6 +101,14 @@ function Sprite(scene, actor, layer){
 			this.y = y;
 			this.h = up.height;
 			this.w = up.width;
+
+			this.hspot = {
+				x0:this.x,
+				x1:this.x+this.w,
+				y0:this.y,
+				y1:this.y+this.h
+			}
+
 			this.clear();
 			this.layer.drawImage(this.image, up.x, up.y, up.width, up.height, this.x, this.y, up.width, up.height);
 		}

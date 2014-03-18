@@ -3,6 +3,9 @@ function Player(scene,params,key){
 	this.prototype = new Actor(scene,params,key);
 	this.x = scene.spawnStart.x;
 	this.y = scene.spawnStart.y;
+	this.w;
+	this.h;
+	this.hspot = {};
 	this.scene = scene;
 	this.speed = 4;
 	activePlayer = this;
@@ -11,6 +14,7 @@ function Player(scene,params,key){
 	this.init = function(){
 		this.sprite = new Sprite(this.scene, this.actor, this.scene.playerLayer);
 		this.sprite.draw(this.x,this.y);
+		this.w = this.sprite.w;
 		activeSprites.push(this);
 	}
 
@@ -35,9 +39,11 @@ function Player(scene,params,key){
 	}
 
 	this.whatDoOnStop = function(){
+		this.w = this.sprite.w;
+		this.h = this.sprite.h;
 		for (var i = 0; i < activeTransporters.length; i++) {
 			var t = activeTransporters[i];
-			if(t.intent && t.withinPadding(this)){
+			if(t.intent && t.withinPadding(this.sprite.hspot)){
 				t.transportMe();
 			}
 		}
