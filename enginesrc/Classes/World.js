@@ -3,7 +3,7 @@ function World(){
 
 	this.changeScene = function(ns){
 		activeScene.hide();
-		Hotspot.removeAll();
+		Hotspot.removeAllFromScene();
 		var newScene = new Scene(this.locations[ns]);
 		newScene.show();
 	}

@@ -11,7 +11,7 @@ npm install -g bower
 npm install -g grunt-cli
 npm install
 bower update
-grunt dist
+grunt
 ```
 
 ###Folders

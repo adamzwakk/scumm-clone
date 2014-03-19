@@ -10,6 +10,7 @@ function Inventory(){
 	this.actionArea = {};
 	this.itemArea = {};
 	this.actions = new Array();
+	this.mousePos = {};
 	
 
 	this.init = function(){
@@ -82,8 +83,15 @@ function Inventory(){
 		});
 
 		$('canvas#invItems').on('mousemove',function(e){
+			that.mousePos.x = e.offsetX;
+			that.mousePos.y = e.offsetY;
 			for (var i = 0; i < that.items.length; i++) {
-				var it = this.items[i];
+				var it = that.items[i];
+				if(withinHspot(that.mousePos,it.hspot)){
+					that.target = it.hspot.name;
+				} else {
+					that.target = '';
+				}
 			};
 		});
 	}

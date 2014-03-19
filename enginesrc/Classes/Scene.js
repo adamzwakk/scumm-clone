@@ -266,9 +266,9 @@ function Scene(scene){
 	}
 
 	this.showHotspotText = function(mousePos){
-		for (var i = 0; i < Hotspot.allInstances.length; i++) {
-			var h = Hotspot.allInstances[i];
-			if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
+		for (var i = 0; i < Hotspot.allSceneInstances.length; i++) {
+			var h = Hotspot.allSceneInstances[i];
+			if(withinHspot(mousePos,h)){
 				Inventory.target = h.name;
 				break;
 			} else {
@@ -287,7 +287,7 @@ function Scene(scene){
 		for (var i = 0; i < this.graphCO.length; i++) {
 			for (var j = 0; j < this.graphCO[i].length; j++) {
 				var h = this.graphCO[i][j];
-				if(h.p == 1 && h.x0 <= ppos.x && ppos.x <= h.x1 && h.y0 <= ppos.y && ppos.y <= h.y1){
+				if(h.p == 1 && withinHspot(ppos,h)){
 					gridPos = h;
 					break findPos;
 				}

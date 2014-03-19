@@ -37,14 +37,6 @@ function InventoryItem(item,l){
 
 	this.drawInv = function(w,h,x,y){
 		this.layer.ctx.drawImage(this.image, 0, 0, this.w, this.h, x, y, w, h);
-		this.hspot = {
-			x0:x,
-			y0:y,
-			x1:x+w,
-			y1:y+h,
-			w:w,
-			h:h,
-			name:item.i.name
-		};
+		this.hspot = new Hotspot(w,h,x,y,item.i.name,false,true);
 	}
 }

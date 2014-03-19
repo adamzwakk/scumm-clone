@@ -21,6 +21,10 @@ function moveDifference(src,dest,speed){
 	}
 }
 
+function withinHspot(pos,h){
+	return (h.x0 <= pos.x && pos.x <= h.x1 && h.y0 <= pos.y && pos.y <= h.y1);
+}
+
 function isset(v){
 	return (typeof v !== 'undefined');
 }
