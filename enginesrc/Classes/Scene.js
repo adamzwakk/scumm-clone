@@ -157,7 +157,6 @@ function Scene(scene){
 			var t = new Transporter(obj,this,l);
 			activeTransporters.push(t);
 			this.transporters.push(t);
-			t.spotIndex = this.checkSpots.push(t);
 		}
 	}
 
@@ -266,7 +265,7 @@ function Scene(scene){
 		};
 	}
 
-	this.showHotspotText = function(mousePos,objs){
+	this.showHotspotText = function(mousePos){
 		for (var i = 0; i < Hotspot.allInstances.length; i++) {
 			var h = Hotspot.allInstances[i];
 			if(h.x0 <= mousePos.x && mousePos.x <= h.x1 && h.y0 <= mousePos.y && mousePos.y <= h.y1){
@@ -376,7 +375,7 @@ function Scene(scene){
 		$('canvas').not('#inv,#dialog,#actions,#invItems').on('mousemove',function(e){
 			mousePos.x = e.offsetX;
 			mousePos.y = e.offsetY;
-			that.showHotspotText(mousePos, that.checkSpots);
+			that.showHotspotText(mousePos);
 		});
 	}
 

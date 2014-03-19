@@ -34,3 +34,7 @@ function Hotspot(w,h,x,y,name,bm){
 }
 
 Hotspot.allInstances = new Array();
+
+Hotspot.removeAll = function(){
+	Hotspot.allInstances = new Array();	
+}
