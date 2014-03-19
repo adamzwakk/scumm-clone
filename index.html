@@ -53,6 +53,15 @@
 
 <p>My main priority is to seperate the main engine code, and the actual game/asset code. Everything in the gamesrc folder is configured via JSON objects.</p>
 
+<p>You will need grunt and bower to install dependencies and build the demo project with the engine.</p>
+
+<pre><code>npm install -g bower
+npm install -g grunt-cli
+npm install
+bower update
+grunt
+</code></pre>
+
 <h3>
 <a name="folders" class="anchor" href="#folders"><span class="octicon octicon-link"></span></a>Folders</h3>
 
@@ -79,6 +88,11 @@
 <a name="actor" class="anchor" href="#actor"><span class="octicon octicon-link"></span></a>Actor</h6>
 
 <p>An actor is a character on the scene, including the main player. Actors can move freely on the scene background. Only player actors can use transporters.</p>
+
+<h6>
+<a name="sprite" class="anchor" href="#sprite"><span class="octicon octicon-link"></span></a>Sprite</h6>
+
+<p>Where the different sprites live for the actor, support multiple frames per action (walking, talking, etc).</p>
 
 <h6>
 <a name="transporter" class="anchor" href="#transporter"><span class="octicon octicon-link"></span></a>Transporter</h6>
