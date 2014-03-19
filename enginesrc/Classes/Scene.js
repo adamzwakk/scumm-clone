@@ -7,7 +7,6 @@ function Scene(scene){
 	this.itemLayers = new Array();
 	this.items = new Array();
 	this.actors = new Array();
-	this.checkSpots = new Array();
 	this.images = new Array();
 	this.playerLayer;
 	this.moving = false;
@@ -192,7 +191,6 @@ function Scene(scene){
 				i.spawn();
 				activeItems.push(i);
 				that.items.push(i);
-				that.checkSpots.push(i);
 			}
 		});
 	}

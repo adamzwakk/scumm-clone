@@ -21,7 +21,7 @@ function Hotspot(w,h,x,y,name,bm,stay){
 		}
 	}
 
-	this.remove = function(){
+	this.removeFromScene = function(){
 		Hotspot.allSceneInstances.splice(this.instanceKey,1);
 	}
 

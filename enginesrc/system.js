@@ -9,7 +9,6 @@ var playerSprite;
 var activeSprites = new Array();
 var activeTransporters = new Array();
 var activeItems = new Array();
-var eventLayer;
 var playerDest;
 var mousePos = {};
 var mainPreloader = new PxLoader();
