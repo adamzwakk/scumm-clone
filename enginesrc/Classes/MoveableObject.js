@@ -4,10 +4,16 @@ function MoveableObject(){
 	this.curDir = {};
 	this.hspot;
 	this.moveQueue = new Array();
+	this.movePos = 0;
 
 	this.move = function(dt){
-		if(this.moving && this.moveQueue.length > 0){
+		if(this.moving && this.moveQueue.length > 0 && this.movePos != this.moveQueue.length){
 			var src = {x:this.x,y:this.y};
+
+			var gridDest = this.moveQueue[this.movePos];
+
+			this.destX = gridDest.x0;
+			this.destY = gridDest.y0;
 
 			if(this.type == 'p'){
 				this.destXs = this.destX - (this.sprite.realW/2);
@@ -42,10 +48,14 @@ function MoveableObject(){
 			} else {
 				delete this.curDir.x;
 				delete this.curDir.y;
-				this.moving = false;
-				if(this.type == 'p'){
-					activePlayer.whatDoOnStop();
-				}
+				this.movePos++;
+			}
+		} else {
+			this.moving = false;
+			this.movePos = 0;
+			this.moveQueue = new Array();
+			if(this.type == 'p'){
+				activePlayer.whatDoOnStop();
 			}
 		}
 	}

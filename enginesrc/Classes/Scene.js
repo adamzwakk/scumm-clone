@@ -324,6 +324,7 @@ function Scene(scene){
 				var h = this.graphCO[i][j];
 				if(h.posX == cp.y && h.posY == cp.x){
 					node2get = h;
+					break;
 				}
 				
 			}
@@ -359,9 +360,7 @@ function Scene(scene){
 					var q = that.nodeToXY(currentPath[i]);
 					activePlayer.moveQueue.push(q);
 				};
-
-				activePlayer.destX = playerDest.x;
-				activePlayer.destY = playerDest.y;
+				
 				activePlayer.moving = true;
 			}
 		});
