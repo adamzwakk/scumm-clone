@@ -51,12 +51,14 @@ function MoveableObject(){
 				this.movePos++;
 			}
 		} else {
+			if(this.moving && this.moveQueue.length > 0){
+				if(this.type == 'p'){
+					activePlayer.whatDoOnStop();
+				}
+			}
 			this.moving = false;
 			this.movePos = 0;
 			this.moveQueue = new Array();
-			if(this.type == 'p'){
-				activePlayer.whatDoOnStop();
-			}
 		}
 	}
 

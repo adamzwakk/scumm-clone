@@ -26,6 +26,7 @@ function Scene(scene){
 	this.graph;
 	this.graphCO = new Array();
 	this.walkLayer;
+	this.debugMoveLine;
 	
 	this.init = function(){
 		var that = this;
@@ -48,61 +49,66 @@ function Scene(scene){
 	}
 
 	this.drawPathGrid = function(){
-		if(isset(scene.walkable)){
-			var l = new Layer('walkable',0,9999,this.width,this.height);
-			this.layers.push(l);
-			this.walkLayer = l.ctx;
+		var l = new Layer('walkable',0,9999,this.width,this.height);
+		this.layers.push(l);
+		this.walkLayer = l.ctx;
 
-			var ctx = l.ctx;
-			var gridSize = {};
-			var curGrid = {};
-			var touchArray = new Array();
-			var touchArrayX;
-			ctx.beginPath();
+		var ctx = l.ctx;
+		var gridSize = {};
+		var curGrid = {};
+		var touchArray = new Array();
+		var touchArrayX;
+		ctx.beginPath();
+		if(isset(scene.walkable) && scene.walkable.length > 0){
 			for (var i = 0; i < scene.walkable.length; i++) {
 				var w = scene.walkable[i];
 			 	ctx.lineTo(w.x,w.y);
 			}
-			if(debugMode){
-				ctx.fillStyle = "rgba(150,150,150,0.4)";
-				ctx.fill();
-			}
-			gridSize.x = parseInt(this.width/this.squareSize);
-			gridSize.y = parseInt(this.height/this.squareSize);
-			if(debugMode){
-				console.log('Creating Grid '+gridSize.x+', '+gridSize.y);
-			}
-			curGrid.x = 0
-			curGrid.y = 0;
-			for (var i = 0; i < gridSize.y; i++) {
-				curGrid.y = i*this.squareSize;
-				touchArrayX = new Array();
-				var thisXGrid = new Array();
-				for (var j = 0; j < gridSize.x; j++) {
-					var s = {};
-					var p;
-					s.x0 = j*this.squareSize;
-					s.y0 = curGrid.y;
-					s.x1 = (j*this.squareSize)+this.squareSize;
-					s.y1 = curGrid.y+this.squareSize;
-					s.posY = i;
-					s.posX = j;
-					curGrid.x = j*this.squareSize;
-					if(this.walkLayer.isPointInPath(s.x0,s.y0) || this.walkLayer.isPointInPath(s.x1,s.y1)){
-						touchArrayX.push(1);
-						s.p = 1;
-					} else {
-						touchArrayX.push(0);
-						s.p = 0;
-					}
-					thisXGrid.push(s);
-
-				}
-				this.graphCO.push(thisXGrid);
-				touchArray.push(touchArrayX);
-			}
-			this.graph = new Graph(touchArray);
+		} else {
+			ctx.lineTo(0,this.height);
+			ctx.lineTo(0,0);
+			ctx.lineTo(this.width,0);
+			ctx.lineTo(this.width,this.height);
 		}
+		if(debugMode){
+			ctx.fillStyle = "rgba(150,150,150,0.4)";
+			ctx.fill();
+		}
+		gridSize.x = parseInt(this.width/this.squareSize);
+		gridSize.y = parseInt(this.height/this.squareSize);
+		if(debugMode){
+			console.log('Creating Grid '+gridSize.x+', '+gridSize.y);
+		}
+		curGrid.x = 0
+		curGrid.y = 0;
+		for (var i = 0; i < gridSize.y; i++) {
+			curGrid.y = i*this.squareSize;
+			touchArrayX = new Array();
+			var thisXGrid = new Array();
+			for (var j = 0; j < gridSize.x; j++) {
+				var s = {};
+				var p;
+				s.x0 = j*this.squareSize;
+				s.y0 = curGrid.y;
+				s.x1 = (j*this.squareSize)+this.squareSize;
+				s.y1 = curGrid.y+this.squareSize;
+				s.posY = i;
+				s.posX = j;
+				curGrid.x = j*this.squareSize;
+				if(this.walkLayer.isPointInPath(s.x0,s.y0) || this.walkLayer.isPointInPath(s.x1,s.y1)){
+					touchArrayX.push(1);
+					s.p = 1;
+				} else {
+					touchArrayX.push(0);
+					s.p = 0;
+				}
+				thisXGrid.push(s);
+
+			}
+			this.graphCO.push(thisXGrid);
+			touchArray.push(touchArrayX);
+		}
+		this.graph = new Graph(touchArray);
 	}
 
 	this.preloadLayers = function(){
@@ -355,12 +361,26 @@ function Scene(scene){
 					var mc = that.findGraphPos(playerDest);
 					console.log('Grid coordinates: '+mc.posX+', '+mc.posY);
 				}
-				var pathQueue = new Array();
+				
 				for (var i = 0; i < currentPath.length; i++) {
 					var q = that.nodeToXY(currentPath[i]);
 					activePlayer.moveQueue.push(q);
 				};
 				
+				if(debugMode){
+					that.walkLayer.beginPath();
+					for (var i = 0; i < activePlayer.moveQueue.length; i++) {
+						var q = activePlayer.moveQueue[i];
+						if(i == 0){
+							that.walkLayer.moveTo(q.x0, q.y0);
+						} else {
+							that.walkLayer.lineTo(q.x0, q.y0);
+						}
+					}
+					that.walkLayer.strokeStyle = '#ff0000';
+					that.walkLayer.stroke();
+				}
+
 				activePlayer.moving = true;
 			}
 		});
